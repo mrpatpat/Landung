@@ -1,5 +1,6 @@
 package oot.landung;
 
+
 public abstract class Player {
 	
 	
@@ -12,16 +13,14 @@ public abstract class Player {
 	
 	
 	Player(){
-		askforname();
+		this.name = askforName();
 	}
 	
 	
 	
-	public abstract String askforname();
+	public abstract String askforName();
 	
 	
-	public Action getAction() {
-		return null;
-	}
+	public abstract Action askforAction();
 
 }

@@ -70,13 +70,13 @@ public class Game implements Serializable {
 		
 		do {
 			do {
-				a1 = player[0].getAction();
+				a1 = player[0].askforAction();
 			} while (!this.isActionValid(a1));
 
 			this.executeAction(a1);
 
 			do {
-				a2 = player[1].getAction();
+				a2 = player[1].askforAction();
 			} while (!this.isActionValid(a2));
 
 			this.executeAction(a2);
