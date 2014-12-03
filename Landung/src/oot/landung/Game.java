@@ -48,7 +48,8 @@ public class Game implements Serializable {
 		player = new Player[Game.PLAYERS];
 
 		if (type == GameType.PVP) {
-
+			player[0] = new HumanPlayer();
+			player[1] = new HumanPlayer();
 		}
 
 		// init board
@@ -66,6 +67,7 @@ public class Game implements Serializable {
 
 		Action a1;
 		Action a2;
+		
 		do {
 			do {
 				a1 = player[0].getAction();
