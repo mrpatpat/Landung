@@ -9,8 +9,6 @@ public class HumanPlayer extends Player{
 
 	HumanPlayer() {
 		
-		super(askforname());
-		
 	}
 
 	@Override

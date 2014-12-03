@@ -11,8 +11,8 @@ public abstract class Player {
 	
 	
 	
-	Player(String name){
-		this.name=name;
+	Player(){
+		askforname();
 	}
 	
 	
