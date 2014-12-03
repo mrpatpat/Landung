@@ -31,5 +31,14 @@ public class Action {
 	public Vector<Integer> getSetTo() {
 		return setTo;
 	}
+	
+	public String toString(){
+		String s = "";
+		s+=actor;
+		s+=moveFrom;
+		s+=moveTo;
+		s+=setTo;
+		return s;
+	}
 
 }

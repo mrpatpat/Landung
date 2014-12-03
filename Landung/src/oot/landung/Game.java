@@ -127,6 +127,7 @@ public class Game implements Serializable {
 	 * @return Gültigkeit
 	 */
 	public boolean executeAction(Action a) {
+		System.out.println("execute:"+a);
 		return false;
 	}
 

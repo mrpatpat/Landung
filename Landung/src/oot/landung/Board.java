@@ -23,7 +23,7 @@ public class Board {
 		
 		String format = " %-2s|%-3s|%-3s|%-3s|%-3s|%-3s|%n";
 
-		System.out.printf("   | 0 | 1 | 2 | 3 | 4 |%n");
+		System.out.printf("   | A | B | C | D | E |%n");
 		System.out.printf("---+---+---+---+---+---+%n");
 		
 		for(int i=0;i<SIZE;i++){
