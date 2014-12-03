@@ -18,6 +18,42 @@ public abstract class Player {
 	
 	
 	
+	
+	
+	public int getStone() {
+		return this.stone;
+	}
+
+
+
+
+
+	public String getName() {
+		return this.name;
+	}
+
+
+
+
+
+	public int getPoints() {
+		return this.points;
+	}
+
+
+
+
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+
+	public void setStone(int stone) {
+		this.stone = stone;
+	}
+
+
 	public abstract String askforName();
 	
 	
