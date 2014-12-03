@@ -4,20 +4,16 @@ public class Board {
 
 	private static final int SIZE = 5;
 
-	private Tile[][] tiles;
+	private Stone[][] tiles;
 
 	public Board() {
 		clearBoard();
 	}
 
 	private void clearBoard() {
-		tiles = new Tile[SIZE][SIZE];
-		for (Tile[] t1 : tiles) {
-			for (Tile t2 : t1) {
-				t2 = new Tile();
-			}
+		tiles = new Stone[SIZE][SIZE];	
 		}
-	}
+	
 
 	public String toString() {
 		return "";
