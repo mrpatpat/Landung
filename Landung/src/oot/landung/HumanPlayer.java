@@ -1,7 +1,24 @@
 package oot.landung;
 
+
+/**
+ * Instanz eines Menschlichen Spielers.
+ */
+
 public class HumanPlayer extends Player{
 
-	String name;
+	HumanPlayer() {
+		
+		super(askforname());
+		
+	}
+
+	@Override
+	public String askforname() {
+		// 
+		return null;
+	}
+
+	
 	
 }
