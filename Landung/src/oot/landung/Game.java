@@ -16,7 +16,7 @@ public class Game implements Serializable {
 	 * Spielmodi
 	 */
 	public enum GameType {
-		PVE_NOOB,PVE_EASY,PVE_MEDIUM,PVE_HARD,PVE_KLAUS,PVP;
+		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP;
 	}
 
 	/**
@@ -40,11 +40,6 @@ public class Game implements Serializable {
 	private int turn;
 
 	/**
-	 * Runde
-	 */
-	private int round;
-
-	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
 	public Game(GameType type) {
@@ -61,35 +56,73 @@ public class Game implements Serializable {
 
 		// init rest
 		turn = 0;
-		round = 0;
 
+	}
+
+	/**
+	 * Spielschleife gibt Sieger zur�ck
+	 */
+	public Player run() {
+
+		Action a1;
+		Action a2;
+		do {
+			do {
+				a1 = player[0].getAction();
+			} while (!this.isActionValid(a1));
+
+			this.executeAction(a1);
+
+			do {
+				a2 = player[1].getAction();
+			} while (!this.isActionValid(a2));
+
+			this.executeAction(a2);
+		} while (getWinner() == null);
+
+		return getWinner();
+
+	}
+
+	/**
+	 * null if no winner
+	 * 
+	 * @return
+	 */
+	public Player getWinner() {
+		return null;
 	}
 
 	/**
 	 * gibt alle gültigen Aktionen aus
+	 * 
 	 * @return
 	 */
-	public List<Action> getValidActions(){
+	public List<Action> getValidActions() {
 		return null;
 	}
-	
+
 	/**
 	 * prüft ob eine Aktion gültig ist
-	 * @param a Aktion
+	 * 
+	 * @param a
+	 *            Aktion
 	 * @return Gültigkeit
 	 */
-	public boolean isActionValid(Action a){
+	public boolean isActionValid(Action a) {
 		return false;
 	}
-	
+
 	/**
-	 * Führt eine Aktion aus. Wenn sie ungültig ist, gibt es ein false und sie wird nicht ausgeführt
-	 * @param a Aktion
+	 * Führt eine Aktion aus. Wenn sie ungültig ist, gibt es ein false und sie
+	 * wird nicht ausgeführt
+	 * 
+	 * @param a
+	 *            Aktion
 	 * @return Gültigkeit
 	 */
-	public boolean executeAction(Action a){
+	public boolean executeAction(Action a) {
 		return false;
 	}
-	
 
 }
