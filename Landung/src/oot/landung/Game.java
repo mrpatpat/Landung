@@ -16,7 +16,7 @@ public class Game implements Serializable {
 	 * Spielmodi
 	 */
 	public enum GameType {
-		PVP
+		PVE_NOOB,PVE_EASY,PVE_MEDIUM,PVE_HARD,PVE_KLAUS,PVP;
 	}
 
 	/**
