@@ -67,7 +67,7 @@ public class Game implements Serializable {
 
 		Action a1;
 		Action a2;
-		
+
 		do {
 			do {
 				a1 = player[0].askforAction();
@@ -75,11 +75,16 @@ public class Game implements Serializable {
 
 			this.executeAction(a1);
 
-			do {
-				a2 = player[1].askforAction();
-			} while (!this.isActionValid(a2));
+			if (getWinner() == null) {
 
-			this.executeAction(a2);
+				do {
+					a2 = player[1].askforAction();
+				} while (!this.isActionValid(a2));
+
+				this.executeAction(a2);
+				
+			}
+			
 		} while (getWinner() == null);
 
 		return getWinner();
