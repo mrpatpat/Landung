@@ -10,16 +10,25 @@ public abstract class Player {
 	
 	private int points=0;
 	
+	private String symbol;
 	
 	
-	Player(){
+	
+	
+	
+	public Player(String symbol){
 		this.name = askforName();
+		this.symbol=symbol;
 	}
 	
 	
 	
 	
-	
+	public String getSymbol() {
+		return symbol;
+	}
+
+		
 	public int getStone() {
 		return this.stone;
 	}
