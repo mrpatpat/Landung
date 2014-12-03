@@ -40,11 +40,6 @@ public class Game implements Serializable {
 	private int turn;
 
 	/**
-	 * Runde
-	 */
-	private int round;
-
-	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
 	public Game(GameType type) {
@@ -61,7 +56,6 @@ public class Game implements Serializable {
 
 		// init rest
 		turn = 0;
-		round = 0;
 
 	}
 
