@@ -28,6 +28,13 @@ public class HumanPlayer extends Player{
 	@Override
 	public Action askforAction() {
 		
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Aktion eingeben: ");
+		String name  = in.nextLine ();
+		
+		in.close();
+		
 		return null;
 	}
 
