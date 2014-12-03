@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player{
 
-	public HumanPlayer(String symbol) {
-		super(symbol);
+	public HumanPlayer(int n) {
+		super(n);
 		
 	}
 

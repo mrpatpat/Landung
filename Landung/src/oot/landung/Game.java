@@ -48,8 +48,8 @@ public class Game implements Serializable {
 		player = new Player[Game.PLAYERS];
 
 		if (type == GameType.PVP) {
-			player[0] = new HumanPlayer("X");
-			player[1] = new HumanPlayer("O");
+			player[0] = new HumanPlayer(0);
+			player[1] = new HumanPlayer(1);
 		}
 
 		// init board
@@ -64,31 +64,29 @@ public class Game implements Serializable {
 	 * Spielschleife gibt Sieger zurück
 	 */
 	public Player run() {
-
-		Action a1;
-		Action a2;
-
+		
 		do {
-			do {
-				a1 = player[0].askforAction();
-			} while (!this.isActionValid(a1));
-
-			this.executeAction(a1);
+			
+			runPlayerTurn(player[0]);
 
 			if (getWinner() == null) {
-
-				do {
-					a2 = player[1].askforAction();
-				} while (!this.isActionValid(a2));
-
-				this.executeAction(a2);
-				
+				runPlayerTurn(player[1]);
 			}
-			
+
 		} while (getWinner() == null);
 
 		return getWinner();
 
+	}
+
+	private void runPlayerTurn(Player p) {
+		Action a;
+		do {
+			a = p.askforAction();
+		} while (!this.isActionValid(a));
+
+		this.executeAction(a);
+		board.print();
 	}
 
 	/**
@@ -117,7 +115,7 @@ public class Game implements Serializable {
 	 * @return GÃ¼ltigkeit
 	 */
 	public boolean isActionValid(Action a) {
-		return false;
+		return true;
 	}
 
 	/**

@@ -16,9 +16,9 @@ public abstract class Player {
 	
 	
 	
-	public Player(String symbol){
+	public Player(int n){
 		this.name = askforName();
-		this.symbol=symbol;
+		symbol = n==0 ? "X":"O";
 	}
 	
 	
