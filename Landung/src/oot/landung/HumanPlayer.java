@@ -15,12 +15,10 @@ public class HumanPlayer extends Player{
 	@Override
 	public String askforName() {
 			
-		Scanner in = new Scanner(System.in);
+		Scanner in = Utils.getScanner();
 		
 		System.out.println("Geben Sie Ihren Namen ein: ");
 		String name  = in.nextLine ();
-		
-		in.close();
 		
 		return name;
 	}
@@ -28,12 +26,10 @@ public class HumanPlayer extends Player{
 	@Override
 	public Action askforAction() {
 		
-		Scanner in = new Scanner(System.in);
+		Scanner in = Utils.getScanner();
 		
 		System.out.println("Aktion eingeben: ");
 		String name  = in.nextLine ();
-		
-		in.close();
 		
 		return null;
 	}

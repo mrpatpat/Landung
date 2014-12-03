@@ -8,6 +8,7 @@ public class Start {
 		
 		Game g = new Game(GameType.PVP);
 		g.run();
+		Utils.closeScanner();
 
 	}
 
