@@ -105,6 +105,7 @@ public class Game implements Serializable {
 		} while (turnValid == false);
 
 		this.executeAction(a);
+		turn++;
 		board.print();
 	}
 

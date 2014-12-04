@@ -49,28 +49,34 @@ public class Action {
 	 * @return GÃ¼ltigkeit
 	 */
 	public boolean isActionValid(Board board, int turn) {
-		
+
 		Player player = getActor();
-		
-		//Züge 1 bis 4
-		if(turn==0){
-			if(!(this instanceof SetAction)){
+
+		// Züge 1 bis 4
+		if (turn == 0) {
+			if (!(this instanceof SetAction)) {
 				player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
 				return false;
 			}
-		} else if(turn==1){
-			if(!(this instanceof SetAction)){
+		} else if (turn == 1) {
+			if (!(this instanceof SetAction)) {
 				player.notifyUnvalidMove("Im zweiten Zug darf man nur setzen.");
 				return false;
 			}
-		} else if(turn==2){
-			if(!(this instanceof MoveAndSetAction)){
+		} else if (turn == 2) {
+			if (!(this instanceof MoveAndSetAction)) {
 				player.notifyUnvalidMove("Im dritten Zug darf man nur bewegen und setzen.");
 				return false;
 			}
-		} else if(turn==3){
-			if(!((this instanceof SetAction)||(this instanceof MoveAndSetAction))){
+		} else if (turn == 3) {
+			if (!((this instanceof SetAction) || (this instanceof MoveAndSetAction))) {
 				player.notifyUnvalidMove("Im vierten Zug darf man nur setzen oder bewegen und setzen.");
+				return false;
+			}
+		} else {
+			if (!(this instanceof MoveAndSetAction)) {
+				player.notifyUnvalidMove("Im " + (turn + 1)
+						+ ". Zug darf man nur bewegen und setzen.");
 				return false;
 			}
 		}
@@ -83,10 +89,14 @@ public class Action {
 
 		for (Vector<Integer> v : vectors) {
 			if (v != null) {
-				if (v.getX() < 0 || v.getX() >= Board.SIZE)
+				if (v.getX() < 0 || v.getX() >= Board.SIZE) {
+					player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
 					return false;
-				if (v.getY() < 0 || v.getY() >= Board.SIZE)
+				}
+				if (v.getY() < 0 || v.getY() >= Board.SIZE) {
+					player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
 					return false;
+				}
 			}
 		}
 
