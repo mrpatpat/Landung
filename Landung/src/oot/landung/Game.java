@@ -137,7 +137,7 @@ public class Game implements Serializable {
 
 		for (Vector<Integer> v : vectors) {
 			if (v != null) {
-				if (v.getX() < 0 || v.getX() >= Board.SIZE)
+				if (v.getX() < 0 || v.getX() >= Board.SIZE) 
 					return false;
 				if (v.getY() < 0 || v.getY() >= Board.SIZE)
 					return false;
@@ -161,8 +161,9 @@ public class Game implements Serializable {
 				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
 						.getY());
 
+			// du hattest hier moveTo anstatt setTo
 			if (a.getSetTo() != null)
-				moveFrom = board.getStone(a.getSetTo().getX(), a.getSetTo()
+				setTo = board.getStone(a.getSetTo().getX(), a.getSetTo()
 						.getY());
 			
 			// Spieler darf nur eigene Steine bewegen
@@ -172,11 +173,11 @@ public class Game implements Serializable {
 			// Spieler darf nur auf leere Felder setzen TODO:falsch
 			if (a.getSetTo()!=null&&setTo!=null)
 			return false;
-
+			
 			// Spieler darf nur auf leere Felder ziehen
 			if (a.getMoveTo()!=null&&moveTo!=null)
 				return false;
-
+			
 		}
 
 		return true;
