@@ -53,7 +53,7 @@ public class Action {
 		Player player = getActor();
 		
 		
-		if(sudo==false){
+		if(!sudo){
 		// Züge 1 bis 4
 		if (turn == 0 || turn == 1) {
 			if (!(this instanceof SetAction)) {
