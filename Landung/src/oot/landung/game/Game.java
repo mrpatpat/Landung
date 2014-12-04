@@ -157,11 +157,9 @@ public class Game implements Serializable {
 				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
 						.getY());
 
-			// du hattest hier moveTo anstatt setTo
 			if (a.getSetTo() != null) {
 				setTo = board
 						.getStone(a.getSetTo().getX(), a.getSetTo().getY());
-				player.notifyUnvalidMove("???");
 			}
 
 			// Spieler darf nur eigene Steine bewegen
