@@ -53,24 +53,19 @@ public class Action {
 		Player player = getActor();
 
 		// Züge 1 bis 4
-		if (turn == 0) {
+		if (turn == 0 || turn == 1) {
 			if (!(this instanceof SetAction)) {
 				player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
 				return false;
-			}
-		} else if (turn == 1) {
-			if (!(this instanceof SetAction)) {
-				player.notifyUnvalidMove("Im zweiten Zug darf man nur setzen.");
-				return false;
-			}
+			}	
 		} else if (turn == 2) {
 			if (!(this instanceof MoveAndSetAction)) {
-				player.notifyUnvalidMove("Im dritten Zug darf man nur bewegen und setzen.");
+				player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
 				return false;
 			}
 		} else if (turn == 3) {
 			if (!((this instanceof SetAction) || (this instanceof MoveAndSetAction))) {
-				player.notifyUnvalidMove("Im vierten Zug darf man nur setzen oder bewegen und setzen.");
+				player.notifyUnvalidMove("Im diesem Zug darf man nur setzen oder bewegen und setzen.");
 				return false;
 			}
 		} else {
