@@ -51,24 +51,18 @@ public class Action {
 	public boolean isActionValid(Board board, int turn) {
 
 		Player player = getActor();
-
-		if (!sudo) {
-			// Züge 1 bis 4
-			if (turn == 0 || turn == 1) {
-				if (!(this instanceof SetAction)) {
-					player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
-					return false;
-				}
-			} else if (turn == 2 || turn > 3) {
-				if (!(this instanceof MoveAndSetAction)) {
-					player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
-					return false;
-				}
-			} else if (turn == 3) {
-				if (!((this instanceof SetAction) || (this instanceof MoveAndSetAction))) {
-					player.notifyUnvalidMove("Im diesem Zug darf man nur setzen oder bewegen und setzen.");
-					return false;
-				}
+				
+		if(!sudo){
+		// Züge 1 bis 4
+		if (turn == 0 || turn == 1) {
+			if (!(this instanceof SetAction)) {
+				player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
+				return false;
+			}	
+		} else if (turn == 2 || turn > 3) {
+			if (!(this instanceof MoveAndSetAction)) {
+				player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
+				return false;
 			}
 		}
 
