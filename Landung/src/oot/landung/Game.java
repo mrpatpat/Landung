@@ -169,10 +169,12 @@ public class Game implements Serializable {
 			// Spieler darf nur eigene Steine bewegen
 			if (moveFrom!=null&&moveFrom.getOwner() != player)
 				return false;
-
-			// Spieler darf nur auf leere Felder setzen TODO:falsch
-			if (a.getSetTo()!=null&&setTo!=null)
+			
+			
+			// Spieler darf nur auf leere Felder setzen 
+			if (setTo != null)
 			return false;
+			
 			
 			// Spieler darf nur auf leere Felder ziehen
 			if (a.getMoveTo()!=null&&moveTo!=null)

@@ -30,7 +30,7 @@ public class HumanPlayer extends Player {
 
 		Scanner in = Utils.getScanner();
 		
-		System.out.println("\n" + getName()+ " ist am Zug:");
+		System.out.println("\n" + this.getName()+ " ist am Zug ("+ this.getSymbol() +"):");
 		System.out.println("[setze nach] -> a0");
 		System.out.println("[ziehe von][ziehe nach][setze nach] -> a0 d0 e0");
 		
