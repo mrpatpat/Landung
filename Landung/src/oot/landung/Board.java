@@ -41,7 +41,10 @@ public class Board {
 	public void print() {
 
 		String format = " %-2s|%-3s|%-3s|%-3s|%-3s|%-3s|%n";
-
+		
+		// Leerzeile damit es schöner aussieht 
+		System.out.println();
+		
 		System.out.printf("   | A | B | C | D | E |%n");
 		System.out.printf("---+---+---+---+---+---+%n");
 
