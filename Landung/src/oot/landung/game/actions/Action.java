@@ -1,19 +1,23 @@
 package oot.landung.game.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import oot.landung.game.board.Board;
+import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
-
-
 public class Action {
-	
+
 	private final Player actor;
 	private final Vector<Integer> moveFrom;
 	private final Vector<Integer> moveTo;
 	private final Vector<Integer> setTo;
 	private final boolean sudo;
-	
-	public Action(boolean sudo,Player actor,Vector<Integer> moveFrom, Vector<Integer> moveTo, Vector<Integer> setTo){
+
+	public Action(boolean sudo, Player actor, Vector<Integer> moveFrom,
+			Vector<Integer> moveTo, Vector<Integer> setTo) {
 		this.actor = actor;
 		this.moveFrom = moveFrom;
 		this.moveTo = moveTo;
@@ -36,13 +40,79 @@ public class Action {
 	public Vector<Integer> getSetTo() {
 		return setTo;
 	}
-	
-	public String toString(){
+
+	/**
+	 * prüft ob eine Aktion gültig ist
+	 * 
+	 * @param a
+	 *            Aktion
+	 * @return Gültigkeit
+	 */
+	public boolean isActionValid(Board board) {
+
+		// Spielfeldgrenzen
+		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
+		vectors.add(getMoveFrom());
+		vectors.add(getMoveTo());
+		vectors.add(getSetTo());
+
+		for (Vector<Integer> v : vectors) {
+			if (v != null) {
+				if (v.getX() < 0 || v.getX() >= Board.SIZE)
+					return false;
+				if (v.getY() < 0 || v.getY() >= Board.SIZE)
+					return false;
+			}
+		}
+
+		// Regeln, durch sudo umgehbar
+		if (!getSudo()) {
+
+			Player player = getActor();
+			Stone moveFrom = null;
+			Stone moveTo = null;
+			Stone setTo = null;
+
+			if (getMoveFrom() != null)
+				moveFrom = board.getStone(getMoveFrom().getX(), getMoveFrom()
+						.getY());
+
+			if (getMoveTo() != null)
+				moveTo = board.getStone(getMoveTo().getX(), getMoveTo().getY());
+
+			if (getSetTo() != null) {
+				setTo = board.getStone(getSetTo().getX(), getSetTo().getY());
+			}
+
+			// Spieler darf nur eigene Steine bewegen
+			if (moveFrom != null && moveFrom.getOwner() != player) {
+				player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+				return false;
+			}
+
+			// Spieler darf nur auf leere Felder setzen
+			if (setTo != null) {
+				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				return false;
+			}
+
+			// Spieler darf nur auf leere Felder ziehen
+			if (getMoveTo() != null && moveTo != null) {
+				player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public String toString() {
 		String s = "";
-		s+=actor.getName()+";";
-		s+=moveFrom+"->";
-		s+=moveTo+";set:";
-		s+=setTo+";";
+		s += actor.getName() + ";";
+		s += moveFrom + "->";
+		s += moveTo + ";set:";
+		s += setTo + ";";
 		return s;
 	}
 

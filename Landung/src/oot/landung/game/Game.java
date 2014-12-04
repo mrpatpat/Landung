@@ -99,7 +99,7 @@ public class Game implements Serializable {
 		boolean turnValid = false;
 		do {
 			a = p.askforAction();
-			if (this.isActionValid(a)) {
+			if (a.isActionValid(board)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
@@ -115,74 +115,6 @@ public class Game implements Serializable {
 	 */
 	public Player getWinner() {
 		return null;
-	}
-
-	/**
-	 * prüft ob eine Aktion gültig ist
-	 * 
-	 * @param a
-	 *            Aktion
-	 * @return Gültigkeit
-	 */
-	public boolean isActionValid(Action a) {
-
-		// Spielfeldgrenzen
-		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
-		vectors.add(a.getMoveFrom());
-		vectors.add(a.getMoveTo());
-		vectors.add(a.getSetTo());
-
-		for (Vector<Integer> v : vectors) {
-			if (v != null) {
-				if (v.getX() < 0 || v.getX() >= Board.SIZE)
-					return false;
-				if (v.getY() < 0 || v.getY() >= Board.SIZE)
-					return false;
-			}
-		}
-
-		// Regeln, durch sudo umgehbar
-		if (!a.getSudo()) {
-
-			Player player = a.getActor();
-			Stone moveFrom = null;
-			Stone moveTo = null;
-			Stone setTo = null;
-
-			if (a.getMoveFrom() != null)
-				moveFrom = board.getStone(a.getMoveFrom().getX(), a
-						.getMoveFrom().getY());
-
-			if (a.getMoveTo() != null)
-				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
-						.getY());
-
-			if (a.getSetTo() != null) {
-				setTo = board
-						.getStone(a.getSetTo().getX(), a.getSetTo().getY());
-			}
-
-			// Spieler darf nur eigene Steine bewegen
-			if (moveFrom != null && moveFrom.getOwner() != player) {
-				player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
-				return false;
-			}
-
-			// Spieler darf nur auf leere Felder setzen
-			if (setTo != null) {
-				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
-				return false;
-			}
-
-			// Spieler darf nur auf leere Felder ziehen
-			if (a.getMoveTo() != null && moveTo != null) {
-				player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
-				return false;
-			}
-
-		}
-
-		return true;
 	}
 
 	/**
