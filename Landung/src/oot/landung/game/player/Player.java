@@ -14,13 +14,16 @@ public abstract class Player {
 	
 	private String symbol;
 	
+	private int playerID;
+	
 	
 	
 	
 	
 	public Player(int n){
 		
-		symbol = n==0 ? "X":"O";
+		this.playerID = n;
+		symbol = n==1 ? "X":"O";
 		this.name = askforName();
 		
 	}
@@ -38,6 +41,9 @@ public abstract class Player {
 	}
 
 
+	public int getPlayerID() {
+		return this.playerID;
+	}
 
 
 
@@ -70,5 +76,6 @@ public abstract class Player {
 	public abstract String askforName();
 	
 	public abstract Action askforAction();
-
+	
+	public abstract void notifyUnvalidMove(String message);
 }

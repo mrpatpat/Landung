@@ -9,6 +9,7 @@ import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
+import oot.landung.game.utils.Vector;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -62,8 +63,8 @@ public class Game implements Serializable {
 		player = new Player[Game.PLAYERS];
 
 		if (type == GameType.PVP) {
-			player[0] = new HumanPlayer(0);
-			player[1] = new HumanPlayer(1);
+			player[0] = new HumanPlayer(1);
+			player[1] = new HumanPlayer(2);
 		}
 
 		// init board
@@ -95,9 +96,13 @@ public class Game implements Serializable {
 
 	private void runPlayerTurn(Player p) {
 		Action a;
+		boolean turnValid = false;
 		do {
 			a = p.askforAction();
-		} while (!this.isActionValid(a));
+			if (this.isActionValid(a)) {
+				turnValid = true;
+			}
+		} while (turnValid == false);
 
 		this.executeAction(a);
 		board.print();
@@ -121,54 +126,63 @@ public class Game implements Serializable {
 	 */
 	public boolean isActionValid(Action a) {
 
-//		// Spielfeldgrenzen
-//		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
-//		vectors.add(a.getMoveFrom());
-//		vectors.add(a.getMoveTo());
-//		vectors.add(a.getSetTo());
-//
-//		for (Vector<Integer> v : vectors) {
-//			if (v != null) {
-//				if (v.getX() < 0 || v.getX() >= Board.SIZE)
-//					return false;
-//				if (v.getY() < 0 || v.getY() >= Board.SIZE)
-//					return false;
-//			}
-//		}
-//
-//		// Regeln, durch sudo umgehbar
-//		if (!a.getSudo()) {
-//
-//			Player player = a.getActor();
-//			Stone moveFrom = null;
-//			Stone moveTo = null;
-//			Stone setTo = null;
-//
-//			if (a.getMoveFrom() != null)
-//				moveFrom = board.getStone(a.getMoveFrom().getX(), a
-//						.getMoveFrom().getY());
-//
-//			if (a.getMoveTo() != null)
-//				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
-//						.getY());
-//
-//			if (a.getSetTo() != null)
-//				moveFrom = board.getStone(a.getSetTo().getX(), a.getSetTo()
-//						.getY());
-//			
-//			// Spieler darf nur eigene Steine bewegen
-//			if (moveFrom!=null&&moveFrom.getOwner() != player)
-//				return false;
-//
-//			// Spieler darf nur auf leere Felder setzen TODO:falsch
-//			if (a.getSetTo()!=null&&setTo!=null)
-//				return false;
-//
-//			// Spieler darf nur auf leere Felder ziehen
-//			if (a.getMoveTo()!=null&&moveTo!=null)
-//				return false;
-//
-//		}
+		// Spielfeldgrenzen
+		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
+		vectors.add(a.getMoveFrom());
+		vectors.add(a.getMoveTo());
+		vectors.add(a.getSetTo());
+
+		for (Vector<Integer> v : vectors) {
+			if (v != null) {
+				if (v.getX() < 0 || v.getX() >= Board.SIZE)
+					return false;
+				if (v.getY() < 0 || v.getY() >= Board.SIZE)
+					return false;
+			}
+		}
+
+		// Regeln, durch sudo umgehbar
+		if (!a.getSudo()) {
+
+			Player player = a.getActor();
+			Stone moveFrom = null;
+			Stone moveTo = null;
+			Stone setTo = null;
+
+			if (a.getMoveFrom() != null)
+				moveFrom = board.getStone(a.getMoveFrom().getX(), a
+						.getMoveFrom().getY());
+
+			if (a.getMoveTo() != null)
+				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
+						.getY());
+
+			// du hattest hier moveTo anstatt setTo
+			if (a.getSetTo() != null) {
+				setTo = board
+						.getStone(a.getSetTo().getX(), a.getSetTo().getY());
+				player.notifyUnvalidMove("???");
+			}
+
+			// Spieler darf nur eigene Steine bewegen
+			if (moveFrom != null && moveFrom.getOwner() != player) {
+				player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+				return false;
+			}
+
+			// Spieler darf nur auf leere Felder setzen
+			if (setTo != null) {
+				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				return false;
+			}
+
+			// Spieler darf nur auf leere Felder ziehen
+			if (a.getMoveTo() != null && moveTo != null) {
+				player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+				return false;
+			}
+
+		}
 
 		return true;
 	}

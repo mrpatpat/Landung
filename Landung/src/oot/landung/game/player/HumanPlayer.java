@@ -3,8 +3,6 @@ package oot.landung.game.player;
 import java.util.Scanner;
 
 import oot.landung.game.actions.Action;
-import oot.landung.game.actions.MoveAndSetAction;
-import oot.landung.game.actions.SetAction;
 import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
@@ -21,26 +19,25 @@ public class HumanPlayer extends Player {
 	@Override
 	public String askforName() {
 
-		// Scanner in = Utils.getScanner();
-		//
-		// System.out.println("Geben Sie Ihren Namen ein Spieler "
-		// + this.getSymbol() + ": ");
-		// String name = in.nextLine();
-		//
-		// return name;
+		Scanner in = Utils.getScanner();
 
-		return "z";
+		System.out.println("Geben Sie Ihren Namen ein Spieler " + this.getPlayerID()  +": ");
+		String name = in.nextLine();
 
+		return name;
+		
+		
 	}
 
 	@Override
 	public Action askforAction() {
 
 		Scanner in = Utils.getScanner();
-
+		
+		System.out.println("\n" + this.getName()+ " ist am Zug ("+ this.getSymbol() +"):");
 		System.out.println("[setze nach] -> a0");
 		System.out.println("[ziehe von][ziehe nach][setze nach] -> a0 d0 e0");
-
+		
 		String command = in.nextLine();
 		String[] commands = command.split(" ");
 
@@ -53,11 +50,10 @@ public class HumanPlayer extends Player {
 		}
 
 		if (commands.length == 1 + delta) {
-			return new SetAction(sudo, this,
+			return new Action(sudo, this, null, null,
 					stringToVector(commands[0 + delta]));
-			
 		} else if (commands.length == 3 + delta) {
-			return new MoveAndSetAction(sudo, this, stringToVector(commands[0]),
+			return new Action(sudo, this, stringToVector(commands[0]),
 					stringToVector(commands[1]),
 					stringToVector(commands[2 + delta]));
 		}
@@ -95,5 +91,10 @@ public class HumanPlayer extends Player {
 
 		} else
 			return null;
+	}
+
+	@Override
+	public void notifyUnvalidMove(String message) {
+		System.out.println("Ungültiger Zug: "+ message);
 	}
 }

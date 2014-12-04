@@ -5,7 +5,7 @@ import oot.landung.game.utils.Vector;
 
 
 
-public abstract class Action {
+public class Action {
 	
 	private final Player actor;
 	private final Vector<Integer> moveFrom;
