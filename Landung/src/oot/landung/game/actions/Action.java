@@ -64,7 +64,13 @@ public class Action {
 					player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
 					return false;
 				}
+			} else if (turn == 3) {
+				if (!((this instanceof MoveAndSetAction)||(this instanceof SetAction))) {
+					player.notifyUnvalidMove("In diesem Zug darf man nur setzen oder bewegen und setzen.");
+					return false;
+				}
 			}
+			
 
 			// Spielfeldgrenzen
 			List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
