@@ -1,7 +1,6 @@
 package oot.landung;
 
 import java.util.Scanner;
-import java.util.Vector;
 
 /**
  * Instanz eines Menschlichen Spielers.
@@ -16,13 +15,15 @@ public class HumanPlayer extends Player {
 	@Override
 	public String askforName() {
 
-		Scanner in = Utils.getScanner();
-
-		System.out.println("Geben Sie Ihren Namen ein Spieler "
-				+ this.getSymbol() + ": ");
-		String name = in.nextLine();
-
-		return name;
+//		Scanner in = Utils.getScanner();
+//
+//		System.out.println("Geben Sie Ihren Namen ein Spieler "
+//				+ this.getSymbol() + ": ");
+//		String name = in.nextLine();
+//
+//		return name;
+		
+		return "z";
 
 	}
 
@@ -31,15 +32,27 @@ public class HumanPlayer extends Player {
 
 		Scanner in = Utils.getScanner();
 
-		System.out
-				.println("Geben Sie eine Aktion in der Form [ziehe von][ziehe nach][setze nach]. Beispiel: a0 d0 e0");
+		System.out.println("[setze nach] -> a0");
+		System.out.println("[ziehe von][ziehe nach][setze nach] -> a0 d0 e0");
+		
 		String command = in.nextLine();
 		String[] commands = command.split(" ");
 
-		if (commands.length == 1) {
-			return new Action(this,null,null,stringToVector(commands[0]));
-		} else if (commands.length == 3) {
-			return new Action(this,stringToVector(commands[0]),stringToVector(commands[1]),stringToVector(commands[2]));
+		boolean sudo = false;
+		int delta = 0;
+
+		if (commands[0].equals("sudo")) {
+			sudo = true;
+			delta = 1;
+		}
+
+		if (commands.length == 1 + delta) {
+			return new Action(sudo, this, null, null,
+					stringToVector(commands[0 + delta]));
+		} else if (commands.length == 3 + delta) {
+			return new Action(sudo, this, stringToVector(commands[0]),
+					stringToVector(commands[1]),
+					stringToVector(commands[2 + delta]));
 		}
 
 		return null;

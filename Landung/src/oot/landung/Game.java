@@ -1,6 +1,7 @@
 package oot.landung;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,13 @@ import java.util.List;
  * managed alles was zum Spiel gehört.
  */
 public class Game implements Serializable {
+
+	public static void main(String[] args) {
+
+		Game g = new Game(GameType.PVP);
+		g.run();
+
+	}
 
 	/**
 	 * Spielmodi
@@ -64,9 +72,9 @@ public class Game implements Serializable {
 	 * Spielschleife gibt Sieger zur�ck
 	 */
 	public Player run() {
-		
+
 		do {
-			
+
 			runPlayerTurn(player[0]);
 
 			if (getWinner() == null) {
@@ -99,15 +107,6 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * gibt alle gültigen Aktionen aus
-	 * 
-	 * @return
-	 */
-	public List<Action> getValidActions() {
-		return null;
-	}
-
-	/**
 	 * prüft ob eine Aktion gültig ist
 	 * 
 	 * @param a
@@ -115,20 +114,76 @@ public class Game implements Serializable {
 	 * @return Gültigkeit
 	 */
 	public boolean isActionValid(Action a) {
+
+//		// Spielfeldgrenzen
+//		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
+//		vectors.add(a.getMoveFrom());
+//		vectors.add(a.getMoveTo());
+//		vectors.add(a.getSetTo());
+//
+//		for (Vector<Integer> v : vectors) {
+//			if (v != null) {
+//				if (v.getX() < 0 || v.getX() >= Board.SIZE)
+//					return false;
+//				if (v.getY() < 0 || v.getY() >= Board.SIZE)
+//					return false;
+//			}
+//		}
+//
+//		// Regeln, durch sudo umgehbar
+//		if (!a.getSudo()) {
+//
+//			Player player = a.getActor();
+//			Stone moveFrom = null;
+//			Stone moveTo = null;
+//			Stone setTo = null;
+//
+//			if (a.getMoveFrom() != null)
+//				moveFrom = board.getStone(a.getMoveFrom().getX(), a
+//						.getMoveFrom().getY());
+//
+//			if (a.getMoveTo() != null)
+//				moveTo = board.getStone(a.getMoveTo().getX(), a.getMoveTo()
+//						.getY());
+//
+//			if (a.getSetTo() != null)
+//				moveFrom = board.getStone(a.getSetTo().getX(), a.getSetTo()
+//						.getY());
+//			
+//			// Spieler darf nur eigene Steine bewegen
+//			if (moveFrom!=null&&moveFrom.getOwner() != player)
+//				return false;
+//
+//			// Spieler darf nur auf leere Felder setzen TODO:falsch
+//			if (a.getSetTo()!=null&&setTo!=null)
+//				return false;
+//
+//			// Spieler darf nur auf leere Felder ziehen
+//			if (a.getMoveTo()!=null&&moveTo!=null)
+//				return false;
+//
+//		}
+
 		return true;
 	}
 
 	/**
-	 * Führt eine Aktion aus. Wenn sie ungültig ist, gibt es ein false und sie
-	 * wird nicht ausgeführt
+	 * Führt eine Aktion aus.
 	 * 
 	 * @param a
 	 *            Aktion
-	 * @return Gültigkeit
 	 */
-	public boolean executeAction(Action a) {
-		System.out.println("execute:"+a);
-		return false;
-	}
+	public void executeAction(Action a) {
 
+		// execute move
+		if ((a.getMoveFrom() != null) && (a.getMoveTo() != null))
+			board.moveStone(a.getMoveFrom().getX(), a.getMoveFrom().getY(), a
+					.getMoveTo().getX(), a.getMoveTo().getY());
+
+		// execute set
+		if (a.getSetTo() != null)
+			board.placeStone(a.getSetTo().getX(), a.getSetTo().getY(),
+					new Stone(a.getActor()));
+
+	}
 }

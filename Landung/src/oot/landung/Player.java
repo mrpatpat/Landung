@@ -67,7 +67,6 @@ public abstract class Player {
 
 	public abstract String askforName();
 	
-	
 	public abstract Action askforAction();
 
 }
