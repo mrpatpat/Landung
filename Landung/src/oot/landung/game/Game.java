@@ -99,7 +99,7 @@ public class Game implements Serializable {
 		boolean turnValid = false;
 		do {
 			a = p.askforAction();
-			if (a.isActionValid(board)) {
+			if (a.isActionValid(board,turn)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);

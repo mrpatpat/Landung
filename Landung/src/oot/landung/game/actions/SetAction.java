@@ -11,8 +11,8 @@ public class SetAction extends Action {
 	}
 	
 	@Override
-	public boolean isActionValid(Board board) {
-		return true && super.isActionValid(board);
+	public boolean isActionValid(Board board, int turn) {
+		return true && super.isActionValid(board,turn);
 	}
 
 }
