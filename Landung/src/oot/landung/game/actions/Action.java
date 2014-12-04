@@ -51,78 +51,82 @@ public class Action {
 	public boolean isActionValid(Board board, int turn) {
 
 		Player player = getActor();
-				
-		if(!sudo){
-		// Züge 1 bis 4
-		if (turn == 0 || turn == 1) {
-			if (!(this instanceof SetAction)) {
-				player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
-				return false;
-			}	
-		} else if (turn == 2 || turn > 3) {
-			if (!(this instanceof MoveAndSetAction)) {
-				player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
-				return false;
-			}
-		}
 
-		// Spielfeldgrenzen
-		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
-		vectors.add(getMoveFrom());
-		vectors.add(getMoveTo());
-		vectors.add(getSetTo());
-
-		for (Vector<Integer> v : vectors) {
-			if (v != null) {
-				if (v.getX() < 0 || v.getX() >= Board.SIZE) {
-					player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+		if (!sudo) {
+			// Züge 1 bis 4
+			if (turn == 0 || turn == 1) {
+				if (!(this instanceof SetAction)) {
+					player.notifyUnvalidMove("Im ersten Zug darf man nur setzen.");
 					return false;
 				}
-				if (v.getY() < 0 || v.getY() >= Board.SIZE) {
-					player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+			} else if (turn == 2 || turn > 3) {
+				if (!(this instanceof MoveAndSetAction)) {
+					player.notifyUnvalidMove("Im zweiten Zug darf man nur bewegen und setzen.");
 					return false;
 				}
 			}
+
+			// Spielfeldgrenzen
+			List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
+			vectors.add(getMoveFrom());
+			vectors.add(getMoveTo());
+			vectors.add(getSetTo());
+
+			for (Vector<Integer> v : vectors) {
+				if (v != null) {
+					if (v.getX() < 0 || v.getX() >= Board.SIZE) {
+						player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+						return false;
+					}
+					if (v.getY() < 0 || v.getY() >= Board.SIZE) {
+						player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+						return false;
+					}
+				}
+			}
+
+			// Regeln, durch sudo umgehbar
+			if (!getSudo()) {
+
+				Stone moveFrom = null;
+				Stone moveTo = null;
+				Stone setTo = null;
+
+				if (getMoveFrom() != null)
+					moveFrom = board.getStone(getMoveFrom().getX(),
+							getMoveFrom().getY());
+
+				if (getMoveTo() != null)
+					moveTo = board.getStone(getMoveTo().getX(), getMoveTo()
+							.getY());
+
+				if (getSetTo() != null) {
+					setTo = board
+							.getStone(getSetTo().getX(), getSetTo().getY());
+				}
+
+				// Spieler darf nur eigene Steine bewegen
+				if (moveFrom != null && moveFrom.getOwner() != player) {
+					player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+					return false;
+				}
+
+				// Spieler darf nur auf leere Felder setzen
+				if (setTo != null) {
+					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+					return false;
+				}
+
+				// Spieler darf nur auf leere Felder ziehen
+				if (getMoveTo() != null && moveTo != null) {
+					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+					return false;
+				}
+
+			}
+
+			return true;
 		}
-
-		// Regeln, durch sudo umgehbar
-		if (!getSudo()) {
-
-			Stone moveFrom = null;
-			Stone moveTo = null;
-			Stone setTo = null;
-
-			if (getMoveFrom() != null)
-				moveFrom = board.getStone(getMoveFrom().getX(), getMoveFrom()
-						.getY());
-
-			if (getMoveTo() != null)
-				moveTo = board.getStone(getMoveTo().getX(), getMoveTo().getY());
-
-			if (getSetTo() != null) {
-				setTo = board.getStone(getSetTo().getX(), getSetTo().getY());
-			}
-
-			// Spieler darf nur eigene Steine bewegen
-			if (moveFrom != null && moveFrom.getOwner() != player) {
-				player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
-				return false;
-			}
-
-			// Spieler darf nur auf leere Felder setzen
-			if (setTo != null) {
-				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
-				return false;
-			}
-
-			// Spieler darf nur auf leere Felder ziehen
-			if (getMoveTo() != null && moveTo != null) {
-				player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
-				return false;
-			}
-
-		}
-
 		return true;
 	}
 
