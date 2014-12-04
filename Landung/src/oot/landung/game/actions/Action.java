@@ -96,6 +96,7 @@ public class Action {
 
 				Stone moveFrom = null;
 				Stone moveTo = null;
+				Stone setTo = null;
 
 				if (getMoveFrom() != null)
 					moveFrom = board.getStone(getMoveFrom().getX(),
@@ -105,9 +106,20 @@ public class Action {
 					moveTo = board.getStone(getMoveTo().getX(), getMoveTo()
 							.getY());
 
+				if (getSetTo() != null) {
+					setTo = board
+							.getStone(getSetTo().getX(), getSetTo().getY());
+				}
+
 				// Spieler darf nur eigene Steine bewegen
 				if (moveFrom != null && moveFrom.getOwner() != player) {
 					player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+					return false;
+				}
+
+				// Spieler darf nur auf leere Felder setzen
+				if (setTo != null) {
+					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 					return false;
 				}
 
