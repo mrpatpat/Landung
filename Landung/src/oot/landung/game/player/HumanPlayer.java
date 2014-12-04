@@ -3,6 +3,8 @@ package oot.landung.game.player;
 import java.util.Scanner;
 
 import oot.landung.game.actions.Action;
+import oot.landung.game.actions.MoveAndSetAction;
+import oot.landung.game.actions.SetAction;
 import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
@@ -50,10 +52,9 @@ public class HumanPlayer extends Player {
 		}
 
 		if (commands.length == 1 + delta) {
-			return new Action(sudo, this, null, null,
-					stringToVector(commands[0 + delta]));
+			return new SetAction(sudo, this,stringToVector(commands[0 + delta]));
 		} else if (commands.length == 3 + delta) {
-			return new Action(sudo, this, stringToVector(commands[0]),
+			return new MoveAndSetAction(sudo, this, stringToVector(commands[0]),
 					stringToVector(commands[1]),
 					stringToVector(commands[2 + delta]));
 		}
