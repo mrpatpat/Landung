@@ -56,8 +56,8 @@ public class Game implements Serializable {
 		player = new Player[Game.PLAYERS];
 
 		if (type == GameType.PVP) {
-			player[0] = new HumanPlayer(0);
-			player[1] = new HumanPlayer(1);
+			player[0] = new HumanPlayer(1);
+			player[1] = new HumanPlayer(2);
 		}
 
 		// init board

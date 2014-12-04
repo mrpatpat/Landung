@@ -15,16 +15,14 @@ public class HumanPlayer extends Player {
 	@Override
 	public String askforName() {
 
-//		Scanner in = Utils.getScanner();
-//
-//		System.out.println("Geben Sie Ihren Namen ein Spieler "
-//				+ this.getSymbol() + ": ");
-//		String name = in.nextLine();
-//
-//		return name;
-		
-		return "z";
+		Scanner in = Utils.getScanner();
 
+		System.out.println("Geben Sie Ihren Namen ein Spieler " + this.getPlayerID()  +": ");
+		String name = in.nextLine();
+
+		return name;
+		
+		
 	}
 
 	@Override
