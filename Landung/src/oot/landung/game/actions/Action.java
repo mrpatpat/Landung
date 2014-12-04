@@ -51,7 +51,9 @@ public class Action {
 	public boolean isActionValid(Board board, int turn) {
 
 		Player player = getActor();
-
+		
+		
+		if(sudo==false){
 		// Züge 1 bis 4
 		if (turn == 0 || turn == 1) {
 			if (!(this instanceof SetAction)) {
@@ -69,7 +71,7 @@ public class Action {
 				return false;
 			}
 		} 
-		
+		}
 
 		// Spielfeldgrenzen
 		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
