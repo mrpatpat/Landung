@@ -49,6 +49,12 @@ public class Action {
 	 * @return Gültigkeit
 	 */
 	public boolean isActionValid(Board board) {
+		
+		if(this instanceof SetAction){
+			
+		} else if(this instanceof MoveAndSetAction){
+			
+		}
 
 		// Spielfeldgrenzen
 		List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
