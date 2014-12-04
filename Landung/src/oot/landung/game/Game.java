@@ -97,16 +97,18 @@ public class Game implements Serializable {
 	private void runPlayerTurn(Player p) {
 		Action a;
 		boolean turnValid = false;
+
 		do {
+			board.print();
 			a = p.askforAction();
-			if (a.isActionValid(board,turn)) {
+			if (a.isActionValid(board, turn)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
 
 		this.executeAction(a);
 		turn++;
-		board.print();
+
 	}
 
 	/**
