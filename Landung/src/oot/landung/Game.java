@@ -87,7 +87,7 @@ public class Game implements Serializable {
 		
 	}	
 		
-		
+	// Gibt eine Fehlermeldung aus
 	private void printUnvalidTurn(){
 		System.out.println("\nDieser Zug ist nicht erlaubt bitte geben Sie erneut einen Zug ein!");
 	}
@@ -151,6 +151,7 @@ public class Game implements Serializable {
 			Stone moveFrom = null;
 			Stone moveTo = null;
 			Stone setTo = null;
+			
 
 			if (a.getMoveFrom() != null)
 				moveFrom = board.getStone(a.getMoveFrom().getX(), a
