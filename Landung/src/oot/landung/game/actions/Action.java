@@ -65,12 +65,11 @@ public class Action {
 					return false;
 				}
 			} else if (turn == 3) {
-				if (!((this instanceof MoveAndSetAction)||(this instanceof SetAction))) {
+				if (!((this instanceof MoveAndSetAction) || (this instanceof SetAction))) {
 					player.notifyUnvalidMove("In diesem Zug darf man nur setzen oder bewegen und setzen.");
 					return false;
 				}
 			}
-			
 
 			// Spielfeldgrenzen
 			List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
@@ -127,6 +126,39 @@ public class Action {
 				if (getMoveTo() != null && moveTo != null) {
 					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
 					return false;
+				}
+
+				// TODO: implementierung schlägt noch fehl
+				// Spieler darf nur gerade / diagonal ziehen
+				if (moveFrom != null && moveTo != null && setTo == null) {
+					// 3-4 Felder nach oben oder nach unten, nach rechts oder
+					// links ziehen
+					// TODO: Diagonal
+					if
+					// nach oben
+					((getMoveFrom().getX() - 3 == getMoveTo().getX() && getMoveFrom()
+							.getY() == getMoveTo().getY())
+							|| (getMoveFrom().getX() - 4 == getMoveTo().getX() && getMoveFrom()
+									.getY() == getMoveTo().getY())
+							// nach unten
+							|| (getMoveFrom().getX() + 3 == getMoveTo().getX() && getMoveFrom()
+									.getY() == getMoveTo().getY())
+							|| (getMoveFrom().getX() + 4 == getMoveTo().getX() && getMoveFrom()
+									.getY() == getMoveTo().getY())
+							// nach links
+							|| (getMoveFrom().getY() - 3 == getMoveTo().getY() && getMoveFrom()
+									.getX() == getMoveTo().getX())
+							|| (getMoveFrom().getY() - 4 == getMoveTo().getY() && getMoveFrom()
+									.getX() == getMoveTo().getX())
+							// nach rechts
+							|| (getMoveFrom().getY() + 3 == getMoveTo().getY() && getMoveFrom()
+									.getX() == getMoveTo().getX())
+							|| (getMoveFrom().getY() + 4 == getMoveTo().getY() && getMoveFrom()
+									.getX() == getMoveTo().getX())) {
+						// TODO: diagonal 4 richtungen
+						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen");
+						return false;
+					}
 				}
 
 			}
