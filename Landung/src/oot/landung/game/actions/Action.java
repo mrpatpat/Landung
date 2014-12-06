@@ -128,51 +128,53 @@ public class Action {
 					return false;
 				}
 
-				boolean rightMove = false;
-				// valid move combinations (X,Y)
-				int[][] validMoveCombination = { { 0, +3 }, { 0, +4 },
-						{ +3, 0 }, { +4, 0 }, { 0, -3 }, { 0, -4 }, { -3, 0 },
-						{ -4, 0 }, { +3, +3 }, { +4, +4 }, { +3, -3 },
-						{ +4, -4 }, { -3, -3 }, { -4, -4 }, { -3, +3 },
-						{ -4, +4 } };
-				// Spieler darf nur gerade / diagonal 3-4 Felder ziehen
-				if (getMoveFrom() != null && getMoveTo() != null) {
-					rightMove = false;
-					// checks the move through validMoveCombination
+				boolean validSet = false;
+				boolean validMove = false;
+				// erlaubte moves in kombination mit ihren erlaubten setzmustern
+				// (X,Y,setX,setY)
+				int[][] validMoveCombination = { { 0, +3, 0, -1 },
+						{ 0, +4, 0, -1 }, { +3, 0, -1, 0 }, { +4, 0, -1, 0 },
+						{ 0, -3, 0, +1 }, { 0, -4, 0, +1 }, { -3, 0, +1, 0 },
+						{ -4, 0, +1, 0 }, { +3, +3, -1, -1 },
+						{ +4, +4, -1, -1 }, { +3, -3, -1, +1 },
+						{ +4, -4, -1, +1 }, { -3, -3, +1, +1 },
+						{ -4, -4, +1, +1 }, { -3, +3, +1, -1 },
+						{ -4, +4, +1, -1 } };
+				// Spieler darf nur gerade / diagonal 3-4 Felder ziehen und den
+				// Stein direkt dahinter setzen!
+				if (getMoveFrom() != null && getMoveTo() != null
+						&& getSetTo() != null) {
+					validMove = false;
+					validSet = false;
+					// checks the move through valid Move+Set-Combination
 					for (int i = 0; i < validMoveCombination.length; i++) {
+						//is the move valid?
 						if ((getMoveFrom().getX() + validMoveCombination[i][0]) == getMoveTo()
 								.getX()
 								&& ((getMoveFrom().getY() + validMoveCombination[i][1]) == getMoveTo()
 										.getY())) {
-							rightMove = true;
-
+							validMove = true;
+							//if move is valid -> is the set valid?
+							if (((getMoveTo().getX() + validMoveCombination[i][2]) == getSetTo()
+									.getX())
+									&& ((getMoveTo().getY() + validMoveCombination[i][3]) == getSetTo()
+											.getY())) {
+								validSet = true;
+							}
 						}
 					}
 
-					if (!rightMove) {
+					if (!validMove) {
 						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen (3-4 Felder)");
+						return false;
+					} else if (!validSet) {
+						player.notifyUnvalidMove("Stein darf nur 1 Feld hinter gezogenem Stein gesetzt werden!");
 						return false;
 					}
 				}
-
-				boolean rightSet = false;
-				// es darf nur hinter dem gezogenen Stein gesetzt werden
-				// es wäre nicht schlecht, wenn die zugrichtung beim vorherigen
-				// regeltest schon überprüft werden würde, dann wäre die regel
-				// hier ziemlich simple ->muss noch
-				// implementiert werden
-
-				if (getMoveFrom() != null && getMoveTo() != null
-						&& getSetTo() != null) {
-					// zug war nach rechts
-					if (((getMoveFrom().getX() - getMoveTo().getX()) < 0)
-							&& (getMoveFrom().getY() == getMoveTo().getY())) {
-						// TODO:regel noch fertigstellen
-					}
-				}
-
-				// TODO: es dürfen keine steine beim ziehen übersprungen werden!
 			}
+
+			// TODO: es dürfen keine steine beim ziehen übersprungen werden!
 
 			return true;
 		}
