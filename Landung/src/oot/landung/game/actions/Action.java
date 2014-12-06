@@ -130,42 +130,63 @@ public class Action {
 
 				boolean validSet = false;
 				boolean validMove = false;
-				// erlaubte moves in kombination mit ihren erlaubten setzmustern
-				// (X,Y,setX,setY)
-				int[][] validMoveCombination = { { 0, +3, 0, -1 },
-						{ 0, +4, 0, -1 }, { +3, 0, -1, 0 }, { +4, 0, -1, 0 },
-						{ 0, -3, 0, +1 }, { 0, -4, 0, +1 }, { -3, 0, +1, 0 },
-						{ -4, 0, +1, 0 }, { +3, +3, -1, -1 },
-						{ +4, +4, -1, -1 }, { +3, -3, -1, +1 },
-						{ +4, -4, -1, +1 }, { -3, -3, +1, +1 },
-						{ -4, -4, +1, +1 }, { -3, +3, +1, -1 },
-						{ -4, +4, +1, -1 } };
+				boolean validPath = false;
+				// erlaubtes Bewegungsmuster [0]X und [1]Y + erlaubtes
+				// Setztmuster [2]X und [3]Y + Bewegungsablauf für das Muster
+				// [4]X und [5]Y
+				// (X,Y,setX,setY,pathX,pathY)
+				int[][] validMoveCombination = { { 0, +3, 0, -1, 0, +1 },
+						{ 0, +4, 0, -1, 0, +1 }, { +3, 0, -1, 0, +1, 0 },
+						{ +4, 0, -1, 0, +1, 0 }, { 0, -3, 0, +1, 0, -1 },
+						{ 0, -4, 0, +1, 0, -1 }, { -3, 0, +1, 0, -1, 0 },
+						{ -4, 0, +1, 0, -1, 0 }, { +3, +3, -1, -1, +1, +1 },
+						{ +4, +4, -1, -1, +1, +1 }, { +3, -3, -1, +1, +1, -1 },
+						{ +4, -4, -1, +1, +1, -1 }, { -3, -3, +1, +1, -1, -1 },
+						{ -4, -4, +1, +1, -1, -1 }, { -3, +3, +1, -1, -1, +1 },
+						{ -4, +4, +1, -1, -1, +1 } };
 				// Spieler darf nur gerade / diagonal 3-4 Felder ziehen und den
 				// Stein direkt dahinter setzen!
 				if (getMoveFrom() != null && getMoveTo() != null
 						&& getSetTo() != null) {
 					validMove = false;
 					validSet = false;
+					validPath = true;
 					// checks the move through valid Move+Set-Combination
 					for (int i = 0; i < validMoveCombination.length; i++) {
-						//is the move valid?
+						// is the move valid?
 						if ((getMoveFrom().getX() + validMoveCombination[i][0]) == getMoveTo()
 								.getX()
 								&& ((getMoveFrom().getY() + validMoveCombination[i][1]) == getMoveTo()
 										.getY())) {
 							validMove = true;
-							//if move is valid -> is the set valid?
+							// if move is valid -> is the path valid?
+							int pathX = getMoveFrom().getX(), pathY = getMoveFrom()
+									.getY();
+							do {
+								pathX += validMoveCombination[i][4];
+								pathY += validMoveCombination[i][5];
+								if (board.getStone(pathX, pathY) != null) {
+									validPath = false;
+								}
+							} while ((pathX != getMoveTo().getX())
+									&& (pathY != getMoveTo().getY()));
+						} else {
+							// if move and path is valid -> is the set valid?
 							if (((getMoveTo().getX() + validMoveCombination[i][2]) == getSetTo()
 									.getX())
 									&& ((getMoveTo().getY() + validMoveCombination[i][3]) == getSetTo()
 											.getY())) {
 								validSet = true;
 							}
+
 						}
 					}
 
 					if (!validMove) {
 						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen (3-4 Felder)");
+						return false;
+					} else if (!validPath) {
+						player.notifyUnvalidMove("Der gewählte Pfad wird von einem Spielstein blockiert!");
 						return false;
 					} else if (!validSet) {
 						player.notifyUnvalidMove("Stein darf nur 1 Feld hinter gezogenem Stein gesetzt werden!");
