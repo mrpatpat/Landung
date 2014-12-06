@@ -195,7 +195,6 @@ public class Action {
 				}
 			}
 
-			// TODO: es dürfen keine steine beim ziehen übersprungen werden!
 
 			return true;
 		}
