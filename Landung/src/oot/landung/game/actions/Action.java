@@ -128,39 +128,33 @@ public class Action {
 					return false;
 				}
 
-				// TODO: implementierung schlägt noch fehl
-				// Spieler darf nur gerade / diagonal ziehen
-				if (moveFrom != null && moveTo != null && setTo == null) {
-					// 3-4 Felder nach oben oder nach unten, nach rechts oder
-					// links ziehen
-					// TODO: Diagonal
-					if
-					// nach oben
-					((getMoveFrom().getX() - 3 == getMoveTo().getX() && getMoveFrom()
-							.getY() == getMoveTo().getY())
-							|| (getMoveFrom().getX() - 4 == getMoveTo().getX() && getMoveFrom()
-									.getY() == getMoveTo().getY())
-							// nach unten
-							|| (getMoveFrom().getX() + 3 == getMoveTo().getX() && getMoveFrom()
-									.getY() == getMoveTo().getY())
-							|| (getMoveFrom().getX() + 4 == getMoveTo().getX() && getMoveFrom()
-									.getY() == getMoveTo().getY())
-							// nach links
-							|| (getMoveFrom().getY() - 3 == getMoveTo().getY() && getMoveFrom()
-									.getX() == getMoveTo().getX())
-							|| (getMoveFrom().getY() - 4 == getMoveTo().getY() && getMoveFrom()
-									.getX() == getMoveTo().getX())
-							// nach rechts
-							|| (getMoveFrom().getY() + 3 == getMoveTo().getY() && getMoveFrom()
-									.getX() == getMoveTo().getX())
-							|| (getMoveFrom().getY() + 4 == getMoveTo().getY() && getMoveFrom()
-									.getX() == getMoveTo().getX())) {
-						// TODO: diagonal 4 richtungen
-						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen");
+				boolean rightMove = false;
+				// valid move combinations (X,Y)
+				int[][] validMoveCombination = { { 0, +3 }, { 0, +4 },
+						{ +3, 0 }, { +4, 0 }, { 0, -3 }, { 0, -4 }, { -3, 0 },
+						{ -4, 0 }, { +3, +3 }, { +4, +4 }, { +3, -3 },
+						{ +4, -4 }, { -3, -3 }, { -4, -4 }, { -3, +3 },
+						{ -4, +4 } };
+				// Spieler darf nur gerade / diagonal 3-4 Felder ziehen
+				if (getMoveFrom() != null && getMoveTo() != null) {
+					rightMove = false;
+					//checks the move through validMoveCombination
+					for (int i = 0; i < validMoveCombination.length; i++) {
+						if ((getMoveFrom().getX() + validMoveCombination[i][0]) == getMoveTo()
+								.getX()
+								&& ((getMoveFrom().getY() + validMoveCombination[i][1]) == getMoveTo()
+										.getY()))
+							rightMove = true;
+					}
+
+					if (!rightMove) {
+						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen (3-4 Felder)");
 						return false;
 					}
 				}
 
+				// TODO: es darf nur hinter dem gezogenen stein gesetzt werden
+				// TODO: es dürfen keine steine beim ziehen übersprungen werden!
 			}
 
 			return true;
