@@ -76,8 +76,7 @@ public class MoveAndSetAction extends Action {
 
 			// nur in die Richtungen horizontal, vertikal, diagonal ziehen und
 			// mindestens 2 Felder weiter.
-			if (getMoveTo() != null && getMoveFrom() != null
-					&& getSetTo() != null) {
+			if (getMoveTo() != null && getMoveFrom() != null) {
 
 				boolean isHorizontal = getMoveFrom().getY() == getMoveTo()
 						.getY();
@@ -87,7 +86,9 @@ public class MoveAndSetAction extends Action {
 						- getMoveTo().getY());
 
 				int delta = 0;
-
+				
+				System.out.println(isHorizontal + " " + isVertical + " " + isDiagonal);
+				
 				if (isHorizontal) {
 
 					delta = Math.abs(getMoveFrom().getX() - getMoveTo().getX());

@@ -1,8 +1,10 @@
 package oot.landung.game.player;
 
 import oot.landung.game.actions.Action;
+import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
+import oot.landung.game.utils.Vector;
 
 /**
  * Das ist unsere abstrakte Spielerklasse. Sie ist abstrakt, da wir verschiedene
@@ -122,5 +124,29 @@ public abstract class Player {
 	public abstract void notifyUnvalidMove(String message);
 
 	public abstract RemoveAction askforRemoveAction(Board board);
+	
+	public boolean hasValidActions(Board board){
+		
+		for(int i=0;i<Board.SIZE;i++){
+			for(int j=0;j<Board.SIZE;j++){
+				
+				for(int k=0;k<Board.SIZE;k++){
+					for(int l=0;l<Board.SIZE;l++){
+						
+						MoveAndSetAction a = new MoveAndSetAction(false, this, new Vector<Integer>(i,j),new Vector<Integer>(k,l));
+						
+						if(a.isActionValid(board, 5)){
+							return true;
+						}
+						
+					}
+				}
+				
+			}
+		}
+		
+		return false;
+		
+	}
 
 }

@@ -7,7 +7,6 @@ import oot.landung.game.utils.Vector;
 
 public class RemoveAction extends Action {
 
-
 	public RemoveAction(boolean sudo, Player actor, Vector<Integer> removeFrom) {
 		super(sudo, actor, removeFrom, null, null);
 	}
@@ -29,22 +28,26 @@ public class RemoveAction extends Action {
 				removeFrom = board.getStone(getMoveFrom().getX(), getMoveFrom()
 						.getY());
 
-			// Spieler darf nur eigene Steine bewegen
-			if (removeFrom != null &&removeFrom.getOwner() != player) {
+			// Spieler darf nur eigene Steine entfernen
+			if (removeFrom != null && removeFrom.getOwner() != player) {
 				player.notifyUnvalidMove("Man darf nur eigene Steine entfernen.");
 				return false;
 			}
 
+			// Man darf nur Steine entfernen die existieren
+			if (removeFrom == null)
+				return false;
+
 		}
-		
+
 		return true;
 
 	}
-	
+
 	public void execute(Board board) {
 
 		if ((getMoveFrom() != null))
-			board.removeStone(getMoveFrom().getX(),getMoveFrom().getY());
+			board.removeStone(getMoveFrom().getX(), getMoveFrom().getY());
 
 	}
 

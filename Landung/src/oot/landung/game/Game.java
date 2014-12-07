@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.PVP);
+		Game g = new Game(GameType.PVE_NOOB);
 		g.run();
 
 	}
@@ -34,7 +34,7 @@ public class Game implements Serializable {
 	 * Spielmodi
 	 */
 	public enum GameType {
-		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP;
+		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP, RANDOM;
 	}
 
 	/**
@@ -67,8 +67,15 @@ public class Game implements Serializable {
 
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
+			player[1] = new HumanPlayer(2);
+		} else if (type == GameType.PVE_NOOB) {
+			player[0] = new HumanPlayer(1);
+			player[1] = new RandomAiPlayer(2);
+		} else if (type == GameType.RANDOM) {
+			player[0] = new RandomAiPlayer(1);
 			player[1] = new RandomAiPlayer(2);
 		}
+		
 
 		// init board
 		board = new Board();
@@ -82,18 +89,27 @@ public class Game implements Serializable {
 	 * Spielschleife gibt Sieger zurück
 	 */
 	public Player run() {
+		
+		Player w = null;
 
 		do {
 
 			runPlayerTurn(player[0]);
 
-			if (getWinner() == null) {
+			if(!player[1].hasValidActions(board)){
+				w = player[0];
+			}
+			
+			if (w == null) {
 				runPlayerTurn(player[1]);
+				
+				if(!player[0].hasValidActions(board)){
+					w = player[1];
+				}
+				
 			}
 
-		} while (getWinner() == null);
-
-		Player w = getWinner();
+		} while (w == null);	
 		
 		board.print();
 		
@@ -106,7 +122,6 @@ public class Game implements Serializable {
 	private void runPlayerTurn(Player p) {
 		Action a;
 		boolean turnValid = false;
-
 		do {
 			board.print();
 			a = p.askforAction(turn);
@@ -117,7 +132,7 @@ public class Game implements Serializable {
 
 		a.execute(board);
 		
-		if(p.getStones()>0){
+		if(p.getStones()>=0){
 			p.removeStone();
 		} else {
 			
