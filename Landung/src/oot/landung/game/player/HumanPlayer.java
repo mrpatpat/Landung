@@ -43,7 +43,7 @@ public class HumanPlayer extends Player {
 	 * dabei erlaubt eine Hilfe aufzurufen.
 	 */
 	@Override
-	public Action askforAction() {
+	public Action askforAction(int turn) {
 
 		Scanner in = Utils.getScanner();
 
@@ -56,7 +56,7 @@ public class HumanPlayer extends Player {
 		if (command.contains("hilfe")) {
 
 			printHelp();
-			return askforAction();
+			return askforAction(turn);
 
 		} else {
 

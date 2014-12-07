@@ -1,15 +1,13 @@
 package oot.landung.game;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.game.utils.Vector;
+import oot.landung.game.player.RandomAiPlayer;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -68,7 +66,7 @@ public class Game implements Serializable {
 
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
-			player[1] = new HumanPlayer(2);
+			player[1] = new RandomAiPlayer(2);
 		}
 
 		// init board
@@ -110,7 +108,7 @@ public class Game implements Serializable {
 
 		do {
 			board.print();
-			a = p.askforAction();
+			a = p.askforAction(turn);
 			if (a.isActionValid(board, turn)) {
 				turnValid = true;
 			}

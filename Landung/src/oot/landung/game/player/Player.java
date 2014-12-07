@@ -108,9 +108,10 @@ public abstract class Player {
 
 	/**
 	 * Fordert eine Aktion vom Spieler.
+	 * @param turn aktueller Zug
 	 * @return Aktion
 	 */
-	public abstract Action askforAction();
+	public abstract Action askforAction(int turn);
 
 	/**
 	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausführen möchte.
