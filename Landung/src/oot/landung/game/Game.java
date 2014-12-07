@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.RANDOM);
+		Game g = new Game(GameType.PVP);
 		g.run();
 
 	}

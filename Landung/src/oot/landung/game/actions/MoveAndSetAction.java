@@ -107,6 +107,17 @@ public class MoveAndSetAction extends Action {
 
 					delta = Math.abs(getMoveFrom().getX() - getMoveTo().getX());
 
+					int start = getMoveFrom().getX();
+					int end = getMoveTo().getX();
+					int step = (int) Math.signum(getMoveTo().getX()
+							- getMoveFrom().getX());
+
+					for (int i = start; i < end; i += step) {
+						Stone temp = board.getStone(i, getMoveFrom().getY());
+						if (temp != null)
+							return false;
+					}
+
 				} else if (isVertical) {
 
 					delta = Math.abs(getMoveFrom().getY() - getMoveTo().getY());
