@@ -56,6 +56,12 @@ public class MoveAndSetAction extends Action {
 				setTo = board.getStone(getSetTo().getX(), getSetTo().getY());
 			}
 
+			// Mann darf von keinen leeren feldern ziehen
+			if (moveFrom == null) {
+				if(print)player.notifyUnvalidMove("Auf diesem Feld befindet sich kein Stein.");
+				return false;
+			}
+			
 			// Spieler darf nur eigene Steine bewegen
 			if (moveFrom != null && moveFrom.getOwner() != player) {
 				if(print)player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
