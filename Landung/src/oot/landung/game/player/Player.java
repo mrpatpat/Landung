@@ -112,41 +112,48 @@ public abstract class Player {
 
 	/**
 	 * Fordert eine Aktion vom Spieler.
-	 * @param turn aktueller Zug
+	 * 
+	 * @param turn
+	 *            aktueller Zug
 	 * @return Aktion
 	 */
 	public abstract Action askforAction(int turn);
 
 	/**
 	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausführen möchte.
-	 * @param message Begründung des Zuges
+	 * 
+	 * @param message
+	 *            Begründung des Zuges
 	 */
 	public abstract void notifyUnvalidMove(String message);
 
 	public abstract RemoveAction askforRemoveAction(Board board);
-	
-	public boolean hasValidActions(Board board){
-		
-		for(int i=0;i<Board.SIZE;i++){
-			for(int j=0;j<Board.SIZE;j++){
-				
-				for(int k=0;k<Board.SIZE;k++){
-					for(int l=0;l<Board.SIZE;l++){
-						
-						MoveAndSetAction a = new MoveAndSetAction(false, this, new Vector<Integer>(i,j),new Vector<Integer>(k,l));
-						
-						if(a.isActionValid(board, 5)){
+
+	public boolean hasValidActions(Board board) {
+
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+
+				for (int k = 0; k < Board.SIZE; k++) {
+					for (int l = 0; l < Board.SIZE; l++) {
+
+						MoveAndSetAction a = new MoveAndSetAction(false, this,
+								new Vector<Integer>(i, j), new Vector<Integer>(
+										k, l));
+
+						if (a.isActionValid(board, 5, false)) {
+							System.out.println("möglicher nächster Zug:" + a);
 							return true;
 						}
-						
+
 					}
 				}
-				
+
 			}
 		}
-		
+
 		return false;
-		
+
 	}
 
 }

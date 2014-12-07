@@ -31,10 +31,10 @@ public class MoveAndSetAction extends Action {
 	}
 
 	@Override
-	public boolean isActionValid(Board board, int turn) {
+	public boolean isActionValid(Board board, int turn, boolean print) {
 		
 		//check if super is valid
-		if(!super.isActionValid(board, turn)){
+		if(!super.isActionValid(board, turn, print)){
 			return false;
 		}
 
@@ -58,19 +58,19 @@ public class MoveAndSetAction extends Action {
 
 			// Spieler darf nur eigene Steine bewegen
 			if (moveFrom != null && moveFrom.getOwner() != player) {
-				player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+				if(print)player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
 				return false;
 			}
 
 			// Spieler darf nur auf leere Felder setzen
 			if (setTo != null) {
-				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				if(print)player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 				return false;
 			}
 
 			// Spieler darf nur auf leere Felder ziehen
 			if (getMoveTo() != null && moveTo != null) {
-				player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+				if(print)player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
 				return false;
 			}
 
@@ -100,12 +100,12 @@ public class MoveAndSetAction extends Action {
 					delta = Math.abs(getMoveFrom().getY() - getMoveTo().getY());
 
 				} else {
-					player.notifyUnvalidMove("Man darf nur horizontal, vertikal oder diagonal ziehen.");
+					if(print)player.notifyUnvalidMove("Man darf nur horizontal, vertikal oder diagonal ziehen.");
 					return false;
 				}
 
 				if (delta < 3) {
-					player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
+					if(print)player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
 					return false;
 				}
 

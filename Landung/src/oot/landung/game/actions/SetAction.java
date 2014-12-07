@@ -29,10 +29,10 @@ public class SetAction extends Action {
 	}
 
 	@Override
-	public boolean isActionValid(Board board, int turn) {
+	public boolean isActionValid(Board board, int turn, boolean print) {
 
 		// check if super is valid
-		if (!super.isActionValid(board, turn)) {
+		if (!super.isActionValid(board, turn, print)) {
 			return false;
 		}
 
@@ -47,7 +47,7 @@ public class SetAction extends Action {
 
 			// Spieler darf nur auf leere Felder setzen
 			if (setTo != null) {
-				player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				if(print)player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 				return false;
 			}
 

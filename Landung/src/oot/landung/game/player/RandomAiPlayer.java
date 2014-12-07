@@ -41,6 +41,7 @@ public class RandomAiPlayer extends ComputerPlayer{
 			a = new SetAction(sudo,e,b);
 		}
 		
+		System.out.println(a);
 		return a;
 	}
 

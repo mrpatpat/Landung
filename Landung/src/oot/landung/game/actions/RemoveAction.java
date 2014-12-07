@@ -12,10 +12,10 @@ public class RemoveAction extends Action {
 	}
 
 	@Override
-	public boolean isActionValid(Board board, int turn) {
+	public boolean isActionValid(Board board, int turn, boolean print) {
 
 		// check if super is valid
-		if (!super.isActionValid(board, turn)) {
+		if (!super.isActionValid(board, turn, print)) {
 			return false;
 		}
 
@@ -30,7 +30,7 @@ public class RemoveAction extends Action {
 
 			// Spieler darf nur eigene Steine entfernen
 			if (removeFrom != null && removeFrom.getOwner() != player) {
-				player.notifyUnvalidMove("Man darf nur eigene Steine entfernen.");
+				if(print)player.notifyUnvalidMove("Man darf nur eigene Steine entfernen.");
 				return false;
 			}
 
