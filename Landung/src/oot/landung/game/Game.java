@@ -73,6 +73,12 @@ public class Game implements Serializable {
 		// init rest
 		turn = 0;
 
+		// TEST
+		board.placeStone(0, 0, new Stone(player[0]));
+		board.placeStone(0, 1, new Stone(player[0]));
+		board.placeStone(0, 2, new Stone(player[0]));
+		board.placeStone(0, 3, new Stone(player[0]));
+
 	}
 
 	/**
@@ -90,7 +96,10 @@ public class Game implements Serializable {
 
 		} while (getWinner() == null);
 
-		return getWinner();
+		Player w = getWinner();
+		w.notifyWinner();
+
+		return w;
 
 	}
 
@@ -117,6 +126,89 @@ public class Game implements Serializable {
 	 * @return
 	 */
 	public Player getWinner() {
+
+		// 4 gewinnt regel
+
+		// horizontal
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+
+				Stone start = board.getStone(i, j);
+				Stone a = board.getStone(i + 1, j);
+				Stone b = board.getStone(i + 2, j);
+				Stone c = board.getStone(i + 3, j);
+
+				if (start != null & a != null & b != null & c != null) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
+						return start.getOwner();
+					}
+				}
+
+			}
+		}
+
+		// vertikal
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+
+				Stone start = board.getStone(j, i);
+				Stone a = board.getStone(j, i + 1);
+				Stone b = board.getStone(j, i + 2);
+				Stone c = board.getStone(j, i + 3);
+
+				if (start != null & a != null & b != null & c != null) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
+						return start.getOwner();
+					}
+				}
+
+			}
+		}
+
+		// diagonal 1
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+
+				Stone start = board.getStone(j, i);
+				Stone a = board.getStone(j + 1, i + 1);
+				Stone b = board.getStone(j + 2, i + 2);
+				Stone c = board.getStone(j + 3, i + 3);
+
+				if (start != null & a != null & b != null & c != null) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
+						return start.getOwner();
+					}
+				}
+
+			}
+		}
+
+		// diagonal 2
+		for (int i = 3; i < 4; i++) {
+			for (int j = 3; j < 4; j++) {
+
+				Stone start = board.getStone(j, i);
+				Stone a = board.getStone(j - 1, i + 1);
+				Stone b = board.getStone(j - 2, i + 2);
+				Stone c = board.getStone(j - 3, i + 3);
+
+				if (start != null & a != null & b != null & c != null) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
+						return start.getOwner();
+					}
+				}
+
+			}
+		}
+
 		return null;
 	}
 

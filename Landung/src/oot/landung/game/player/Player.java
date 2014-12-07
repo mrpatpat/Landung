@@ -78,4 +78,9 @@ public abstract class Player {
 	public abstract Action askforAction();
 	
 	public abstract void notifyUnvalidMove(String message);
+
+
+
+
+	public abstract void notifyWinner();
 }

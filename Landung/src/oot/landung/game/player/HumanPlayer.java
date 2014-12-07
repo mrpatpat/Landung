@@ -137,4 +137,9 @@ public class HumanPlayer extends Player {
 	public void notifyUnvalidMove(String message) {
 		System.out.println("Ungültiger Zug: " + message);
 	}
+
+	@Override
+	public void notifyWinner() {
+		System.out.println(getName()+" hat gewonnen.");
+	}
 }
