@@ -1,5 +1,11 @@
 package oot.landung.game.utils;
 
+/**
+ * Vektorhilfsklasse.
+ * @author Landung
+ *
+ * @param <T> Datentyp der Vektorkomponenten
+ */
 public class Vector<T> {
 
 	private T x;
