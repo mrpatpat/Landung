@@ -20,6 +20,10 @@ import oot.landung.game.utils.Vector;
  */
 public class Game implements Serializable {
 
+	/**
+	 * Startpunkt für unseren Prototypen
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Game g = new Game(GameType.PVP);
