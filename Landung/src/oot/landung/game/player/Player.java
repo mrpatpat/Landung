@@ -3,6 +3,7 @@ package oot.landung.game.player;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
+import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.utils.Vector;
 
@@ -136,17 +137,45 @@ public abstract class Player {
 
 				for (int k = 0; k < Board.SIZE; k++) {
 					for (int l = 0; l < Board.SIZE; l++) {
-
-						MoveAndSetAction a = new MoveAndSetAction(false, this,
+						
+						if(turn == 0 || turn ==1 ){
+							SetAction a = new SetAction(false,this, new Vector<Integer>(i, j));
+							
+							if (a.isActionValid(board, turn, false)) {
+								System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
+								return true;
+							
+						}else if(turn == 3){
+							
+							SetAction c = new SetAction(false,this, new Vector<Integer>(i, j));
+							
+							if (c.isActionValid(board, turn, false)) {
+								System.out.println(this.getName() + "'s möglicher nächster Zug:" + c);
+								return true;
+							
+							MoveAndSetAction b = new MoveAndSetAction(false, this,
+									new Vector<Integer>(i, j), new Vector<Integer>(k, l));
+							
+							if (b.isActionValid(board, turn, false)) {
+								System.out.println(this.getName() + "'s möglicher nächster Zug:" + b);
+								return true;
+							}
+						}else {
+						MoveAndSetAction d = new MoveAndSetAction(false, this,
 								new Vector<Integer>(i, j), new Vector<Integer>(
 										k, l));
-
-						if (a.isActionValid(board, turn, false)) {
-							System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
+						
+						if (d.isActionValid(board, turn, false)) {
+							System.out.println(this.getName() + "'s möglicher nächster Zug:" + d);
 							return true;
 						}
 
-					}
+						}
+						
+						
+					
+
+						}
 				}
 
 			}
@@ -158,4 +187,5 @@ public abstract class Player {
 
 	}
 
-}
+		}
+	
