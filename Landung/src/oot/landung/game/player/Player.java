@@ -138,54 +138,44 @@ public abstract class Player {
 				for (int k = 0; k < Board.SIZE; k++) {
 					for (int l = 0; l < Board.SIZE; l++) {
 						
-						if(turn == 0 || turn ==1 ){
+						
 							SetAction a = new SetAction(false,this, new Vector<Integer>(i, j));
 							
-							if (a.isActionValid(board, turn, false)) {
-								System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
-								return true;
 							
-						}else if(turn == 3){
+					
 							
-							SetAction c = new SetAction(false,this, new Vector<Integer>(i, j));
 							
-							if (c.isActionValid(board, turn, false)) {
-								System.out.println(this.getName() + "'s möglicher nächster Zug:" + c);
-								return true;
+							
 							
 							MoveAndSetAction b = new MoveAndSetAction(false, this,
 									new Vector<Integer>(i, j), new Vector<Integer>(k, l));
 							
+							if (a.isActionValid(board, turn, false)) {
+								System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
+								return true;
+							}
 							if (b.isActionValid(board, turn, false)) {
 								System.out.println(this.getName() + "'s möglicher nächster Zug:" + b);
 								return true;
-							}
-						}else {
-						MoveAndSetAction d = new MoveAndSetAction(false, this,
-								new Vector<Integer>(i, j), new Vector<Integer>(
-										k, l));
-						
-						if (d.isActionValid(board, turn, false)) {
-							System.out.println(this.getName() + "'s möglicher nächster Zug:" + d);
-							return true;
-						}
-
-						}
-						
-						
+								}
+			
 					
-
-						}
-				}
+					}
+					
+					
+					
 
 			}
 		}
 
+		
+
+		}
 		System.out.println(this.getName() +" hat keine möglichen Züge ");
 		
 		return false;
 
 	}
+}
 
-		}
 	
