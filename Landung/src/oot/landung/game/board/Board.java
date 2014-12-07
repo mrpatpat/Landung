@@ -1,5 +1,7 @@
 package oot.landung.game.board;
 
+import oot.landung.game.utils.Vector;
+
 /**
  * Das ist unsere Spielbrettklasse. Sie verwaltet die Spielsteine auf dem Brett.
  * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur für
@@ -42,8 +44,10 @@ public class Board {
 	/**
 	 * Gibt den Stein an der Stelle x,y zurück.
 	 * 
-	 * @param x x Koordinate
-	 * @param y y Koordinate
+	 * @param x
+	 *            x Koordinate
+	 * @param y
+	 *            y Koordinate
 	 * @return Stein auf Feld, null wenn leer
 	 */
 	public Stone getStone(int x, int y) {
@@ -52,10 +56,15 @@ public class Board {
 
 	/**
 	 * Bewegt einen Spielstein von x1y1 nach x2y2
-	 * @param x1 x Anfangskoordinate 
-	 * @param y1 y Anfangskoordinate
-	 * @param x2 x Endkoordinate
-	 * @param y2 y Endkoordinate
+	 * 
+	 * @param x1
+	 *            x Anfangskoordinate
+	 * @param y1
+	 *            y Anfangskoordinate
+	 * @param x2
+	 *            x Endkoordinate
+	 * @param y2
+	 *            y Endkoordinate
 	 */
 	public void moveStone(int x1, int y1, int x2, int y2) {
 		if (tiles[x1][y1] != null) {
@@ -66,9 +75,13 @@ public class Board {
 
 	/**
 	 * Platziert einen Stein auf Feld xy
-	 * @param x x Koordinate
-	 * @param y y Koordinate
-	 * @param s der zu platzierende Stein
+	 * 
+	 * @param x
+	 *            x Koordinate
+	 * @param y
+	 *            y Koordinate
+	 * @param s
+	 *            der zu platzierende Stein
 	 */
 	public void placeStone(int x, int y, Stone s) {
 		tiles[x][y] = s;
@@ -76,11 +89,80 @@ public class Board {
 
 	/**
 	 * Entfernt einen Stein auf Feld xy
-	 * @param x x Koordinate
-	 * @param y y Koordinate
+	 * 
+	 * @param x
+	 *            x Koordinate
+	 * @param y
+	 *            y Koordinate
 	 */
 	public void removeStone(int x, int y) {
 		tiles[x][y] = null;
+	}
+
+	public boolean hasStonesInBetween(Vector<Integer> a, Vector<Integer> b) {
+
+		int x1 = a.getX();
+		int y1 = a.getY();
+		int x2 = b.getX();
+		int y2 = b.getY();
+
+		if (y1 == y2) {
+
+			if (x1 > x2) {
+				for (int i = x1; i > x2; i--) {
+					Stone s = getStone(i, y1);
+					if (s != null) {
+						return true;
+					}
+				}
+			} else {
+				for (int i = x1; i < x2; i++) {
+					Stone s = getStone(i, y1);
+					if (s != null) {
+						return true;
+					}
+				}
+			}
+
+		} else if (x1 == x2) {
+
+			if (y1 > y2) {
+				for (int i = y1; i > y2; i--) {
+					Stone s = getStone(x1, i);
+					if (s != null) {
+						return true;
+					}
+				}
+			} else {
+				for (int i = y1; i < y2; i++) {
+					Stone s = getStone(x1, i);
+					if (s != null) {
+						return true;
+					}
+				}
+			}
+		} else if (x1 > x2) {
+			int y = y1;
+			for (int i = x1; i > x2; i--) {
+				Stone s = getStone(i, y);
+				if (s != null) {
+					return false;
+				}
+				y--;
+			}
+		} else {
+			int y = y1;
+			for (int i = x1; i < x2; i++) {
+				Stone s = getStone(i, y);
+				if (s != null) {
+					return false;
+				}
+				y++;
+			}
+		}
+
+		return false;
+
 	}
 
 	/**

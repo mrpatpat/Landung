@@ -107,17 +107,6 @@ public class MoveAndSetAction extends Action {
 
 					delta = Math.abs(getMoveFrom().getX() - getMoveTo().getX());
 
-					int start = getMoveFrom().getX();
-					int end = getMoveTo().getX();
-					int step = (int) Math.signum(getMoveTo().getX()
-							- getMoveFrom().getX());
-
-					for (int i = start; i < end; i += step) {
-						Stone temp = board.getStone(i, getMoveFrom().getY());
-						if (temp != null)
-							return false;
-					}
-
 				} else if (isVertical) {
 
 					delta = Math.abs(getMoveFrom().getY() - getMoveTo().getY());
@@ -135,6 +124,14 @@ public class MoveAndSetAction extends Action {
 				if (delta < 3) {
 					if (print)
 						player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
+					return false;
+				}
+				
+				boolean mustSkip = board.hasStonesInBetween(getMoveFrom(), getMoveTo());
+				
+				if(mustSkip){
+					if (print)
+						player.notifyUnvalidMove("Man darf keine Steine überspringen.");
 					return false;
 				}
 
