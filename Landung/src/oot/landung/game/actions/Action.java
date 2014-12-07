@@ -129,6 +129,7 @@ public class Action {
 		if (getSetTo() != null)
 			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
 					getActor()));
+		
 	}
 
 	/**

@@ -30,11 +30,17 @@ public class MoveAndSetAction extends Action {
 		super(sudo, actor, moveFrom, moveTo, null);
 	}
 
+	public String toString() {
+		return "Spieler " + getActor().getName() + " zieht von "
+				+ getMoveFrom() + " nach " + getMoveTo() + " und setzt auf "
+				+ getSetTo();
+	}
+
 	@Override
 	public boolean isActionValid(Board board, int turn, boolean print) {
-		
-		//check if super is valid
-		if(!super.isActionValid(board, turn, print)){
+
+		// check if super is valid
+		if (!super.isActionValid(board, turn, print)) {
 			return false;
 		}
 
@@ -58,25 +64,29 @@ public class MoveAndSetAction extends Action {
 
 			// Mann darf von keinen leeren feldern ziehen
 			if (moveFrom == null) {
-				if(print)player.notifyUnvalidMove("Auf diesem Feld befindet sich kein Stein.");
+				if (print)
+					player.notifyUnvalidMove("Auf diesem Feld befindet sich kein Stein.");
 				return false;
 			}
-			
+
 			// Spieler darf nur eigene Steine bewegen
 			if (moveFrom != null && moveFrom.getOwner() != player) {
-				if(print)player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
+				if (print)
+					player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
 				return false;
 			}
 
 			// Spieler darf nur auf leere Felder setzen
 			if (setTo != null) {
-				if(print)player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				if (print)
+					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 				return false;
 			}
 
 			// Spieler darf nur auf leere Felder ziehen
 			if (getMoveTo() != null && moveTo != null) {
-				if(print)player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+				if (print)
+					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
 				return false;
 			}
 
@@ -92,7 +102,7 @@ public class MoveAndSetAction extends Action {
 						- getMoveTo().getY());
 
 				int delta = 0;
-				
+
 				if (isHorizontal) {
 
 					delta = Math.abs(getMoveFrom().getX() - getMoveTo().getX());
@@ -106,12 +116,14 @@ public class MoveAndSetAction extends Action {
 					delta = Math.abs(getMoveFrom().getY() - getMoveTo().getY());
 
 				} else {
-					if(print)player.notifyUnvalidMove("Man darf nur horizontal, vertikal oder diagonal ziehen.");
+					if (print)
+						player.notifyUnvalidMove("Man darf nur horizontal, vertikal oder diagonal ziehen.");
 					return false;
 				}
 
 				if (delta < 3) {
-					if(print)player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
+					if (print)
+						player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
 					return false;
 				}
 
@@ -124,7 +136,7 @@ public class MoveAndSetAction extends Action {
 	}
 
 	/**
-	 * Override der Setto Methode, da der Stein immer in den Pfad gelegt wird. 
+	 * Override der Setto Methode, da der Stein immer in den Pfad gelegt wird.
 	 */
 	public Vector<Integer> getSetTo() {
 
@@ -155,10 +167,9 @@ public class MoveAndSetAction extends Action {
 
 				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo()
 						.getY() + dY);
-				
 
 			} else if (isDiagonal) {
-				
+
 				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1
 						: 1;
 				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1
@@ -166,7 +177,7 @@ public class MoveAndSetAction extends Action {
 
 				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo()
 						.getY() + dY);
-				
+
 			}
 
 		}

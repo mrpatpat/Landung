@@ -47,7 +47,8 @@ public class SetAction extends Action {
 
 			// Spieler darf nur auf leere Felder setzen
 			if (setTo != null) {
-				if(print)player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				if (print)
+					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 				return false;
 			}
 
@@ -55,6 +56,10 @@ public class SetAction extends Action {
 
 		return true;
 
+	}
+
+	public String toString() {
+		return "Spieler " + getActor().getName() + " zieht nach " + getSetTo();
 	}
 
 }

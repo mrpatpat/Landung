@@ -142,7 +142,7 @@ public abstract class Player {
 										k, l));
 
 						if (a.isActionValid(board, turn, false)) {
-							System.out.println("möglicher nächster Zug:" + a);
+							System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
 							return true;
 						}
 
@@ -152,6 +152,8 @@ public abstract class Player {
 			}
 		}
 
+		System.out.println(this.getName() +" hat keine möglichen Züge ");
+		
 		return false;
 
 	}
