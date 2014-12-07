@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.RANDOM);
+		Game g = new Game(GameType.PVP);
 		g.run();
 
 	}
@@ -98,8 +98,9 @@ public class Game implements Serializable {
 
 			if(!player[1].hasValidActions(board, turn)){
 				w = player[0];
+				w.notifyWinner();
+				return w;
 			}
-			
 			w = getWinner();
 			
 			if (w == null) {
@@ -107,6 +108,8 @@ public class Game implements Serializable {
 				
 				if(!player[0].hasValidActions(board, turn)){
 					w = player[1];
+					w.notifyWinner();
+					return w;
 				}
 				
 				w = getWinner();
