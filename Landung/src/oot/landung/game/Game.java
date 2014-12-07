@@ -73,12 +73,6 @@ public class Game implements Serializable {
 		// init rest
 		turn = 0;
 
-		// TEST
-		board.placeStone(0, 0, new Stone(player[0]));
-		board.placeStone(0, 1, new Stone(player[0]));
-		board.placeStone(0, 2, new Stone(player[0]));
-		board.placeStone(0, 3, new Stone(player[0]));
-
 	}
 
 	/**
@@ -97,6 +91,9 @@ public class Game implements Serializable {
 		} while (getWinner() == null);
 
 		Player w = getWinner();
+		
+		board.print();
+		
 		w.notifyWinner();
 
 		return w;
@@ -115,7 +112,7 @@ public class Game implements Serializable {
 			}
 		} while (turnValid == false);
 
-		this.executeAction(a);
+		a.execute(board);
 		turn++;
 
 	}
@@ -190,13 +187,13 @@ public class Game implements Serializable {
 		}
 
 		// diagonal 2
-		for (int i = 3; i < 4; i++) {
-			for (int j = 3; j < 4; j++) {
+		for (int i = 3; i < 5; i++) {
+			for (int j = 0; j < 2; j++) {
 
 				Stone start = board.getStone(j, i);
-				Stone a = board.getStone(j - 1, i + 1);
-				Stone b = board.getStone(j - 2, i + 2);
-				Stone c = board.getStone(j - 3, i + 3);
+				Stone a = board.getStone(i - 1, j + 1);
+				Stone b = board.getStone(i - 2, j + 2);
+				Stone c = board.getStone(i - 3, j + 3);
 
 				if (start != null & a != null & b != null & c != null) {
 					if (start.getOwner() == a.getOwner()
@@ -211,24 +208,5 @@ public class Game implements Serializable {
 
 		return null;
 	}
-
-	/**
-	 * Führt eine Aktion aus.
-	 * 
-	 * @param a
-	 *            Aktion
-	 */
-	public void executeAction(Action a) {
-
-		// execute move
-		if ((a.getMoveFrom() != null) && (a.getMoveTo() != null))
-			board.moveStone(a.getMoveFrom().getX(), a.getMoveFrom().getY(), a
-					.getMoveTo().getX(), a.getMoveTo().getY());
-
-		// execute set
-		if (a.getSetTo() != null)
-			board.placeStone(a.getSetTo().getX(), a.getSetTo().getY(),
-					new Stone(a.getActor()));
-
-	}
+	
 }

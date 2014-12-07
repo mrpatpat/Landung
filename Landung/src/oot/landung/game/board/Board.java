@@ -1,15 +1,35 @@
 package oot.landung.game.board;
 
+/**
+ * Das ist unsere Spielbrettklasse. Sie verwaltet die Spielsteine auf dem Brett.
+ * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur für
+ * unser Spiel.
+ * 
+ * @author Landung
+ *
+ */
 public class Board {
 
+	/**
+	 * Größe des Spielbretts.
+	 */
 	public static final int SIZE = 5;
 
+	/**
+	 * Eine Matrix zum verwalten der Spielsteine.
+	 */
 	private Stone[][] tiles;
 
+	/**
+	 * Erstellt eine neue, leere Brettinstanz.
+	 */
 	public Board() {
 		clearBoard();
 	}
 
+	/**
+	 * Leert das Spielbrett.
+	 */
 	private void clearBoard() {
 		tiles = new Stone[SIZE][SIZE];
 		for (Stone[] a : tiles) {
@@ -18,33 +38,61 @@ public class Board {
 			}
 		}
 	}
-	
-	public Stone getStone(int x, int y){
+
+	/**
+	 * Gibt den Stein an der Stelle x,y zurück.
+	 * 
+	 * @param x x Koordinate
+	 * @param y y Koordinate
+	 * @return Stein auf Feld, null wenn leer
+	 */
+	public Stone getStone(int x, int y) {
 		return tiles[x][y];
 	}
 
-	public void moveStone(int x1, int y1, int x2, int y2){
-		if(tiles[x1][y1] != null){
+	/**
+	 * Bewegt einen Spielstein von x1y1 nach x2y2
+	 * @param x1 x Anfangskoordinate 
+	 * @param y1 y Anfangskoordinate
+	 * @param x2 x Endkoordinate
+	 * @param y2 y Endkoordinate
+	 */
+	public void moveStone(int x1, int y1, int x2, int y2) {
+		if (tiles[x1][y1] != null) {
 			tiles[x2][y2] = tiles[x1][y1];
 			tiles[x1][y1] = null;
 		}
 	}
 
+	/**
+	 * Platziert einen Stein auf Feld xy
+	 * @param x x Koordinate
+	 * @param y y Koordinate
+	 * @param s der zu platzierende Stein
+	 */
 	public void placeStone(int x, int y, Stone s) {
 		tiles[x][y] = s;
 	}
 
+	/**
+	 * Entfernt einen Stein auf Feld xy
+	 * @param x x Koordinate
+	 * @param y y Koordinate
+	 */
 	public void removeStone(int x, int y) {
 		tiles[x][y] = null;
 	}
 
+	/**
+	 * Gibt das aktuelle Spielbrett auf der Standardkonsole aus.
+	 */
 	public void print() {
 
 		String format = " %-2s|%-3s|%-3s|%-3s|%-3s|%-3s|%n";
-		
-		// Leerzeile damit es schöner aussieht 
+
+		// Leerzeile damit es schöner aussieht
 		System.out.println();
-		
+
 		System.out.printf("   | A | B | C | D | E |%n");
 		System.out.printf("---+---+---+---+---+---+%n");
 

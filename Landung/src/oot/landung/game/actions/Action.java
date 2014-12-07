@@ -195,7 +195,6 @@ public class Action {
 				}
 			}
 
-
 			return true;
 		}
 		return true;
@@ -256,6 +255,18 @@ public class Action {
 
 	public boolean getSudo() {
 		return sudo;
+	}
+
+	public void execute(Board board) {
+		// execute move
+		if ((getMoveFrom() != null) && (getMoveTo() != null))
+			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(),
+					getMoveTo().getX(), getMoveTo().getY());
+
+		// execute set
+		if (getSetTo() != null)
+			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
+					getActor()));
 	}
 
 }
