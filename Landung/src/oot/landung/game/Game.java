@@ -100,12 +100,16 @@ public class Game implements Serializable {
 				w = player[0];
 			}
 			
+			w = getWinner();
+			
 			if (w == null) {
 				runPlayerTurn(player[1]);
 				
 				if(!player[0].hasValidActions(board, turn)){
 					w = player[1];
 				}
+				
+				w = getWinner();
 				
 			}
 
