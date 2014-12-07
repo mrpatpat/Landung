@@ -141,7 +141,17 @@ public class Board {
 					}
 				}
 			}
-		} else if (x1 > x2) {
+			
+		} else if (x1 > x2 && y1 > y2) {
+			int y = y1;
+			for (int i = x1; i > x2; i--) {
+				Stone s = getStone(i, y);
+				if (s != null) {
+					return false;
+				}
+				y++;
+			}
+		} else{
 			int y = y1;
 			for (int i = x1; i > x2; i--) {
 				Stone s = getStone(i, y);
@@ -149,19 +159,30 @@ public class Board {
 					return false;
 				}
 				y--;
-			}
-		} else {
-			int y = y1;
+			
+		}
+			
+			if(x1<x2 && y1 > y2){
+			int yy = y1;
 			for (int i = x1; i < x2; i++) {
-				Stone s = getStone(i, y);
+				Stone s = getStone(i, yy);
 				if (s != null) {
 					return false;
 				}
-				y++;
+				yy--;
 			}
+		}else{
+			int yy = y1;
+			for (int i = x1; i < x2; i++) {
+				Stone s = getStone(i, yy);
+				if (s != null) {
+					return false;
 		}
-
-		return false;
+			}
+			yy++;
+		}
+		}
+			return false;
 
 	}
 
