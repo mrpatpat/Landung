@@ -1,6 +1,8 @@
 package oot.landung.game.player;
 
 import oot.landung.game.actions.Action;
+import oot.landung.game.actions.RemoveAction;
+import oot.landung.game.board.Board;
 
 /**
  * Das ist unsere abstrakte Spielerklasse. Sie ist abstrakt, da wir verschiedene
@@ -118,5 +120,7 @@ public abstract class Player {
 	 * @param message Begründung des Zuges
 	 */
 	public abstract void notifyUnvalidMove(String message);
+
+	public abstract RemoveAction askforRemoveAction(Board board);
 
 }

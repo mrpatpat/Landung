@@ -3,6 +3,7 @@ package oot.landung.game;
 import java.io.Serializable;
 
 import oot.landung.game.actions.Action;
+import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
@@ -115,6 +116,26 @@ public class Game implements Serializable {
 		} while (turnValid == false);
 
 		a.execute(board);
+		
+		if(p.getStones()>0){
+			p.removeStone();
+		} else {
+			
+			boolean remValid = false;
+			RemoveAction ra;
+			
+			do {
+				board.print();
+				ra = p.askforRemoveAction(board);
+				if (ra.isActionValid(board, turn)) {
+					remValid = true;
+				}
+			} while (remValid == false);
+			
+			ra.execute(board);
+			
+		}
+		
 		turn++;
 
 	}

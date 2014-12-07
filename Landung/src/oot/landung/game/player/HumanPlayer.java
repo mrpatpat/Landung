@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
+import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
+import oot.landung.game.board.Board;
 import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
@@ -73,11 +75,10 @@ public class HumanPlayer extends Player {
 			if (commands.length == 1 + delta) {
 				return new SetAction(sudo, this,
 						stringToVector(commands[0 + delta]));
-			} else if (commands.length == 3 + delta) {
+			} else if (commands.length == 2 + delta) {
 				return new MoveAndSetAction(sudo, this,
 						stringToVector(commands[0]),
-						stringToVector(commands[1]),
-						stringToVector(commands[2 + delta]));
+						stringToVector(commands[1]));
 			}
 
 			return null;
@@ -174,5 +175,34 @@ public class HumanPlayer extends Player {
 	@Override
 	public void notifyWinner() {
 		System.out.println(getName() + " hat gewonnen.");
+	}
+
+	@Override
+	public RemoveAction askforRemoveAction(Board board) {
+		
+		Scanner in = Utils.getScanner();
+
+		System.out.println("\n" + this.getName() + " ist am Zug ("
+				+ this.getSymbol() + "). Bitte entferne einen deiner Steine.");
+
+		String command = in.nextLine();
+
+		String[] commands = command.split(" ");
+
+		boolean sudo = false;
+		int delta = 0;
+
+		if (commands[0].equals("sudo")) {
+			sudo = true;
+			delta = 1;
+		}
+
+		if (commands.length == 1 + delta) {
+			return new RemoveAction(sudo, this,
+					stringToVector(commands[0 + delta]));
+		}
+
+		return null;
+
 	}
 }
