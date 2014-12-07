@@ -129,7 +129,7 @@ public abstract class Player {
 
 	public abstract RemoveAction askforRemoveAction(Board board);
 
-	public boolean hasValidActions(Board board) {
+	public boolean hasValidActions(Board board, int turn) {
 
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
@@ -141,7 +141,7 @@ public abstract class Player {
 								new Vector<Integer>(i, j), new Vector<Integer>(
 										k, l));
 
-						if (a.isActionValid(board, 5, false)) {
+						if (a.isActionValid(board, turn, false)) {
 							System.out.println("möglicher nächster Zug:" + a);
 							return true;
 						}

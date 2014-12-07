@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.PVE_NOOB);
+		Game g = new Game(GameType.RANDOM);
 		g.run();
 
 	}
@@ -96,14 +96,14 @@ public class Game implements Serializable {
 
 			runPlayerTurn(player[0]);
 
-			if(!player[1].hasValidActions(board)){
+			if(!player[1].hasValidActions(board, turn)){
 				w = player[0];
 			}
 			
 			if (w == null) {
 				runPlayerTurn(player[1]);
 				
-				if(!player[0].hasValidActions(board)){
+				if(!player[0].hasValidActions(board, turn)){
 					w = player[1];
 				}
 				
