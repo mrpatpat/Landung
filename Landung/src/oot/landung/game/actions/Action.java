@@ -8,6 +8,18 @@ import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
+/**
+ * Eine Klasse zur Darstellung einer Aktion. Eine Aktion ist ein Zug. Sie
+ * besteht grundsätzlich aus 5 Eigenschaften. Sie hat einen Akteur, ein Feld von
+ * dem gezogen wird, ein Feld zu dem gezogen wird, ein Feld auf das gesetzt wird
+ * und die sudo Eingeschaft, die Regeln missachten kann. Die Aktion bildet das
+ * Herzstück unseres Spiels, da die Aktion auch bestimmt was ein gültiger und
+ * möglicher Zug ist. Jede Spielregel ist in der Aktionsklasse oder ihren
+ * Kindklassen definiert. Die Logik lässt sich somit stark kapseln.
+ * 
+ * @author Landung
+ *
+ */
 public class Action {
 
 	private final Player actor;
@@ -16,6 +28,20 @@ public class Action {
 	private final Vector<Integer> setTo;
 	private final boolean sudo;
 
+	/**
+	 * Erstellt eine neue Instanz einer Aktion.
+	 * 
+	 * @param sudo
+	 *            true, wenn Regeln missachtet werden sollen
+	 * @param actor
+	 *            der Spieler, der die Aktion ausführt
+	 * @param moveFrom
+	 *            das Feld von dem gezogen werden soll
+	 * @param moveTo
+	 *            das Feld zu dem gezogen werden soll
+	 * @param setTo
+	 *            das Feld, auf das gesetzt wird
+	 */
 	public Action(boolean sudo, Player actor, Vector<Integer> moveFrom,
 			Vector<Integer> moveTo, Vector<Integer> setTo) {
 		this.actor = actor;
@@ -25,33 +51,20 @@ public class Action {
 		this.sudo = sudo;
 	}
 
-	public Player getActor() {
-		return actor;
-	}
-
-	public Vector<Integer> getMoveFrom() {
-		return moveFrom;
-	}
-
-	public Vector<Integer> getMoveTo() {
-		return moveTo;
-	}
-
-	public Vector<Integer> getSetTo() {
-		return setTo;
-	}
-
 	/**
-	 * prÃ¼ft ob eine Aktion gÃ¼ltig ist
+	 * Gibt an, ob diese Aktion gültig ist. Beachtet Spielfeldgrenzen und wenn
+	 * es keine sudo-Aktion ist auch die Spielregeln.
 	 * 
-	 * @param a
-	 *            Aktion
-	 * @return GÃ¼ltigkeit
+	 * @param board
+	 *            das Spielbrett
+	 * @param turn
+	 *            der aktuelle Spielzug
+	 * @return true, wenn die Aktion gültig ist
 	 */
 	public boolean isActionValid(Board board, int turn) {
-
+	
 		Player player = getActor();
-
+	
 		if (!getSudo()) {
 			// Züge 1 bis 4
 			if (turn == 0 || turn == 1) {
@@ -70,13 +83,13 @@ public class Action {
 					return false;
 				}
 			}
-
+	
 			// Spielfeldgrenzen
 			List<Vector<Integer>> vectors = new ArrayList<Vector<Integer>>();
 			vectors.add(getMoveFrom());
 			vectors.add(getMoveTo());
 			vectors.add(getSetTo());
-
+	
 			for (Vector<Integer> v : vectors) {
 				if (v != null) {
 					if (v.getX() < 0 || v.getX() >= Board.SIZE) {
@@ -89,45 +102,45 @@ public class Action {
 					}
 				}
 			}
-
+	
 			// Regeln, durch sudo umgehbar
 			if (!getSudo()) {
-
+	
 				Stone moveFrom = null;
 				Stone moveTo = null;
 				Stone setTo = null;
-
+	
 				if (getMoveFrom() != null)
 					moveFrom = board.getStone(getMoveFrom().getX(),
 							getMoveFrom().getY());
-
+	
 				if (getMoveTo() != null)
 					moveTo = board.getStone(getMoveTo().getX(), getMoveTo()
 							.getY());
-
+	
 				if (getSetTo() != null) {
 					setTo = board
 							.getStone(getSetTo().getX(), getSetTo().getY());
 				}
-
+	
 				// Spieler darf nur eigene Steine bewegen
 				if (moveFrom != null && moveFrom.getOwner() != player) {
 					player.notifyUnvalidMove("Man darf nur eigene Steine bewegen.");
 					return false;
 				}
-
+	
 				// Spieler darf nur auf leere Felder setzen
 				if (setTo != null) {
 					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
 					return false;
 				}
-
+	
 				// Spieler darf nur auf leere Felder ziehen
 				if (getMoveTo() != null && moveTo != null) {
 					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
 					return false;
 				}
-
+	
 				boolean validSet = false;
 				boolean validMove = false;
 				boolean validPath = false;
@@ -178,10 +191,10 @@ public class Action {
 											.getY())) {
 								validSet = true;
 							}
-
+	
 						}
 					}
-
+	
 					if (!validMove) {
 						player.notifyUnvalidMove("Man darf nur gerade oder diagonal ziehen (3-4 Felder)");
 						return false;
@@ -194,12 +207,81 @@ public class Action {
 					}
 				}
 			}
-
+	
 			return true;
 		}
 		return true;
 	}
 
+	/**
+	 * Führt diese Aktion auf einem Spielfeld aus.
+	 * 
+	 * @param board
+	 *            das Spielfeld
+	 */
+	public void execute(Board board) {
+		// execute move
+		if ((getMoveFrom() != null) && (getMoveTo() != null))
+			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(),
+					getMoveTo().getX(), getMoveTo().getY());
+	
+		// execute set
+		if (getSetTo() != null)
+			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
+					getActor()));
+	}
+
+	/**
+	 * Gibt den Akteur zurück
+	 * 
+	 * @return der Aktuer
+	 */
+	public Player getActor() {
+		return actor;
+	}
+
+	/**
+	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, von dem
+	 * gezogen wird.
+	 * 
+	 * @return Vektor
+	 */
+	public Vector<Integer> getMoveFrom() {
+		return moveFrom;
+	}
+
+	/**
+	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, auf das
+	 * gezogen wird.
+	 * 
+	 * @return Vektor
+	 */
+	public Vector<Integer> getMoveTo() {
+		return moveTo;
+	}
+
+	/**
+	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, auf das
+	 * gesetzt wird.
+	 * 
+	 * @return Vektor
+	 */
+	public Vector<Integer> getSetTo() {
+		return setTo;
+	}
+
+	/**
+	 * Gibt an ob es eine sudo-Aktion ist
+	 * 
+	 * @return true, wenn sudo
+	 */
+	public boolean getSudo() {
+		return sudo;
+	}
+
+	/**
+	 * Stringrepräsentation der Aktion
+	 */
 	public String toString() {
 		String s = "";
 		s += actor.getName() + ";";
@@ -251,22 +333,6 @@ public class Action {
 		} else if (!setTo.equals(other.setTo))
 			return false;
 		return true;
-	}
-
-	public boolean getSudo() {
-		return sudo;
-	}
-
-	public void execute(Board board) {
-		// execute move
-		if ((getMoveFrom() != null) && (getMoveTo() != null))
-			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(),
-					getMoveTo().getX(), getMoveTo().getY());
-
-		// execute set
-		if (getSetTo() != null)
-			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
-					getActor()));
 	}
 
 }
