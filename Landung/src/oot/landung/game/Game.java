@@ -8,7 +8,7 @@ import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.game.player.RandomAiPlayer;
+import oot.landung.game.player.PeterAiPlayer;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.PVP);
+		Game g = new Game(GameType.RANDOM);
 		g.run();
 
 	}
@@ -70,10 +70,10 @@ public class Game implements Serializable {
 			player[1] = new HumanPlayer(2);
 		} else if (type == GameType.PVE_NOOB) {
 			player[0] = new HumanPlayer(1);
-			player[1] = new RandomAiPlayer(2);
+			player[1] = new PeterAiPlayer(2);
 		} else if (type == GameType.RANDOM) {
-			player[0] = new RandomAiPlayer(1);
-			player[1] = new RandomAiPlayer(2);
+			player[0] = new PeterAiPlayer(1);
+			player[1] = new PeterAiPlayer(2);
 		}
 		
 
@@ -131,7 +131,7 @@ public class Game implements Serializable {
 		boolean turnValid = false;
 		do {
 			board.print();
-			a = p.askforAction(turn);
+			a = p.askforAction(turn,board);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}

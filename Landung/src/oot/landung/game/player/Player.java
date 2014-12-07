@@ -118,7 +118,7 @@ public abstract class Player {
 	 *            aktueller Zug
 	 * @return Aktion
 	 */
-	public abstract Action askforAction(int turn);
+	public abstract Action askforAction(int turn, Board board);
 
 	/**
 	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausführen möchte.
@@ -137,45 +137,34 @@ public abstract class Player {
 
 				for (int k = 0; k < Board.SIZE; k++) {
 					for (int l = 0; l < Board.SIZE; l++) {
-						
-						
-							SetAction a = new SetAction(false,this, new Vector<Integer>(i, j));
-							
-							
-					
-							
-							
-							
-							
-							MoveAndSetAction b = new MoveAndSetAction(false, this,
-									new Vector<Integer>(i, j), new Vector<Integer>(k, l));
-							
-							if (a.isActionValid(board, turn, false)) {
-								System.out.println(this.getName() + "'s möglicher nächster Zug:" + a);
-								return true;
-							}
-							if (b.isActionValid(board, turn, false)) {
-								System.out.println(this.getName() + "'s möglicher nächster Zug:" + b);
-								return true;
-								}
-			
-					
+
+						SetAction a = new SetAction(false, this,
+								new Vector<Integer>(i, j));
+
+						MoveAndSetAction b = new MoveAndSetAction(false, this,
+								new Vector<Integer>(i, j), new Vector<Integer>(
+										k, l));
+
+						if (a.isActionValid(board, turn, false)) {
+							System.out.println(this.getName()
+									+ "'s möglicher nächster Zug:" + a);
+							return true;
+						}
+						if (b.isActionValid(board, turn, false)) {
+							System.out.println(this.getName()
+									+ "'s möglicher nächster Zug:" + b);
+							return true;
+						}
+
 					}
-					
-					
-					
 
+				}
 			}
-		}
-
-		
 
 		}
-		System.out.println(this.getName() +" hat keine möglichen Züge ");
-		
+		System.out.println(this.getName() + " hat keine möglichen Züge ");
+
 		return false;
 
 	}
 }
-
-	
