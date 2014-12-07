@@ -96,16 +96,16 @@ public class Game implements Serializable {
 
 			runPlayerTurn(player[0]);
 
-			if(!player[1].hasValidActions(board)){
-				w = player[0];
-			}
+//			if(!player[1].hasValidActions(board)){
+//				w = player[0];
+//			}
 			
 			if (w == null) {
 				runPlayerTurn(player[1]);
 				
-				if(!player[0].hasValidActions(board)){
-					w = player[1];
-				}
+//				if(!player[0].hasValidActions(board)){
+//					w = player[1];
+//				}
 				
 			}
 

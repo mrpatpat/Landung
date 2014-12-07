@@ -87,8 +87,6 @@ public class MoveAndSetAction extends Action {
 
 				int delta = 0;
 				
-				System.out.println(isHorizontal + " " + isVertical + " " + isDiagonal);
-				
 				if (isHorizontal) {
 
 					delta = Math.abs(getMoveFrom().getX() - getMoveTo().getX());
