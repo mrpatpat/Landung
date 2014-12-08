@@ -15,7 +15,7 @@ public class PeterAiPlayer extends ComputerPlayer {
 
 	@Override
 	public String askforName() {
-		return "Peter 'der weniger Intelligente'";
+		return "Peter 'der weniger Intelligente' ("+this.getPlayerID()+")";
 	}
 
 	@Override

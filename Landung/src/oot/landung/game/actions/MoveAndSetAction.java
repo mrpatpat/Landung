@@ -102,6 +102,12 @@ public class MoveAndSetAction extends Action {
 						- getMoveTo().getY());
 
 				int delta = 0;
+				
+				//kein springen
+				if(board.hasStonesInBetween(getMoveFrom(), getMoveTo())){
+					if(print) player.notifyUnvalidMove("Man darf keine Steine überspringen");
+					return false;
+				}
 
 				if (isHorizontal) {
 
@@ -124,14 +130,6 @@ public class MoveAndSetAction extends Action {
 				if (delta < 3) {
 					if (print)
 						player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
-					return false;
-				}
-				
-				boolean mustSkip = board.hasStonesInBetween(getMoveFrom(), getMoveTo());
-				
-				if(mustSkip){
-					if (print)
-						player.notifyUnvalidMove("Man darf keine Steine überspringen.");
 					return false;
 				}
 

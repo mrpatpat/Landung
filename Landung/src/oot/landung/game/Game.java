@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.PVP);
+		Game g = new Game(GameType.EVE_NOOB);
 		g.run();
 
 	}
@@ -34,7 +34,7 @@ public class Game implements Serializable {
 	 * Spielmodi
 	 */
 	public enum GameType {
-		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP, RANDOM;
+		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP, EVE_NOOB;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class Game implements Serializable {
 		} else if (type == GameType.PVE_NOOB) {
 			player[0] = new HumanPlayer(1);
 			player[1] = new PeterAiPlayer(2);
-		} else if (type == GameType.RANDOM) {
+		} else if (type == GameType.EVE_NOOB) {
 			player[0] = new PeterAiPlayer(1);
 			player[1] = new PeterAiPlayer(2);
 		}

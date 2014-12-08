@@ -128,8 +128,19 @@ public abstract class Player {
 	 */
 	public abstract void notifyUnvalidMove(String message);
 
+	/**
+	 * Fordert den Spieler auf einen Stein zu entfernen.
+	 * @param board Spielbrett
+	 * @return Die RemoveAction des Spielers
+	 */
 	public abstract RemoveAction askforRemoveAction(Board board);
 
+	/**
+	 * Gibt zurück, ob ein Spieler noch gültige Aktionen ausführen kann.
+	 * @param board Spielbrett
+	 * @param turn aktueller Zug
+	 * @return true, wenn der Spieler noch Aktionen ausführen kann
+	 */
 	public boolean hasValidActions(Board board, int turn) {
 
 		for (int i = 0; i < Board.SIZE; i++) {
@@ -146,13 +157,10 @@ public abstract class Player {
 										k, l));
 
 						if (a.isActionValid(board, turn, false)) {
-							System.out.println(this.getName()
-									+ "'s möglicher nächster Zug:" + a);
 							return true;
 						}
+						
 						if (b.isActionValid(board, turn, false)) {
-							System.out.println(this.getName()
-									+ "'s möglicher nächster Zug:" + b);
 							return true;
 						}
 
@@ -162,7 +170,6 @@ public abstract class Player {
 			}
 
 		}
-		System.out.println(this.getName() + " hat keine möglichen Züge ");
 
 		return false;
 

@@ -1,5 +1,8 @@
 package oot.landung.game.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import oot.landung.game.utils.Vector;
 
 /**
@@ -99,91 +102,156 @@ public class Board {
 		tiles[x][y] = null;
 	}
 
+	/**
+	 * Gibt zurück ob Steine zwischen zwei Feldern liegen.
+	 * @param a Feld 1
+	 * @param b Feld 2
+	 * @return true, wenn Steine im Weg liegen
+	 */
 	public boolean hasStonesInBetween(Vector<Integer> a, Vector<Integer> b) {
 
-		int x1 = a.getX();
-		int y1 = a.getY();
-		int x2 = b.getX();
-		int y2 = b.getY();
+		return !getStonesBetween(a, b).isEmpty();
 
-		if (y1 == y2) {
+	}
 
-			if (x1 > x2) {
-				for (int i = x1; i > x2; i--) {
-					Stone s = getStone(i, y1);
-					if (s != null) {
-						return true;
-					}
-				}
-			} else {
-				for (int i = x1; i < x2; i++) {
-					Stone s = getStone(i, y1);
-					if (s != null) {
-						return true;
-					}
-				}
-			}
+	/**
+	 * Gibt eine Liste aller Steine zwischen zwei Feldern zurück.
+	 * @param a Feld 1
+	 * @param b Feld 2
+	 * @return Liste
+	 */
+	public List<Stone> getStonesBetween(Vector<Integer> a, Vector<Integer> b) {
 
-		} else if (x1 == x2) {
+		List<Stone> list = new ArrayList<Stone>();
 
-			if (y1 > y2) {
-				for (int i = y1; i > y2; i--) {
-					Stone s = getStone(x1, i);
-					if (s != null) {
-						return true;
-					}
-				}
-			} else {
-				for (int i = y1; i < y2; i++) {
-					Stone s = getStone(x1, i);
-					if (s != null) {
-						return true;
-					}
-				}
-			}
-			
-		} else if (x1 > x2 && y1 > y2) {
-			int y = y1;
-			for (int i = x1; i > x2; i--) {
-				Stone s = getStone(i, y);
-				if (s != null) {
-					return false;
-				}
-				y++;
-			}
-		} else{
-			int y = y1;
-			for (int i = x1; i > x2; i--) {
-				Stone s = getStone(i, y);
-				if (s != null) {
-					return false;
-				}
-				y--;
-			
+		if (a.getY() == b.getY()) {
+			list.addAll(getStonesBetweenHorizontal(a.getX(), b.getX(), b.getY()));
+		} else if (a.getX() == b.getX()) {
+			list.addAll(getStonesBetweenVertical(a.getY(), b.getY(), b.getX()));
+		} else if (Math.abs(a.getX() - b.getX()) == Math.abs(a.getY()
+				- b.getY())) {
+			list.addAll(getStonesBetweenDiagonal(a.getX(), a.getY(), b.getX(),
+					b.getY()));
 		}
-			
-			if(x1<x2 && y1 > y2){
-			int yy = y1;
-			for (int i = x1; i < x2; i++) {
-				Stone s = getStone(i, yy);
-				if (s != null) {
-					return false;
-				}
-				yy--;
-			}
-		}else{
-			int yy = y1;
-			for (int i = x1; i < x2; i++) {
-				Stone s = getStone(i, yy);
-				if (s != null) {
-					return false;
-		}
-			}
-			yy++;
-		}
-		}
-			return false;
 
+		return list;
+
+	}
+
+	private List<Stone> getStonesBetweenDiagonal(int x1, int y1, int x2, int y2) {
+
+		List<Stone> list = new ArrayList<Stone>();
+
+		int topY = Math.min(y1, y2);
+		int botX = Math.max(y1, y2);
+		int leftX = Math.min(x1, x2);
+		int rightX = Math.max(x1, x2);
+
+		// Fall 1: links oben nach rechts unten
+
+		if (topY == y1 && leftX == x1) {
+
+			int topLeftX = x1 + 1;
+			int topLeftY = y1 + 1;
+			int botRightX = x2 - 1;
+			int botRightY = y2 - 1;
+
+			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+				Stone s = getStone(i, j);
+				if (s != null) {
+					list.add(s);
+				}
+			}
+
+		}
+
+		// Fall 2: rechts unten nach links oben
+
+		if (topY == y2 && leftX == x2) {
+
+			int topLeftX = x2 + 1;
+			int topLeftY = y2 + 1;
+			int botRightX = x1 - 1;
+			int botRightY = y1 - 1;
+
+			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+				Stone s = getStone(i, j);
+				if (s != null) {
+					list.add(s);
+				}
+			}
+
+		}
+
+		// Fall 3: rechts oben nach links unten
+
+		if (topY == y1 && rightX == x1) {
+
+			int topRightX = x1 - 1;
+			int topRightY = y1 + 1;
+			int botLeftX = x2 + 1;
+			int botLeftY = y2 - 1;
+
+			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+				Stone s = getStone(i, j);
+				if (s != null) {
+					list.add(s);
+				}
+			}
+
+		}
+
+		// Fall 4: links unten nach rechts oben
+
+		if (topY == y2 && rightX == x2) {
+
+			int topRightX = x2 - 1;
+			int topRightY = y2 + 1;
+			int botLeftX = x1 + 1;
+			int botLeftY = y1 - 1;
+
+			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+				Stone s = getStone(i, j);
+				if (s != null) {
+					list.add(s);
+				}
+			}
+
+		}
+
+		return list;
+	}
+
+	private List<Stone> getStonesBetweenHorizontal(int x, int x2, int y) {
+		List<Stone> list = new ArrayList<Stone>();
+
+		int left = Math.min(x, x2) + 1;
+		int right = Math.max(x, x2) - 1;
+
+		for (int i = left; i <= right; i++) {
+			Stone s = getStone(i, y);
+			if (s != null) {
+				list.add(s);
+			}
+		}
+
+		return list;
+	}
+
+	private List<Stone> getStonesBetweenVertical(int y, int y2, int x) {
+		List<Stone> list = new ArrayList<Stone>();
+
+		int top = Math.min(y, y2) + 1;
+		int bot = Math.max(y, y2) - 1;
+
+		for (int i = top; i <= bot; i++) {
+			Stone s = getStone(x, i);
+			if (s != null) {
+				list.add(s);
+			}
+		}
+
+		return list;
 	}
 
 	/**
