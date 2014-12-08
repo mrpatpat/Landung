@@ -35,7 +35,7 @@ public class MoveAndSetAction extends Action {
 				+ getMoveFrom() + " nach " + getMoveTo() + " und setzt auf "
 				+ getSetTo();
 	}
-
+	
 	@Override
 	public boolean isActionValid(Board board, int turn, boolean print) {
 
@@ -129,7 +129,7 @@ public class MoveAndSetAction extends Action {
 
 				if (delta < 3) {
 					if (print)
-						player.notifyUnvalidMove("Man muss mindestens 2 Felder weit ziehen.");
+						player.notifyUnvalidMove("Man muss mindestens 3 Felder weit ziehen.");
 					return false;
 				}
 
