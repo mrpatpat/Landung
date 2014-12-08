@@ -1,14 +1,16 @@
 package oot.landung.game;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
-import oot.landung.game.player.Player;
 import oot.landung.game.player.PeterAiPlayer;
+import oot.landung.game.player.Player;
+import oot.landung.game.utils.Utils;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -21,12 +23,43 @@ public class Game implements Serializable {
 
 	/**
 	 * Startpunkt für unseren Prototypen
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		Game g = new Game(GameType.EVE_NOOB);
+		Scanner in = Utils.getScanner();
+
+		System.out.println("Landung - Prototyp\n");
+		System.out.println("Spielmodus wählen:");
+		System.out.println("(1) Mensch gegen Mensch");
+		System.out.println("(2) Mensch gegen Peter");
+		System.out.println("(3) Peter gegen Peter");
+		System.out.println("sonstige Eingabe -> Ende");
+
+		String choice = in.nextLine();
+		
+		Game g = null;
+		
+		switch (choice) {
+		case "1":
+			g = new Game(GameType.PVP);
+			break;
+		case "2":
+			g = new Game(GameType.PVE_NOOB);
+			break;
+		case "3":
+			g = new Game(GameType.EVE_NOOB);
+			break;
+		default:
+			Utils.closeScanner();
+			System.exit(0);
+			break;
+		}
+
 		g.run();
+		
+		Utils.closeScanner();
 
 	}
 
@@ -75,7 +108,6 @@ public class Game implements Serializable {
 			player[0] = new PeterAiPlayer(1);
 			player[1] = new PeterAiPlayer(2);
 		}
-		
 
 		// init board
 		board = new Board();
@@ -89,37 +121,37 @@ public class Game implements Serializable {
 	 * Spielschleife gibt Sieger zurück
 	 */
 	public Player run() {
-		
+
 		Player w = null;
 
 		do {
 
 			runPlayerTurn(player[0]);
 
-			if(!player[1].hasValidActions(board, turn)){
+			if (!player[1].hasValidActions(board, turn)) {
 				w = player[0];
 				w.notifyWinner();
 				return w;
 			}
 			w = getWinner();
-			
+
 			if (w == null) {
 				runPlayerTurn(player[1]);
-				
-				if(!player[0].hasValidActions(board, turn)){
+
+				if (!player[0].hasValidActions(board, turn)) {
 					w = player[1];
 					w.notifyWinner();
 					return w;
 				}
-				
+
 				w = getWinner();
-				
+
 			}
 
-		} while (w == null);	
-		
+		} while (w == null);
+
 		board.print();
-		
+
 		w.notifyWinner();
 
 		return w;
@@ -131,21 +163,21 @@ public class Game implements Serializable {
 		boolean turnValid = false;
 		do {
 			board.print();
-			a = p.askforAction(turn,board);
+			a = p.askforAction(turn, board);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
 
 		a.execute(board);
-		
-		if(p.getStones()>=0){
+
+		if (p.getStones() >= 0) {
 			p.removeStone();
 		} else {
-			
+
 			boolean remValid = false;
 			RemoveAction ra;
-			
+
 			do {
 				board.print();
 				ra = p.askforRemoveAction(board);
@@ -153,11 +185,11 @@ public class Game implements Serializable {
 					remValid = true;
 				}
 			} while (remValid == false);
-			
+
 			ra.execute(board);
-			
+
 		}
-		
+
 		turn++;
 
 	}
@@ -253,5 +285,5 @@ public class Game implements Serializable {
 
 		return null;
 	}
-	
+
 }
