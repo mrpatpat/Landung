@@ -130,7 +130,8 @@ public class Game implements Serializable {
 
 			if (!player[1].hasValidActions(board, turn)) {
 				w = player[0];
-				w.notifyWinner();
+				board.print();
+				w.notifyWinner();			
 				return w;
 			}
 			w = getWinner();
@@ -140,6 +141,7 @@ public class Game implements Serializable {
 
 				if (!player[0].hasValidActions(board, turn)) {
 					w = player[1];
+					board.print();
 					w.notifyWinner();
 					return w;
 				}
@@ -148,8 +150,9 @@ public class Game implements Serializable {
 
 			}
 
-		} while (w == null);
-
+		} while (w == null); // ist unbnötig !! wird nie genutzt ?? wenn w = null ist returned er in der while schleife
+							 
+		
 		board.print();
 
 		w.notifyWinner();
