@@ -1,6 +1,7 @@
 package oot.landung.game.player;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
@@ -53,9 +54,27 @@ public class HumanPlayer extends Player {
 				+ this.getSymbol() + "):");
 
 		String command = in.nextLine();
+		boolean b = false;
+		
+		
+		if(turn == 0 || turn == 1 || turn == 3 ){
+		b = Pattern.matches("[a-e][0-5]", command);
+		}
+		
+		
+		if(turn >= 1 && b == false){
+		b = Pattern.matches("[a-e][0-5][ ][a-e][0-5]", command);
+		}
+		
+		
+		if (b == false) {
+			System.out.println("Fehlerhafte Eingabe");
+			return askforAction(turn, board);
+		}
+		
 
 		// help
-		if (command.contains("hilfe")) {
+		if (command.contains("hilfe") || b == false) {
 
 			printHelp();
 			return askforAction(turn, board);
