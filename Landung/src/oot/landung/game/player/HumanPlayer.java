@@ -116,7 +116,8 @@ public class HumanPlayer extends Player {
 				x = 4;
 				break;
 			default:
-				return null;
+				x = 6; // wenn andere buchstaben als a b c d e eingeben werden wird x auf 6 gesetzt 
+					   // somit liefert die size abfrage  6 <5 false 
 			}
 
 			return new Vector<Integer>(x, y);

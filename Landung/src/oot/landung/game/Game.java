@@ -125,7 +125,6 @@ public class Game implements Serializable {
 		Player w = null;
 
 		do {
-
 			runPlayerTurn(player[0]);
 
 			if (!player[1].hasValidActions(board, turn)) {
