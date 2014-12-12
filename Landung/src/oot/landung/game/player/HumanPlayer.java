@@ -58,12 +58,12 @@ public class HumanPlayer extends Player {
 		
 		
 		if(turn == 0 || turn == 1 || turn == 3 ){
-		b = Pattern.matches("[a-e][0-5]", command);
+		b = Pattern.matches("[a-e][0-4]", command);
 		}
 		
 		
 		if(turn >= 1 && b == false){
-		b = Pattern.matches("[a-e][0-5][ ][a-e][0-5]", command);
+		b = Pattern.matches("[a-e][0-4][ ][a-e][0-4]", command);
 		}
 		
 		
