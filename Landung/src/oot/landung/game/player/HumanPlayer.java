@@ -55,9 +55,16 @@ public class HumanPlayer extends Player {
 
 		String command = in.nextLine();
 		boolean b = false;
+	
 		
 		
-		if(turn == 0 || turn == 1 || turn == 3 ){
+		// noch sehr unsauber programmiert sry :/
+		if (command.contains("sudo")) {
+			b = Pattern.matches("[sudo][a-e][0-4][ ][a-e][0-4]", command)
+			  ||Pattern.matches("[sudo][a-e][0-4]", command);
+			
+			
+		}else if(turn == 0 || turn == 1 || turn == 3 ){
 		b = Pattern.matches("[a-e][0-4]", command);
 		}
 		
@@ -65,6 +72,7 @@ public class HumanPlayer extends Player {
 		if(turn >= 1 && b == false){
 		b = Pattern.matches("[a-e][0-4][ ][a-e][0-4]", command);
 		}
+		
 		
 		
 		
@@ -180,6 +188,8 @@ public class HumanPlayer extends Player {
 		System.out.format(f, "", "");
 
 		System.out.format(f, "[1]", "regel 1");
+		
+		
 	}
 
 	/**

@@ -264,7 +264,7 @@ public class Board {
 		// Leerzeile damit es schöner aussieht
 		System.out.println();
 
-		System.out.printf("   | A | B | C | D | E |%n");
+		
 		System.out.printf("---+---+---+---+---+---+%n");
 
 		for (int i = 0; i < SIZE; i++) {
@@ -279,8 +279,10 @@ public class Board {
 
 			System.out.format(format, row);
 			System.out.printf("---+---+---+---+---+---+%n");
+			
 
 		}
+		System.out.printf("   | A | B | C | D | E |%n");
 	}
 
 }
