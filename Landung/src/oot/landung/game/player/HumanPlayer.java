@@ -67,18 +67,18 @@ public class HumanPlayer extends Player {
 		}
 		
 		
-		if (b == false) {
-			System.out.println("Fehlerhafte Eingabe");
-			return askforAction(turn, board);
-		}
 		
-
-		// help
-		if (command.contains("hilfe") || b == false) {
+		if (command.contains("hilfe")) {
 
 			printHelp();
 			return askforAction(turn, board);
 
+		} 
+		
+		
+		if (b == false) {
+			System.out.println("Fehlerhafte Eingabe");
+			return askforAction(turn, board);
 		} else {
 
 			String[] commands = command.split(" ");
