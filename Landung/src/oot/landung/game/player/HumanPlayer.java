@@ -149,6 +149,7 @@ public class HumanPlayer extends Player {
 	 * Gibt eine Hilfeseite auf der Standardkonsole aus.
 	 */
 	public void printHelp() {
+		System.out.println();
 		String f = "%-30s %-50s %n";
 
 		System.out.format(f, "Schreibweisen", "");
@@ -169,8 +170,8 @@ public class HumanPlayer extends Player {
 
 		System.out.format(f, "[Feld]", "Setze Stein auf [Feld]");
 		System.out
-				.format(f, "[Feld1][Feld2][Feld3]",
-						"Bewege Stein auf [Feld1] nach [Feld2] und setze einen Stein auf [Feld3]");
+				.format(f, "[Feld1][Feld2]",
+						"Bewege Stein auf [Feld1] nach [Feld2]");
 
 		System.out.format(f, "", "");
 
