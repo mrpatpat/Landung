@@ -80,19 +80,7 @@ public class MoveAndSetAction extends Action {
 				return false;
 			}
 
-			// Spieler darf nur auf leere Felder setzen
-			if (setTo != null) {
-				if (print)
-					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
-				return false;
-			}
-
-			// Spieler darf nur auf leere Felder ziehen
-			if (getMoveTo() != null && moveTo != null) {
-				if (print)
-					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
-				return false;
-			}
+		
 
 			// nur in die Richtungen horizontal, vertikal, diagonal ziehen und
 			// mindestens 2 Felder weiter.
@@ -139,7 +127,20 @@ public class MoveAndSetAction extends Action {
 				}
 
 			}
+			
+			// Spieler darf nur auf leere Felder setzen
+			if (setTo != null) {
+				if (print)
+					player.notifyUnvalidMove("Das Feld auf das man setzt muss leer sein.");
+				return false;
+			}
 
+			// Spieler darf nur auf leere Felder ziehen
+			if (getMoveTo() != null && moveTo != null) {
+				if (print)
+					player.notifyUnvalidMove("Man darf nur auf leere Felder ziehen.");
+				return false;
+			}
 		}
 
 		return true;
