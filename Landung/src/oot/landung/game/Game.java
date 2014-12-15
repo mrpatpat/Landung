@@ -83,7 +83,7 @@ public class Game implements Serializable {
 	/**
 	 * Spieler
 	 */
-	private Player[] player;
+	public Player[] player;
 
 	/**
 	 * Spielzug
@@ -173,9 +173,7 @@ public class Game implements Serializable {
 
 		a.execute(board);
 
-		if (p.getStones() >= 0) {
-			p.removeStone();
-		} else {
+		if (p.getStones() <= 0) {
 
 			boolean remValid = false;
 			RemoveAction ra;

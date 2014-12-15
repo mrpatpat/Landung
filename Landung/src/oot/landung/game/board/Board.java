@@ -71,13 +71,13 @@ public class Board {
 	 */
 	public void moveStone(int x1, int y1, int x2, int y2) {
 		if (tiles[x1][y1] != null) {
-			tiles[x2][y2] = tiles[x1][y1];
-			tiles[x1][y1] = null;
+			Stone s = removeStone(x1, y1);
+			placeStone(x2,y2,s);
 		}
 	}
 
 	/**
-	 * Platziert einen Stein auf Feld xy
+	 * Platziert einen Stein auf Feld xy und updatet seine Position
 	 * 
 	 * @param x
 	 *            x Koordinate
@@ -88,24 +88,38 @@ public class Board {
 	 */
 	public void placeStone(int x, int y, Stone s) {
 		tiles[x][y] = s;
+		s.updatePosition(x, y);
+		s.getOwner().onStonePlaced(s);
 	}
 
 	/**
-	 * Entfernt einen Stein auf Feld xy
+	 * Entfernt einen Stein auf Feld xy, gibt ihn zurück und benachrichtigt den
+	 * Spieler über das Entfernen
 	 * 
 	 * @param x
 	 *            x Koordinate
 	 * @param y
 	 *            y Koordinate
+	 * @return Stein
 	 */
-	public void removeStone(int x, int y) {
-		tiles[x][y] = null;
+	public Stone removeStone(int x, int y) {
+		Stone s = getStone(x, y);
+		if (s != null) {
+
+			tiles[x][y] = null;
+			s.getOwner().onStoneRemoved(s);
+			return s;
+		} else
+			return null;
 	}
 
 	/**
 	 * Gibt zurück ob Steine zwischen zwei Feldern liegen.
-	 * @param a Feld 1
-	 * @param b Feld 2
+	 * 
+	 * @param a
+	 *            Feld 1
+	 * @param b
+	 *            Feld 2
 	 * @return true, wenn Steine im Weg liegen
 	 */
 	public boolean hasStonesInBetween(Vector<Integer> a, Vector<Integer> b) {
@@ -116,8 +130,11 @@ public class Board {
 
 	/**
 	 * Gibt eine Liste aller Steine zwischen zwei Feldern zurück.
-	 * @param a Feld 1
-	 * @param b Feld 2
+	 * 
+	 * @param a
+	 *            Feld 1
+	 * @param b
+	 *            Feld 2
 	 * @return Liste
 	 */
 	public List<Stone> getStonesBetween(Vector<Integer> a, Vector<Integer> b) {
@@ -156,7 +173,8 @@ public class Board {
 			int botRightX = x2 - 1;
 			int botRightY = y2 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+			for (int i = topLeftX, j = topLeftY; i <= botRightX
+					&& j <= botRightY; i++, j++) {
 				Stone s = getStone(i, j);
 				if (s != null) {
 					list.add(s);
@@ -174,7 +192,8 @@ public class Board {
 			int botRightX = x1 - 1;
 			int botRightY = y1 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+			for (int i = topLeftX, j = topLeftY; i <= botRightX
+					&& j <= botRightY; i++, j++) {
 				Stone s = getStone(i, j);
 				if (s != null) {
 					list.add(s);
@@ -192,7 +211,8 @@ public class Board {
 			int botLeftX = x2 + 1;
 			int botLeftY = y2 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+			for (int i = topRightX, j = topRightY; i >= botLeftX
+					&& j <= botLeftY; i--, j++) {
 				Stone s = getStone(i, j);
 				if (s != null) {
 					list.add(s);
@@ -210,7 +230,8 @@ public class Board {
 			int botLeftX = x1 + 1;
 			int botLeftY = y1 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+			for (int i = topRightX, j = topRightY; i >= botLeftX
+					&& j <= botLeftY; i--, j++) {
 				Stone s = getStone(i, j);
 				if (s != null) {
 					list.add(s);
@@ -264,7 +285,6 @@ public class Board {
 		// Leerzeile damit es schöner aussieht
 		System.out.println();
 
-		
 		System.out.printf("---+---+---+---+---+---+%n");
 
 		for (int i = 0; i < SIZE; i++) {
@@ -279,7 +299,6 @@ public class Board {
 
 			System.out.format(format, row);
 			System.out.printf("---+---+---+---+---+---+%n");
-			
 
 		}
 		System.out.printf("   | A | B | C | D | E |%n");

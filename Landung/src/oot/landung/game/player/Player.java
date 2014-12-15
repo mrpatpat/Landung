@@ -1,10 +1,14 @@
 package oot.landung.game.player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
+import oot.landung.game.board.Stone;
 import oot.landung.game.utils.Vector;
 
 /**
@@ -21,11 +25,11 @@ import oot.landung.game.utils.Vector;
  */
 public abstract class Player {
 
-	private int stones = 9;
 	private String name;
 	private int points = 0;
 	private String symbol;
 	private int playerID;
+	private List<Stone> placedStones;
 
 	/**
 	 * Instanziiert einen neuen Spieler.
@@ -37,6 +41,7 @@ public abstract class Player {
 		this.playerID = playerID;
 		symbol = playerID == 1 ? "X" : "O";
 		this.name = askforName();
+		placedStones = new ArrayList<Stone>();
 	}
 
 	/**
@@ -54,7 +59,7 @@ public abstract class Player {
 	 * @return Steine
 	 */
 	public int getStones() {
-		return this.stones;
+		return 9 - placedStones.size();
 	}
 
 	/**
@@ -82,20 +87,6 @@ public abstract class Player {
 	 */
 	public int getPoints() {
 		return this.points;
-	}
-
-	/**
-	 * Gibt dem Spieler einen Stein.
-	 */
-	public void addStone() {
-		stones++;
-	}
-
-	/**
-	 * Nimmt dem Spieler einen Stein weg.
-	 */
-	public void removeStone() {
-		stones--;
 	}
 
 	/**
@@ -130,48 +121,119 @@ public abstract class Player {
 
 	/**
 	 * Fordert den Spieler auf einen Stein zu entfernen.
-	 * @param board Spielbrett
+	 * 
+	 * @param board
+	 *            Spielbrett
 	 * @return Die RemoveAction des Spielers
 	 */
 	public abstract RemoveAction askforRemoveAction(Board board);
 
+	public void onStonePlaced(Stone s) {
+		placedStones.add(s);
+	}
+
+	public void onStoneRemoved(Stone s) {
+		placedStones.remove(s);
+	}
+
 	/**
 	 * Gibt zurück, ob ein Spieler noch gültige Aktionen ausführen kann.
-	 * @param board Spielbrett
-	 * @param turn aktueller Zug
+	 * 
+	 * @param board
+	 *            Spielbrett
+	 * @param turn
+	 *            aktueller Zug
 	 * @return true, wenn der Spieler noch Aktionen ausführen kann
 	 */
 	public boolean hasValidActions(Board board, int turn) {
 
+		return !getValidActions(board, turn).isEmpty();
+
+	}
+
+	/**
+	 * Gibt eine Liste aller gültigen Züge zurück.
+	 * 
+	 * @param board
+	 *            Spielbrett
+	 * @param turn
+	 *            Zug
+	 * @return Liste
+	 */
+	public List<Action> getValidActions(Board board, int turn) {
+
+		List<Action> result = new ArrayList<Action>();
+
+		if (turn == 0 || turn == 1) {
+			return getValidSetActions(board);
+		} else if (turn == 2 || turn > 3) {
+			return getValidMoveAndSetActions(board, turn);
+		} else if (turn == 3) {
+			result.addAll(getValidSetActions(board));
+			result.addAll(getValidMoveAndSetActions(board, turn));
+			return result;
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * Gibt eine Liste aller möglichen "Bewegen und Setzen" Züge zurück
+	 * 
+	 * @param board
+	 *            Spielbrett
+	 * @param turn
+	 *            Zug
+	 * @return Liste
+	 */
+	private List<Action> getValidMoveAndSetActions(Board board, int turn) {
+
+		List<Action> result = new ArrayList<Action>();
+
+		for (Stone s : placedStones) {
+			for (int i = 0; i < Board.SIZE; i++) {
+				for (int j = 0; j < Board.SIZE; j++) {
+
+					MoveAndSetAction a = new MoveAndSetAction(false, this,
+							s.getPosition(), new Vector<Integer>(i, j));
+
+					if (a.isActionValid(board, turn, false)) {
+						result.add(a);
+					}
+				}
+			}
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * Gibt eine Liste aller möglichen "Setzen" Züge zurück
+	 * 
+	 * @param board
+	 *            Spielbrett
+	 * @return Liste
+	 */
+	private List<Action> getValidSetActions(Board board) {
+
+		List<Action> result = new ArrayList<Action>();
+
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
 
-				for (int k = 0; k < Board.SIZE; k++) {
-					for (int l = 0; l < Board.SIZE; l++) {
-
-						SetAction a = new SetAction(false, this,
-								new Vector<Integer>(i, j));
-
-						MoveAndSetAction b = new MoveAndSetAction(false, this,
-								new Vector<Integer>(i, j), new Vector<Integer>(
-										k, l));
-
-						if (a.isActionValid(board, turn, false)) {
-							return true;
-						}
-						
-						if (b.isActionValid(board, turn, false)) {
-							return true;
-						}
-
-					}
-
+				if (board.getStone(i, j) == null) {
+					Action a = new SetAction(false, this, new Vector<Integer>(
+							i, j));
+					result.add(a);
 				}
-			}
 
+			}
 		}
 
-		return false;
+		return result;
 
 	}
+
 }

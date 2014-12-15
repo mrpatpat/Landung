@@ -52,6 +52,8 @@ public class HumanPlayer extends Player {
 
 		System.out.println("\n" + this.getName() + " ist am Zug ("
 				+ this.getSymbol() + "):");
+		
+		System.out.println(this.getValidActions(board, turn));
 
 		String command = in.nextLine();
 		boolean b = false;
