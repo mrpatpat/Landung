@@ -4,6 +4,7 @@ import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.ai.AiInterface;
+import oot.landung.game.player.ai.StupidAi;
 
 public class ComputerPlayer extends Player {
 
@@ -14,6 +15,8 @@ public class ComputerPlayer extends Player {
 	ComputerPlayer(int id, int level) {
 		super(id);
 		this.level = level;
+		this.stupid = new StupidAi();
+		this.smart = new StupidAi();
 	}
 
 	@Override
@@ -44,8 +47,14 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Action askforAction(int turn, Board board) {
 		
-		//random number 
-		return null;
+		int rand = (int) (Math.random() * 5);
+		
+		if(rand<=level){
+			return stupid.getNextAction(board, this.getValidActions(board, turn), turn);
+		} else {
+			return smart.getNextAction(board, this.getValidActions(board, turn), turn);
+		}
+
 	}
 
 	@Override
@@ -54,6 +63,7 @@ public class ComputerPlayer extends Player {
 
 	@Override
 	public RemoveAction askforRemoveAction(Board board) {
+		//TODO: getValidRemoveActions ?
 		return null;
 	}
 

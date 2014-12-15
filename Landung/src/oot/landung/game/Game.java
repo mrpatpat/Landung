@@ -9,7 +9,6 @@ import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.game.player.ai.PeterAiPlayer;
 import oot.landung.game.utils.Utils;
 
 /**
@@ -101,12 +100,6 @@ public class Game implements Serializable {
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
 			player[1] = new HumanPlayer(2);
-		} else if (type == GameType.PVE_NOOB) {
-			player[0] = new HumanPlayer(1);
-			player[1] = new PeterAiPlayer(2);
-		} else if (type == GameType.EVE_NOOB) {
-			player[0] = new PeterAiPlayer(1);
-			player[1] = new PeterAiPlayer(2);
 		}
 
 		// init board

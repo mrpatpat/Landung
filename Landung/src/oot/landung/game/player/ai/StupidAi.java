@@ -21,11 +21,9 @@ public class StupidAi implements AiInterface {
 	@Override
 	public Action getNextAction(Board board, List<Action> allPossibleActions,
 			int turn) {
-	
-		
-		
-		
+
 		return allPossibleActions.get((int)(Math.random()*allPossibleActions.size()));
+		
 	}
 
 
