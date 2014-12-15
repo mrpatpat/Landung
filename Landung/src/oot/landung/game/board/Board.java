@@ -290,7 +290,7 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 
 			String[] row = new String[SIZE + 1];
-			row[0] = Integer.toString(i);
+			row[0] = Integer.toString(SIZE-i);
 
 			for (int j = 0; j < SIZE; j++) {
 				row[j + 1] = tiles[j][i] == null ? "" : " "

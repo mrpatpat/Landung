@@ -6,6 +6,7 @@ import java.util.List;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
+import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
 /**
@@ -192,9 +193,9 @@ public class Action {
 	public String toString() {
 		String s = "";
 		s += actor.getName() + ";";
-		s += moveFrom + "->";
-		s += moveTo + ";set:";
-		s += setTo + ";";
+		s += Utils.convertInternalVectorToExternalString(moveFrom) + "->";
+		s += Utils.convertInternalVectorToExternalString(moveTo) + ";set:";
+		s += Utils.convertInternalVectorToExternalString(setTo) + ";";
 		return s;
 	}
 

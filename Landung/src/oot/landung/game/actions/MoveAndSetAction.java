@@ -3,6 +3,7 @@ package oot.landung.game.actions;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
+import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
 /**
@@ -32,10 +33,13 @@ public class MoveAndSetAction extends Action {
 
 	public String toString() {
 		return "Spieler " + getActor().getName() + " zieht von "
-				+ getMoveFrom() + " nach " + getMoveTo() + " und setzt auf "
-				+ getSetTo();
+				+ Utils.convertInternalVectorToExternalString(getMoveFrom())
+				+ " nach "
+				+ Utils.convertInternalVectorToExternalString(getMoveTo())
+				+ " und setzt auf "
+				+ Utils.convertInternalVectorToExternalString(getSetTo());
 	}
-	
+
 	@Override
 	public boolean isActionValid(Board board, int turn, boolean print) {
 
@@ -102,10 +106,11 @@ public class MoveAndSetAction extends Action {
 						- getMoveTo().getY());
 
 				int delta = 0;
-				
-				//kein springen
-				if(board.hasStonesInBetween(getMoveFrom(), getMoveTo())){
-					if(print) player.notifyUnvalidMove("Man darf keine Steine überspringen");
+
+				// kein springen
+				if (board.hasStonesInBetween(getMoveFrom(), getMoveTo())) {
+					if (print)
+						player.notifyUnvalidMove("Man darf keine Steine überspringen");
 					return false;
 				}
 

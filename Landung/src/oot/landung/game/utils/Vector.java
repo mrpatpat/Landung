@@ -35,31 +35,7 @@ public class Vector<T> {
 	}
 
 	public String toString() {
-		return "(" + convert(x) + " " + y + ")";
-	}
-
-	private String convert(T toConvert) {
-		String converted = toConvert.toString();
-		switch (converted) {
-		case "0":
-			converted = "A";
-			break;
-		case "1":
-			converted = "B";
-			break;
-		case "2":
-			converted = "C";
-			break;
-		case "3":
-			converted = "D";
-			break;
-		case "4":
-			converted = "E";
-			break;
-		default:
-			return null;
-		}
-		return converted;
+		return "(" + x + " " + y + ")";
 	}
 
 	@Override

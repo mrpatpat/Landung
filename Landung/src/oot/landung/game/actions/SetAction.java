@@ -3,6 +3,7 @@ package oot.landung.game.actions;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
+import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
 /**
@@ -59,7 +60,7 @@ public class SetAction extends Action {
 	}
 
 	public String toString() {
-		return "Spieler " + getActor().getName() + " zieht nach " + getSetTo();
+		return "Spieler " + getActor().getName() + " setzt nach " + Utils.convertInternalVectorToExternalString(getSetTo());
 	}
 
 }
