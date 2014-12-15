@@ -7,7 +7,12 @@ import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.utils.Vector;
 
-public class PeterAiPlayer extends ComputerPlayer {
+/**
+ * RIP PETER
+ * @author Adrian
+ *
+ */
+public class PeterAiPlayer extends Player {
 
 	public PeterAiPlayer(int n) {
 		super(n);
