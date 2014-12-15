@@ -43,6 +43,8 @@ public class ComputerPlayer extends Player {
 
 	@Override
 	public Action askforAction(int turn, Board board) {
+		
+		//random number 
 		return null;
 	}
 
