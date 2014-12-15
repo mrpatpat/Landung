@@ -7,9 +7,9 @@ import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
+import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.game.player.ai.PeterAiPlayer;
 import oot.landung.game.utils.Utils;
 
 /**
@@ -101,12 +101,12 @@ public class Game implements Serializable {
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
 			player[1] = new HumanPlayer(2);
-		} else if (type == GameType.PVE_NOOB) {
+		} else if(type == GameType.PVE_NOOB){
 			player[0] = new HumanPlayer(1);
-			player[1] = new PeterAiPlayer(2);
-		} else if (type == GameType.EVE_NOOB) {
-			player[0] = new PeterAiPlayer(1);
-			player[1] = new PeterAiPlayer(2);
+			player[1] = new ComputerPlayer(2,0);
+		} else if(type == GameType.EVE_NOOB){
+			player[0] = new ComputerPlayer(1,0);
+			player[1] = new ComputerPlayer(2,0);
 		}
 
 		// init board
@@ -180,7 +180,7 @@ public class Game implements Serializable {
 
 			do {
 				board.print();
-				ra = p.askforRemoveAction(board);
+				ra = p.askforRemoveAction(board,turn);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
 				}

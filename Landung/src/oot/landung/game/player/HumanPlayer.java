@@ -151,7 +151,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public RemoveAction askforRemoveAction(Board board) {
+	public RemoveAction askforRemoveAction(Board board, int turn) {
 
 		Scanner in = Utils.getScanner();
 

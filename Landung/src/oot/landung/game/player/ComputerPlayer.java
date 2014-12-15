@@ -4,21 +4,38 @@ import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.ai.AiInterface;
+import oot.landung.game.player.ai.StupidAi;
 
+/**
+ * Computerspieler mit 5 Spielstufen (0-4)
+ * 
+ * @author Adrian
+ *
+ */
 public class ComputerPlayer extends Player {
 
 	private int level;
 	private AiInterface stupid;
 	private AiInterface smart;
 
-	ComputerPlayer(int id, int level) {
+	/**
+	 * Erzeugt einen Computerspieler mit einer KI Stufe
+	 * 
+	 * @param id
+	 *            id
+	 * @param level
+	 *            KI Stufe 0-4
+	 */
+	public ComputerPlayer(int id, int level) {
 		super(id);
 		this.level = level;
+		this.stupid = new StupidAi();
+		this.smart = new StupidAi();
 	}
 
 	@Override
 	public void notifyWinner() {
-
+		// irrelevant
 	}
 
 	@Override
@@ -41,20 +58,57 @@ public class ComputerPlayer extends Player {
 
 	}
 
+	/**
+	 * Gibt einen Zug des Spielers zurück. Benutzt je nach Stufe Züge der
+	 * intelligenten und dummen KI (in einem Verhältnis linear zum Level).
+	 * 
+	 * @param turn
+	 *            der zug
+	 * @param board
+	 *            das Spielfeld
+	 * @return der Zug
+	 */
 	@Override
 	public Action askforAction(int turn, Board board) {
-		
-		//random number 
-		return null;
+
+		int rand = (int) (Math.random() * 5);
+
+		if (rand <= level) {
+			return stupid.getNextAction(board,
+					this.getValidActions(board, turn), turn);
+		} else {
+			return smart.getNextAction(board,
+					this.getValidActions(board, turn), turn);
+		}
+
 	}
 
 	@Override
 	public void notifyUnvalidMove(String message) {
+		// irrelevant
 	}
 
+	/**
+	 * Gibt einen Entfernen-Zug des Spielers zurück. Benutzt je nach Stufe Züge der
+	 * intelligenten und dummen KI (in einem Verhältnis linear zum Level).
+	 * 
+	 * @param turn
+	 *            der zug
+	 * @param board
+	 *            das Spielfeld
+	 * @return der Zug
+	 */
 	@Override
-	public RemoveAction askforRemoveAction(Board board) {
-		return null;
+	public RemoveAction askforRemoveAction(Board board, int turn) {
+		int rand = (int) (Math.random() * 5);
+
+		if (rand <= level) {
+			return stupid.getNextRemoveAction(board,
+					this.getValidRemoveActions(board, turn));
+		} else {
+			return smart.getNextRemoveAction(board,
+					this.getValidRemoveActions(board, turn));
+		}
 	}
 
 }
