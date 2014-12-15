@@ -162,7 +162,7 @@ public abstract class Player {
 	 */
 	public List<Action> getValidActions(Board board, int turn) {
 
-		List<Action> result = new ArrayList<Action>();
+		List<Action> result = new ArrayList<>();
 
 		if (turn == 0 || turn == 1) {
 			return getValidSetActions(board);
@@ -189,7 +189,7 @@ public abstract class Player {
 	 */
 	private List<Action> getValidMoveAndSetActions(Board board, int turn) {
 
-		List<Action> result = new ArrayList<Action>();
+		List<Action> result = new ArrayList<>();
 
 		for (Stone s : placedStones) {
 			for (int i = 0; i < Board.SIZE; i++) {

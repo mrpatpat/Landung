@@ -8,8 +8,8 @@ import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.HumanPlayer;
-import oot.landung.game.player.PeterAiPlayer;
 import oot.landung.game.player.Player;
+import oot.landung.game.player.ai.PeterAiPlayer;
 import oot.landung.game.utils.Utils;
 
 /**
