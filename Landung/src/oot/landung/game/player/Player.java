@@ -126,7 +126,7 @@ public abstract class Player {
 	 *            Spielbrett
 	 * @return Die RemoveAction des Spielers
 	 */
-	public abstract RemoveAction askforRemoveAction(Board board);
+	public abstract RemoveAction askforRemoveAction(Board board, int turn);
 
 	public void onStonePlaced(Stone s) {
 		placedStones.add(s);
@@ -207,6 +207,30 @@ public abstract class Player {
 
 		return result;
 
+	}
+
+	/**
+	 * Gibt eine Liste aller möglichen "Entfernen" Züge zurück
+	 * @param board Spielfeld
+	 * @param turn Zug
+	 * @return alle möglichen Entfernen Züge
+	 */
+	public List<RemoveAction> getValidRemoveActions(Board board, int turn) {
+
+		List<RemoveAction> result = new ArrayList<>();
+
+		for (Stone s : placedStones) {
+
+			RemoveAction a = new RemoveAction(false, this, s.getPosition());
+
+			if (a.isActionValid(board, turn, false)) {
+				result.add(a);
+			}
+
+		}
+
+		return result;
+		
 	}
 
 	/**
