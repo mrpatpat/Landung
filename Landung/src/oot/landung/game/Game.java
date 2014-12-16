@@ -92,15 +92,6 @@ public class Game {
 	private int turn;
 
 	private int currentPlayer;
-	
-	public Game(SaveGame save){
-		
-		this.player = save.getPlayer();
-		this.board = save.getBoard();
-		this.currentPlayer = save.getCurrentPlayer();
-		this.turn = save.getTurn();
-		
-	}
 
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
