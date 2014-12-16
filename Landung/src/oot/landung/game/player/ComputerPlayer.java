@@ -92,7 +92,7 @@ public class ComputerPlayer extends Player {
 			System.out.println("Thomas hat gewonnen.");
 			break;
 		case 4:
-			System.out.println("NÃ¶Ã¶Ã¶g! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
+			System.out.println("Nööög! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
 			break;
 		default:
 			System.out.println("n/a hat gewonnen.");
