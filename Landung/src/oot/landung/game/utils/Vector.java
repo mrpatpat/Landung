@@ -8,7 +8,7 @@ package oot.landung.game.utils;
  * @param <T>
  *            Datentyp der Vektorkomponenten
  */
-public class Vector<T> {
+public class Vector<T>{
 
 	private T x;
 	private T y;

@@ -1,7 +1,7 @@
 package oot.landung.game.board;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import oot.landung.game.utils.Vector;
@@ -14,7 +14,7 @@ import oot.landung.game.utils.Vector;
  * @author Landung
  *
  */
-public class Board {
+public class Board implements Serializable{
 
 	/**
 	 * Gr��e des Spielbretts.

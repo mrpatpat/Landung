@@ -1,5 +1,6 @@
 package oot.landung.game.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import oot.landung.game.utils.Vector;
  * @author Landung
  *
  */
-public abstract class Player {
+public abstract class Player implements Serializable{
 
 	private String name;
 	private int points = 0;

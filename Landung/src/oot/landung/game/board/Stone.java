@@ -1,16 +1,20 @@
 package oot.landung.game.board;
 
+import java.io.Serializable;
+
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
-public class Stone {
+public class Stone implements Serializable{
 
 	private Player owner;
-	private Vector<Integer> position;
-
+	private int x;
+	private int y;
+	
 	public Stone(Player owner, int x, int y) {
 		this.owner = owner;
-		position = new Vector<Integer>(x, y);
+		this.x = x;
+		this.y = y;
 	}
 
 	public Player getOwner() {
@@ -22,12 +26,12 @@ public class Stone {
 	}
 
 	public Vector<Integer> getPosition() {
-		return position;
+		return new Vector<Integer>(x, y);
 	}
 
 	public void updatePosition(int x, int y) {
-		position.setX(x);
-		position.setY(y);
+		this.x = x;
+		this.y = y;
 	}
 	
 }

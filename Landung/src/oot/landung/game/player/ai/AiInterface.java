@@ -1,11 +1,10 @@
 package oot.landung.game.player.ai;
 
+import java.io.Serializable;
 import java.util.List;
 
 import oot.landung.game.actions.Action;
-import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
-import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 
 /**
@@ -13,7 +12,7 @@ import oot.landung.game.board.Board;
  * @author Adrian
  *
  */
-public interface AiInterface {
+public interface AiInterface extends Serializable{
 	
 	/**
 	 * Fordert einen Zug von der KI.

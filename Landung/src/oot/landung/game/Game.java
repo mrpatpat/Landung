@@ -11,6 +11,7 @@ import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Utils;
+import oot.landung.savegame.SaveGame;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -19,7 +20,7 @@ import oot.landung.game.utils.Utils;
  * Klassen, die Game benutzt müssen auch serialisierbar sein. Die Spielklasse
  * managed alles was zum Spiel gehört.
  */
-public class Game implements Serializable {
+public class Game {
 
 	/**
 	 * Startpunkt f�r unseren Prototypen
@@ -38,9 +39,9 @@ public class Game implements Serializable {
 		System.out.println("sonstige Eingabe -> Ende");
 
 		String choice = in.nextLine();
-		
+
 		Game g = null;
-		
+
 		switch (choice) {
 		case "1":
 			g = new Game(GameType.PVP);
@@ -58,7 +59,7 @@ public class Game implements Serializable {
 		}
 
 		g.run();
-		
+
 		Utils.closeScanner();
 
 	}
@@ -78,7 +79,7 @@ public class Game implements Serializable {
 	/**
 	 * Spielfeld static for test
 	 */
-	public static Board board;
+	public Board board;
 
 	/**
 	 * Spieler
@@ -89,6 +90,17 @@ public class Game implements Serializable {
 	 * Spielzug
 	 */
 	private int turn;
+
+	private int currentPlayer;
+	
+	public Game(SaveGame save){
+		
+		this.player = save.getPlayer();
+		this.board = save.getBoard();
+		this.currentPlayer = save.getCurrentPlayer();
+		this.turn = save.getTurn();
+		
+	}
 
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
@@ -101,12 +113,12 @@ public class Game implements Serializable {
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
 			player[1] = new HumanPlayer(2);
-		} else if(type == GameType.PVE_NOOB){
+		} else if (type == GameType.PVE_NOOB) {
 			player[0] = new HumanPlayer(1);
-			player[1] = new ComputerPlayer(2,0);
-		} else if(type == GameType.EVE_NOOB){
-			player[0] = new ComputerPlayer(1,0);
-			player[1] = new ComputerPlayer(2,0);
+			player[1] = new ComputerPlayer(2, 0);
+		} else if (type == GameType.EVE_NOOB) {
+			player[0] = new ComputerPlayer(1, 0);
+			player[1] = new ComputerPlayer(2, 0);
 		}
 
 		// init board
@@ -130,7 +142,7 @@ public class Game implements Serializable {
 			if (!player[1].hasValidActions(board, turn)) {
 				w = player[0];
 				board.print();
-				w.notifyWinner();			
+				w.notifyWinner();
 				return w;
 			}
 			w = getWinner();
@@ -149,9 +161,9 @@ public class Game implements Serializable {
 
 			}
 
-		} while (w == null); // ist unbn�tig !! wird nie genutzt ?? wenn w = null ist returned er in der while schleife
-							 
-		
+		} while (w == null); // ist unbn�tig !! wird nie genutzt ?? wenn w =
+								// null ist returned er in der while schleife
+
 		board.print();
 
 		w.notifyWinner();
@@ -161,22 +173,22 @@ public class Game implements Serializable {
 	}
 
 	private void runPlayerTurn(Player p) {
-		
+
 		Action a;
-		
+
 		boolean turnValid = false;
-		
-		
-		
+
+		currentPlayer = p.getPlayerID();
+
 		do {
 			board.print();
-			System.out.println(p.getName()+"("+p.getSymbol()+") hat folgende Zuege: "+p.getValidActions(board, turn));
+			System.out.println(p.getName() + "(" + p.getSymbol() + ") hat folgende Zuege: " + p.getValidActions(board, turn));
 			a = p.askforAction(turn, board);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName()+"("+p.getSymbol()+") wählt Zug: "+a);
+		System.out.println(p.getName() + "(" + p.getSymbol() + ") wählt Zug: " + a);
 		a.execute(board);
 
 		if (p.getStones() <= 0) {
@@ -186,7 +198,7 @@ public class Game implements Serializable {
 
 			do {
 				board.print();
-				ra = p.askforRemoveAction(board,turn);
+				ra = p.askforRemoveAction(board, turn);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
 				}
@@ -219,9 +231,7 @@ public class Game implements Serializable {
 				Stone c = board.getStone(i + 3, j);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner()
-							& a.getOwner() == b.getOwner()
-							& b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -239,9 +249,7 @@ public class Game implements Serializable {
 				Stone c = board.getStone(j, i + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner()
-							& a.getOwner() == b.getOwner()
-							& b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -259,9 +267,7 @@ public class Game implements Serializable {
 				Stone c = board.getStone(j + 3, i + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner()
-							& a.getOwner() == b.getOwner()
-							& b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -279,9 +285,7 @@ public class Game implements Serializable {
 				Stone c = board.getStone(i - 3, j + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner()
-							& a.getOwner() == b.getOwner()
-							& b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -290,6 +294,22 @@ public class Game implements Serializable {
 		}
 
 		return null;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public Player[] getPlayer() {
+		return player;
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public int getTurn() {
+		return turn;
 	}
 
 }

@@ -54,9 +54,6 @@ public class HumanPlayer extends Player {
 		System.out.println("\n" + this.getName() + " ist am Zug ("
 				+ this.getSymbol() + "):");
 
-		System.out.println("mögliche Züge: "
-				+ this.getValidActions(board, turn));
-
 		String command = in.nextLine();
 
 		
@@ -119,7 +116,7 @@ public class HumanPlayer extends Player {
 		System.out
 				.format(f,
 						"sudo",
-						"Vor jeden Befehl kann ein sudo gesetzt werden, das zum missachten der Regeln führt");
+						"Vor jeden Befehl kann ein sudo gesetzt werden, das zum missachten der Regeln fï¿½hrt");
 
 		System.out.format(f, "", "");
 
@@ -142,11 +139,11 @@ public class HumanPlayer extends Player {
 	}
 
 	/**
-	 * Benachrichtigung bei ungültigem Zug.
+	 * Benachrichtigung bei ungï¿½ltigem Zug.
 	 */
 	@Override
 	public void notifyUnvalidMove(String message) {
-		System.out.println("Ungültiger Zug: " + message);
+		System.out.println("Ungï¿½ltiger Zug: " + message);
 	}
 
 	/**
