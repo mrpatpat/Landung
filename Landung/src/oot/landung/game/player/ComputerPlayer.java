@@ -89,6 +89,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void notifyUnvalidMove(String message) {
 		// irrelevant
+		System.out.println(message);
 	}
 
 	/**

@@ -97,7 +97,7 @@ public abstract class Action {
 			vectors.add(getMoveFrom());
 			vectors.add(getMoveTo());
 			vectors.add(getSetTo());
-
+			
 			for (Vector<Integer> v : vectors) {
 				if (v != null) {
 					if (v.getX() < 0 || v.getX() >= Board.SIZE) {
@@ -112,9 +112,6 @@ public abstract class Action {
 					}
 				}
 			}
-
-			return true;
-
 		}
 
 		return true;

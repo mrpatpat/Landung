@@ -53,8 +53,9 @@ public class MoveAndSetAction extends Action {
 			if (getMoveFrom() != null)
 				moveFrom = board.getStone(getMoveFrom().getX(), getMoveFrom().getY());
 
-			if (getMoveTo() != null)
+			if (getMoveTo() != null) {
 				moveTo = board.getStone(getMoveTo().getX(), getMoveTo().getY());
+			}
 
 			if (getSetTo() != null) {
 				setTo = board.getStone(getSetTo().getX(), getSetTo().getY());
@@ -179,13 +180,12 @@ public class MoveAndSetAction extends Action {
 
 	@Override
 	public void execute(Board board) {
-		// execute move
-		if ((getMoveFrom() != null) && (getMoveTo() != null))
-			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(), getMoveTo().getX(), getMoveTo().getY());
-
-		// execute set
-		if (getSetTo() != null)
-			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
+			// execute move
+			if ((getMoveFrom() != null) && (getMoveTo() != null))
+				board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(), getMoveTo().getX(), getMoveTo().getY());
+			// execute set
+			if (getSetTo() != null)
+				board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
 	}
 
 }

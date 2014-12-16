@@ -195,8 +195,7 @@ public abstract class Player {
 			for (int i = 0; i < Board.SIZE; i++) {
 				for (int j = 0; j < Board.SIZE; j++) {
 
-					MoveAndSetAction a = new MoveAndSetAction(false, this,
-							s.getPosition(), new Vector<Integer>(i, j));
+					MoveAndSetAction a = new MoveAndSetAction(false, this, s.getPosition(), new Vector<Integer>(i, j));
 
 					if (a.isActionValid(board, turn, false)) {
 						result.add(a);
@@ -211,8 +210,11 @@ public abstract class Player {
 
 	/**
 	 * Gibt eine Liste aller m�glichen "Entfernen" Z�ge zur�ck
-	 * @param board Spielfeld
-	 * @param turn Zug
+	 * 
+	 * @param board
+	 *            Spielfeld
+	 * @param turn
+	 *            Zug
 	 * @return alle m�glichen Entfernen Z�ge
 	 */
 	public List<RemoveAction> getValidRemoveActions(Board board, int turn) {
@@ -230,7 +232,7 @@ public abstract class Player {
 		}
 
 		return result;
-		
+
 	}
 
 	/**
@@ -248,8 +250,7 @@ public abstract class Player {
 			for (int j = 0; j < Board.SIZE; j++) {
 
 				if (board.getStone(i, j) == null) {
-					SetAction a = new SetAction(false, this, new Vector<Integer>(
-							i, j));
+					SetAction a = new SetAction(false, this, new Vector<Integer>(i, j));
 					result.add(a);
 				}
 
