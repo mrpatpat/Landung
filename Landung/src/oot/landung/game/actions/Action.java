@@ -102,12 +102,12 @@ public class Action {
 				if (v != null) {
 					if (v.getX() < 0 || v.getX() >= Board.SIZE) {
 						if (print)
-							player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+							player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen a und e liegen.");
 						return false;
 					}
 					if (v.getY() < 0 || v.getY() >= Board.SIZE) {
 						if (print)
-							player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 (a und e) liegen.");
+							player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 liegen.");
 						return false;
 					}
 				}
