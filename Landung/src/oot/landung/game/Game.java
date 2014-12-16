@@ -22,7 +22,7 @@ import oot.landung.game.utils.Utils;
 public class Game implements Serializable {
 
 	/**
-	 * Startpunkt für unseren Prototypen
+	 * Startpunkt fï¿½r unseren Prototypen
 	 * 
 	 * @param args
 	 */
@@ -31,7 +31,7 @@ public class Game implements Serializable {
 		Scanner in = Utils.getScanner();
 
 		System.out.println("Landung - Prototyp\n");
-		System.out.println("Spielmodus wählen:");
+		System.out.println("Spielmodus wï¿½hlen:");
 		System.out.println("(1) Mensch gegen Mensch");
 		System.out.println("(2) Mensch gegen Peter");
 		System.out.println("(3) Peter gegen Peter");
@@ -118,7 +118,7 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * Spielschleife gibt Sieger zurück
+	 * Spielschleife gibt Sieger zurï¿½ck
 	 */
 	public Player run() {
 
@@ -149,7 +149,7 @@ public class Game implements Serializable {
 
 			}
 
-		} while (w == null); // ist unbnötig !! wird nie genutzt ?? wenn w = null ist returned er in der while schleife
+		} while (w == null); // ist unbnï¿½tig !! wird nie genutzt ?? wenn w = null ist returned er in der while schleife
 							 
 		
 		board.print();
@@ -166,6 +166,7 @@ public class Game implements Serializable {
 		do {
 			board.print();
 			a = p.askforAction(turn, board);
+			System.out.println(a);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}

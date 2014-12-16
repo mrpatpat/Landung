@@ -7,7 +7,7 @@ import oot.landung.game.utils.Utils;
 import oot.landung.game.utils.Vector;
 
 /**
- * Eine Aktion, die auf nur "setzen" beschränkt ist. Beispiel: Im ersten Zug
+ * Eine Aktion, die auf nur "setzen" beschrï¿½nkt ist. Beispiel: Im ersten Zug
  * setzt der Spieler einen Stein, aber zieht keinen.
  * 
  * @author Landung
@@ -21,7 +21,7 @@ public class SetAction extends Action {
 	 * @param sudo
 	 *            true, wenn Regeln missachtet werden sollen
 	 * @param actor
-	 *            der ausführende Spieler
+	 *            der ausfï¿½hrende Spieler
 	 * @param setTo
 	 *            das Feld, auf das gesetzt werden soll
 	 */
@@ -61,6 +61,15 @@ public class SetAction extends Action {
 
 	public String toString() {
 		return "Spieler " + getActor().getName() + " setzt nach " + Utils.convertInternalVectorToExternalString(getSetTo());
+	}
+
+	@Override
+	public void execute(Board board) {
+
+		// execute set
+		if (getSetTo() != null)
+			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
+
 	}
 
 }

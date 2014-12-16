@@ -30,7 +30,7 @@ public class ComputerPlayer extends Player {
 		super(id);
 		this.level = level;
 		this.stupid = new StupidAi();
-		this.smart = new StupidAi();
+		this.smart = stupid;
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class ComputerPlayer extends Player {
 	}
 
 	/**
-	 * Gibt einen Zug des Spielers zurück. Benutzt je nach Stufe Züge der
-	 * intelligenten und dummen KI (in einem Verhältnis linear zum Level).
+	 * Gibt einen Zug des Spielers zurï¿½ck. Benutzt je nach Stufe Zï¿½ge der
+	 * intelligenten und dummen KI (in einem Verhï¿½ltnis linear zum Level).
 	 * 
 	 * @param turn
 	 *            der zug
@@ -71,6 +71,9 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Action askforAction(int turn, Board board) {
 
+		System.out.println("mï¿½gliche Zï¿½ge: "
+				+ this.getValidActions(board, turn));
+		
 		int rand = (int) (Math.random() * 5);
 
 		if (rand <= level) {
@@ -89,8 +92,8 @@ public class ComputerPlayer extends Player {
 	}
 
 	/**
-	 * Gibt einen Entfernen-Zug des Spielers zurück. Benutzt je nach Stufe Züge der
-	 * intelligenten und dummen KI (in einem Verhältnis linear zum Level).
+	 * Gibt einen Entfernen-Zug des Spielers zurï¿½ck. Benutzt je nach Stufe Zï¿½ge der
+	 * intelligenten und dummen KI (in einem Verhï¿½ltnis linear zum Level).
 	 * 
 	 * @param turn
 	 *            der zug

@@ -9,7 +9,7 @@ import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 
 /**
- * Interface für eine Künstliche Intelligenz. 
+ * Interface fï¿½r eine Kï¿½nstliche Intelligenz. 
  * @author Adrian
  *
  */
@@ -18,17 +18,16 @@ public interface AiInterface {
 	/**
 	 * Fordert einen Zug von der KI.
 	 * @param board Das aktuelle Spielfeld.
-	 * @param allPossibleActions Liste aller Aktionen die möglich sind
+	 * @param allPossibleActions Liste aller Aktionen die mï¿½glich sind
 	 * @return Der Zug der KI
 	 */
-	public Action getNextSetAction(Board board, List<SetAction> allPossibleSetActions, int turn);
+	public Action getNextAction(Board board, List<Action> possibleActions, int turn);
 	
-	public Action getNextMoveAndSetAction(Board board, List<MoveAndSetAction> allPossibleMoveAndSetActions, int turn);
 	
 	/**
 	 * Fordert die KI auf einen Stein zu entfernen.
 	 * @param board Das aktuelle Spielfeld.
-	 * @param allPossibleActions Liste aller Aktionen die möglich sind
+	 * @param allPossibleActions Liste aller Aktionen die mï¿½glich sind
 	 * @return Der Zug der KI
 	 */
 	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions);	

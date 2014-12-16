@@ -10,29 +10,21 @@ import oot.landung.game.board.Board;
 
 /**
  * RIP PETER
+ * 
  * @author Adrian
  *
  */
 public class StupidAi implements AiInterface {
 
 	@Override
-	public RemoveAction getNextRemoveAction(Board board,
-			List<RemoveAction> allPossibleRemoveActions) {
-		return allPossibleRemoveActions.get((int)(Math.random()*allPossibleRemoveActions.size()));
+	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions) {
+		return allPossibleRemoveActions.get((int) (Math.random() * allPossibleRemoveActions.size()));
 	}
 
 	@Override
-	public SetAction getNextSetAction(Board board,
-			List<SetAction> allPossibleSetActions, int turn) {
-		return allSetPossibleActions.get((int)(Math.random()*allPossibleSetActions.size()));
+	public Action getNextAction(Board board, List<Action> possibleActions, int turn) {
+		Action a = possibleActions.get((int) (Math.random() * possibleActions.size()));
+		return a;
 	}
-
-	@Override
-	public MoveAndSetAction getNextMoveAndSetAction(Board board,
-			List<MoveAndSetAction> allPossibleMoveAndSetActions, int turn) {
-		return allPossiblMoveAndSetActions.get((int)(Math.random()*allPossiblMoveAndSetActions.size()));
-	}
-
-
 
 }

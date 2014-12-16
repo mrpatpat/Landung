@@ -7,7 +7,7 @@ import oot.landung.game.utils.Vector;
 
 /**
  * Das ist unsere Spielbrettklasse. Sie verwaltet die Spielsteine auf dem Brett.
- * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur für
+ * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur fï¿½r
  * unser Spiel.
  * 
  * @author Landung
@@ -16,7 +16,7 @@ import oot.landung.game.utils.Vector;
 public class Board {
 
 	/**
-	 * Größe des Spielbretts.
+	 * Grï¿½ï¿½e des Spielbretts.
 	 */
 	public static final int SIZE = 5;
 
@@ -45,7 +45,7 @@ public class Board {
 	}
 
 	/**
-	 * Gibt den Stein an der Stelle x,y zurück.
+	 * Gibt den Stein an der Stelle x,y zurï¿½ck.
 	 * 
 	 * @param x
 	 *            x Koordinate
@@ -93,8 +93,8 @@ public class Board {
 	}
 
 	/**
-	 * Entfernt einen Stein auf Feld xy, gibt ihn zurück und benachrichtigt den
-	 * Spieler über das Entfernen
+	 * Entfernt einen Stein auf Feld xy, gibt ihn zurï¿½ck und benachrichtigt den
+	 * Spieler ï¿½ber das Entfernen
 	 * 
 	 * @param x
 	 *            x Koordinate
@@ -105,7 +105,6 @@ public class Board {
 	public Stone removeStone(int x, int y) {
 		Stone s = getStone(x, y);
 		if (s != null) {
-
 			tiles[x][y] = null;
 			s.getOwner().onStoneRemoved(s);
 			return s;
@@ -114,7 +113,7 @@ public class Board {
 	}
 
 	/**
-	 * Gibt zurück ob Steine zwischen zwei Feldern liegen.
+	 * Gibt zurï¿½ck ob Steine zwischen zwei Feldern liegen.
 	 * 
 	 * @param a
 	 *            Feld 1
@@ -129,7 +128,7 @@ public class Board {
 	}
 
 	/**
-	 * Gibt eine Liste aller Steine zwischen zwei Feldern zurück.
+	 * Gibt eine Liste aller Steine zwischen zwei Feldern zurï¿½ck.
 	 * 
 	 * @param a
 	 *            Feld 1
@@ -282,7 +281,7 @@ public class Board {
 
 		String format = " %-2s|%-3s|%-3s|%-3s|%-3s|%-3s|%n";
 
-		// Leerzeile damit es schöner aussieht
+		// Leerzeile damit es schï¿½ner aussieht
 		System.out.println();
 
 		System.out.printf("---+---+---+---+---+---+%n");

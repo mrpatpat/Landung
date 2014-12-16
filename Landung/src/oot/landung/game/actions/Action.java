@@ -11,12 +11,12 @@ import oot.landung.game.utils.Vector;
 
 /**
  * Eine Klasse zur Darstellung einer Aktion. Eine Aktion ist ein Zug. Sie
- * besteht grundsätzlich aus 5 Eigenschaften. Sie hat einen Akteur, ein Feld von
+ * besteht grundsï¿½tzlich aus 5 Eigenschaften. Sie hat einen Akteur, ein Feld von
  * dem gezogen wird, ein Feld zu dem gezogen wird, ein Feld auf das gesetzt wird
  * und die sudo Eingeschaft, die Regeln missachten kann. Die Aktion bildet das
- * Herzstück unseres Spiels, da die Aktion auch bestimmt was ein gültiger und
- * möglicher Zug ist. Jede Spielregel ist in der Aktionsklasse oder ihren
- * Kindklassen definiert. Die Logik lässt sich somit stark kapseln.
+ * Herzstï¿½ck unseres Spiels, da die Aktion auch bestimmt was ein gï¿½ltiger und
+ * mï¿½glicher Zug ist. Jede Spielregel ist in der Aktionsklasse oder ihren
+ * Kindklassen definiert. Die Logik lï¿½sst sich somit stark kapseln.
  * 
  * @author Landung
  *
@@ -35,7 +35,7 @@ public abstract class Action {
 	 * @param sudo
 	 *            true, wenn Regeln missachtet werden sollen
 	 * @param actor
-	 *            der Spieler, der die Aktion ausführt
+	 *            der Spieler, der die Aktion ausfï¿½hrt
 	 * @param moveFrom
 	 *            das Feld von dem gezogen werden soll
 	 * @param moveTo
@@ -53,14 +53,14 @@ public abstract class Action {
 	}
 
 	/**
-	 * Gibt an, ob diese Aktion gültig ist. Beachtet Spielfeldgrenzen und wenn
+	 * Gibt an, ob diese Aktion gï¿½ltig ist. Beachtet Spielfeldgrenzen und wenn
 	 * es keine sudo-Aktion ist auch die Spielregeln.
 	 * 
 	 * @param board
 	 *            das Spielbrett
 	 * @param turn
 	 *            der aktuelle Spielzug
-	 * @return true, wenn die Aktion gültig ist
+	 * @return true, wenn die Aktion gï¿½ltig ist
 	 */
 	public boolean isActionValid(Board board, int turn, boolean print) {
 
@@ -68,7 +68,7 @@ public abstract class Action {
 
 		if (!getSudo()) {
 
-			// Züge 1 bis 4
+			// Zï¿½ge 1 bis 4
 			if (turn == 0 || turn == 1) {
 				if (!(this instanceof SetAction)) {
 					if (print)
@@ -102,12 +102,12 @@ public abstract class Action {
 				if (v != null) {
 					if (v.getX() < 0 || v.getX() >= Board.SIZE) {
 						if (print)
-							player.notifyUnvalidMove("Die X-Koordinaten müssen zwischen a und e liegen.");
+							player.notifyUnvalidMove("Die X-Koordinaten mï¿½ssen zwischen a und e liegen.");
 						return false;
 					}
 					if (v.getY() < 0 || v.getY() >= Board.SIZE) {
 						if (print)
-							player.notifyUnvalidMove("Die Y-Koordinaten müssen zwischen 1 und 5 liegen.");
+							player.notifyUnvalidMove("Die Y-Koordinaten mï¿½ssen zwischen 1 und 5 liegen.");
 						return false;
 					}
 				}
@@ -121,26 +121,15 @@ public abstract class Action {
 	}
 
 	/**
-	 * Führt diese Aktion auf einem Spielfeld aus.
+	 * Fï¿½hrt diese Aktion auf einem Spielfeld aus.
 	 * 
 	 * @param board
 	 *            das Spielfeld
 	 */
-	public void execute(Board board) {
-		// execute move
-		if ((getMoveFrom() != null) && (getMoveTo() != null))
-			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(),
-					getMoveTo().getX(), getMoveTo().getY());
-
-		// execute set
-		if (getSetTo() != null)
-			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
-					getActor(), getSetTo().getX(), getSetTo().getY()));
-
-	}
+	public abstract void execute(Board board);
 
 	/**
-	 * Gibt den Akteur zurück
+	 * Gibt den Akteur zurï¿½ck
 	 * 
 	 * @return der Aktuer
 	 */
@@ -149,7 +138,7 @@ public abstract class Action {
 	}
 
 	/**
-	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, von dem
+	 * Gibt den Vektor zurï¿½ck, der die Koordinaten des Feldes besitzt, von dem
 	 * gezogen wird.
 	 * 
 	 * @return Vektor
@@ -159,7 +148,7 @@ public abstract class Action {
 	}
 
 	/**
-	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, auf das
+	 * Gibt den Vektor zurï¿½ck, der die Koordinaten des Feldes besitzt, auf das
 	 * gezogen wird.
 	 * 
 	 * @return Vektor
@@ -169,7 +158,7 @@ public abstract class Action {
 	}
 
 	/**
-	 * Gibt den Vektor zurück, der die Koordinaten des Feldes besitzt, auf das
+	 * Gibt den Vektor zurï¿½ck, der die Koordinaten des Feldes besitzt, auf das
 	 * gesetzt wird.
 	 * 
 	 * @return Vektor
@@ -188,7 +177,7 @@ public abstract class Action {
 	}
 
 	/**
-	 * Stringrepräsentation der Aktion
+	 * Stringreprï¿½sentation der Aktion
 	 */
 	public String toString() {
 		String s = "";

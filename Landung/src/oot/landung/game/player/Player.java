@@ -14,10 +14,10 @@ import oot.landung.game.utils.Vector;
 /**
  * Das ist unsere abstrakte Spielerklasse. Sie ist abstrakt, da wir verschiedene
  * Arten von Spieler haben, die aber eine gemeinsame Schnittstelle und
- * gemeinsames Verhalten haben. Die Spielerklasse und ihre Kinder sind für die
- * Ein- und Ausgaben zuständig. Damit sind Ein- und Ausgaben von der Spiellogik
+ * gemeinsames Verhalten haben. Die Spielerklasse und ihre Kinder sind fï¿½r die
+ * Ein- und Ausgaben zustï¿½ndig. Damit sind Ein- und Ausgaben von der Spiellogik
  * getrennt und die K.I. kann an dieser Stelle ihre Eingaben an das Spiel
- * weitergeben ohne die Programmlogik des Spiels kennen zu müssen. Sie wird
+ * weitergeben ohne die Programmlogik des Spiels kennen zu mï¿½ssen. Sie wird
  * genauso wie ein menschlicher Spieler behandelt.
  * 
  * @author Landung
@@ -45,7 +45,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt das Symbol des Spielers zurück.
+	 * Gibt das Symbol des Spielers zurï¿½ck.
 	 * 
 	 * @return X oder O
 	 */
@@ -54,7 +54,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt die Anzahl der Steine des Spielers zurück.
+	 * Gibt die Anzahl der Steine des Spielers zurï¿½ck.
 	 * 
 	 * @return Steine
 	 */
@@ -63,7 +63,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt die SpielerID zurück.
+	 * Gibt die SpielerID zurï¿½ck.
 	 * 
 	 * @return
 	 */
@@ -72,7 +72,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt den Spielernamen zurück.
+	 * Gibt den Spielernamen zurï¿½ck.
 	 * 
 	 * @return Spielername
 	 */
@@ -81,7 +81,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt die Punkteanzahl des Spielers zurück.
+	 * Gibt die Punkteanzahl des Spielers zurï¿½ck.
 	 * 
 	 * @return Punkteanzahl
 	 */
@@ -90,7 +90,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Das Spiel ruft diese Methode auf, wenn dieser Spieler als Sieger gewählt
+	 * Das Spiel ruft diese Methode auf, wenn dieser Spieler als Sieger gewï¿½hlt
 	 * wurde. Das Verhalten des Spielers wird in der Kindklasse definiert.
 	 */
 	public abstract void notifyWinner();
@@ -112,10 +112,10 @@ public abstract class Player {
 	public abstract Action askforAction(int turn, Board board);
 
 	/**
-	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausführen möchte.
+	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausfï¿½hren mï¿½chte.
 	 * 
 	 * @param message
-	 *            Begründung des Zuges
+	 *            Begrï¿½ndung des Zuges
 	 */
 	public abstract void notifyUnvalidMove(String message);
 
@@ -137,13 +137,13 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt zurück, ob ein Spieler noch gültige Aktionen ausführen kann.
+	 * Gibt zurï¿½ck, ob ein Spieler noch gï¿½ltige Aktionen ausfï¿½hren kann.
 	 * 
 	 * @param board
 	 *            Spielbrett
 	 * @param turn
 	 *            aktueller Zug
-	 * @return true, wenn der Spieler noch Aktionen ausführen kann
+	 * @return true, wenn der Spieler noch Aktionen ausfï¿½hren kann
 	 */
 	public boolean hasValidActions(Board board, int turn) {
 
@@ -152,7 +152,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt eine Liste aller gültigen Züge zurück.
+	 * Gibt eine Liste aller gï¿½ltigen Zï¿½ge zurï¿½ck.
 	 * 
 	 * @param board
 	 *            Spielbrett
@@ -162,8 +162,7 @@ public abstract class Player {
 	 */
 	public List<Action> getValidActions(Board board, int turn) {
 
-		//TODO:Hier geschieht etwas schlechtes mit den ActionTypen. Nur bei KI, d.h. irgendwo gehen Informationen verloren beim Casten 
-		List<Action> result = new ArrayList<>();
+		List<Action> result = new ArrayList<Action>();
 
 		if (turn == 0 || turn == 1) {
 			result.addAll(getValidSetActions(board));
@@ -180,7 +179,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt eine Liste aller möglichen "Bewegen und Setzen" Züge zurück
+	 * Gibt eine Liste aller mï¿½glichen "Bewegen und Setzen" Zï¿½ge zurï¿½ck
 	 * 
 	 * @param board
 	 *            Spielbrett
@@ -211,10 +210,10 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt eine Liste aller möglichen "Entfernen" Züge zurück
+	 * Gibt eine Liste aller mï¿½glichen "Entfernen" Zï¿½ge zurï¿½ck
 	 * @param board Spielfeld
 	 * @param turn Zug
-	 * @return alle möglichen Entfernen Züge
+	 * @return alle mï¿½glichen Entfernen Zï¿½ge
 	 */
 	public List<RemoveAction> getValidRemoveActions(Board board, int turn) {
 
@@ -235,7 +234,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * Gibt eine Liste aller möglichen "Setzen" Züge zurück
+	 * Gibt eine Liste aller mï¿½glichen "Setzen" Zï¿½ge zurï¿½ck
 	 * 
 	 * @param board
 	 *            Spielbrett

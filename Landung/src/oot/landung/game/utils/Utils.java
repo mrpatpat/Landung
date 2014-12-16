@@ -13,7 +13,7 @@ public class Utils {
 	private static Scanner scanner;
 
 	/**
-	 * Gibt einen Scanner zurück, öffnet ihn wenn nötig.
+	 * Gibt einen Scanner zurï¿½ck, ï¿½ffnet ihn wenn nï¿½tig.
 	 * 
 	 * @return
 	 */
@@ -87,6 +87,8 @@ public class Utils {
 	 */
 	public static String convertInternalVectorToExternalString(Vector<Integer> v) {
 
+		if (v == null)
+			return "null";
 		String x = "";
 		String y = (5 - v.getY()) + "";
 

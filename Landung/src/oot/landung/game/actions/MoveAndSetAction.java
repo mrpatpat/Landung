@@ -20,24 +20,19 @@ public class MoveAndSetAction extends Action {
 	 * @param sudo
 	 *            true, wenn Regeln missachtet werden sollen
 	 * @param actor
-	 *            der Spieler, der die Aktion ausführt
+	 *            der Spieler, der die Aktion ausfï¿½hrt
 	 * @param moveFrom
 	 *            das Feld von dem gezogen werden soll
 	 * @param moveTo
 	 *            das Feld zu dem gezogen werden soll
 	 */
-	public MoveAndSetAction(boolean sudo, Player actor,
-			Vector<Integer> moveFrom, Vector<Integer> moveTo) {
+	public MoveAndSetAction(boolean sudo, Player actor, Vector<Integer> moveFrom, Vector<Integer> moveTo) {
 		super(sudo, actor, moveFrom, moveTo, null);
 	}
 
 	public String toString() {
-		return "Spieler " + getActor().getName() + " zieht von "
-				+ Utils.convertInternalVectorToExternalString(getMoveFrom())
-				+ " nach "
-				+ Utils.convertInternalVectorToExternalString(getMoveTo())
-				+ " und setzt auf "
-				+ Utils.convertInternalVectorToExternalString(getSetTo());
+		return "Spieler " + getActor().getName() + " zieht von " + Utils.convertInternalVectorToExternalString(getMoveFrom()) + " nach "
+				+ Utils.convertInternalVectorToExternalString(getMoveTo()) + " und setzt auf " + Utils.convertInternalVectorToExternalString(getSetTo());
 	}
 
 	@Override
@@ -56,8 +51,7 @@ public class MoveAndSetAction extends Action {
 		if (!getSudo()) {
 
 			if (getMoveFrom() != null)
-				moveFrom = board.getStone(getMoveFrom().getX(), getMoveFrom()
-						.getY());
+				moveFrom = board.getStone(getMoveFrom().getX(), getMoveFrom().getY());
 
 			if (getMoveTo() != null)
 				moveTo = board.getStone(getMoveTo().getX(), getMoveTo().getY());
@@ -72,7 +66,7 @@ public class MoveAndSetAction extends Action {
 					player.notifyUnvalidMove("Auf diesem Feld befindet sich kein Stein.");
 				return false;
 			}
-		
+
 			// Spieler darf nur eigene Steine bewegen
 			if (moveFrom != null && moveFrom.getOwner() != player) {
 				if (print)
@@ -80,25 +74,20 @@ public class MoveAndSetAction extends Action {
 				return false;
 			}
 
-	
-
 			// nur in die Richtungen horizontal, vertikal, diagonal ziehen und
 			// mindestens 2 Felder weiter.
 			if (getMoveTo() != null && getMoveFrom() != null) {
 
-				boolean isHorizontal = getMoveFrom().getY() == getMoveTo()
-						.getY();
+				boolean isHorizontal = getMoveFrom().getY() == getMoveTo().getY();
 				boolean isVertical = getMoveFrom().getX() == getMoveTo().getX();
-				boolean isDiagonal = Math.abs(getMoveFrom().getX()
-						- getMoveTo().getX()) == Math.abs(getMoveFrom().getY()
-						- getMoveTo().getY());
+				boolean isDiagonal = Math.abs(getMoveFrom().getX() - getMoveTo().getX()) == Math.abs(getMoveFrom().getY() - getMoveTo().getY());
 
 				int delta = 0;
 
 				// kein springen
 				if (board.hasStonesInBetween(getMoveFrom(), getMoveTo())) {
 					if (print)
-						player.notifyUnvalidMove("Man darf keine Steine überspringen");
+						player.notifyUnvalidMove("Man darf keine Steine ï¿½berspringen");
 					return false;
 				}
 
@@ -127,7 +116,7 @@ public class MoveAndSetAction extends Action {
 				}
 
 			}
-			
+
 			// Spieler darf nur auf leere Felder setzen
 			if (setTo != null) {
 				if (print)
@@ -148,9 +137,7 @@ public class MoveAndSetAction extends Action {
 
 	}
 
-	/**
-	 * Override der Setto Methode, da der Stein immer in den Pfad gelegt wird.
-	 */
+	@Override
 	public Vector<Integer> getSetTo() {
 
 		Vector<Integer> res = null;
@@ -159,37 +146,28 @@ public class MoveAndSetAction extends Action {
 
 			boolean isHorizontal = getMoveFrom().getY() == getMoveTo().getY();
 			boolean isVertical = getMoveFrom().getX() == getMoveTo().getX();
-			boolean isDiagonal = Math.abs(getMoveFrom().getX()
-					- getMoveTo().getX()) == Math.abs(getMoveFrom().getY()
-					- getMoveTo().getY());
+			boolean isDiagonal = Math.abs(getMoveFrom().getX() - getMoveTo().getX()) == Math.abs(getMoveFrom().getY() - getMoveTo().getY());
 
 			if (isHorizontal) {
 
-				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1
-						: 1;
+				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1 : 1;
 				int dY = 0;
 
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo()
-						.getY() + dY);
+				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
 
 			} else if (isVertical) {
 
 				int dX = 0;
-				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1
-						: 1;
+				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1 : 1;
 
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo()
-						.getY() + dY);
+				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
 
 			} else if (isDiagonal) {
 
-				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1
-						: 1;
-				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1
-						: 1;
+				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1 : 1;
+				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1 : 1;
 
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo()
-						.getY() + dY);
+				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
 
 			}
 
@@ -197,6 +175,17 @@ public class MoveAndSetAction extends Action {
 
 		return res;
 
+	}
+
+	@Override
+	public void execute(Board board) {
+		// execute move
+		if ((getMoveFrom() != null) && (getMoveTo() != null))
+			board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(), getMoveTo().getX(), getMoveTo().getY());
+
+		// execute set
+		if (getSetTo() != null)
+			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
 	}
 
 }
