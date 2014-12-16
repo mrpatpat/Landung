@@ -1,8 +1,5 @@
 package oot.landung.game;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
@@ -10,8 +7,7 @@ import oot.landung.game.board.Stone;
 import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.game.utils.Utils;
-import oot.landung.savegame.SaveGame;
+import oot.landung.menu.Menu;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand
@@ -23,52 +19,10 @@ import oot.landung.savegame.SaveGame;
 public class Game {
 
 	/**
-	 * Startpunkt f�r unseren Prototypen
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		Scanner in = Utils.getScanner();
-
-		System.out.println("Landung - Prototyp\n");
-		System.out.println("Spielmodus w�hlen:");
-		System.out.println("(1) Mensch gegen Mensch");
-		System.out.println("(2) Mensch gegen Peter");
-		System.out.println("(3) Peter gegen Peter");
-		System.out.println("sonstige Eingabe -> Ende");
-
-		String choice = in.nextLine();
-
-		Game g = null;
-
-		switch (choice) {
-		case "1":
-			g = new Game(GameType.PVP);
-			break;
-		case "2":
-			g = new Game(GameType.PVE_NOOB);
-			break;
-		case "3":
-			g = new Game(GameType.EVE_NOOB);
-			break;
-		default:
-			Utils.closeScanner();
-			System.exit(0);
-			break;
-		}
-
-		g.run();
-
-		Utils.closeScanner();
-
-	}
-
-	/**
 	 * Spielmodi
 	 */
 	public enum GameType {
-		PVE_NOOB, PVE_EASY, PVE_MEDIUM, PVE_HARD, PVE_KLAUS, PVP, EVE_NOOB;
+		PVP, PVE, EVE;
 	}
 
 	/**
@@ -92,24 +46,28 @@ public class Game {
 	private int turn;
 
 	private int currentPlayer;
+	
+	private Menu main;
 
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
-	public Game(GameType type) {
+	public Game(GameType type, Menu main) {
 
+		this.main = main;
+		
 		// init players
 		player = new Player[Game.PLAYERS];
 
 		if (type == GameType.PVP) {
 			player[0] = new HumanPlayer(1);
 			player[1] = new HumanPlayer(2);
-		} else if (type == GameType.PVE_NOOB) {
+		} else if (type == GameType.PVE) {
 			player[0] = new HumanPlayer(1);
-			player[1] = new ComputerPlayer(2, 0);
-		} else if (type == GameType.EVE_NOOB) {
-			player[0] = new ComputerPlayer(1, 0);
-			player[1] = new ComputerPlayer(2, 0);
+			player[1] = new ComputerPlayer(2);
+		} else if (type == GameType.EVE) {
+			player[0] = new ComputerPlayer(1);
+			player[1] = new ComputerPlayer(2);
 		}
 
 		// init board

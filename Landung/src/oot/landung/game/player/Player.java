@@ -44,6 +44,10 @@ public abstract class Player implements Serializable{
 		this.name = askforName();
 		placedStones = new ArrayList<Stone>();
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
 
 	/**
 	 * Gibt das Symbol des Spielers zur�ck.

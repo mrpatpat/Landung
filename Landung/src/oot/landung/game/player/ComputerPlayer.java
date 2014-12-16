@@ -1,12 +1,14 @@
 package oot.landung.game.player;
 
 import java.util.List;
+import java.util.Scanner;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.ai.AiInterface;
 import oot.landung.game.player.ai.StupidAi;
+import oot.landung.game.utils.Utils;
 
 /**
  * Computerspieler mit 5 Spielstufen (0-4)
@@ -28,20 +30,15 @@ public class ComputerPlayer extends Player {
 	 * @param level
 	 *            KI Stufe 0-4
 	 */
-	public ComputerPlayer(int id, int level) {
+	public ComputerPlayer(int id) {
 		super(id);
-		this.level = level;
+		this.level = askForLevel();
+		setName(genName());
 		this.stupid = new StupidAi();
 		this.smart = stupid;
 	}
 
-	@Override
-	public void notifyWinner() {
-		// irrelevant
-	}
-
-	@Override
-	public String askforName() {
+	private String genName() {
 
 		switch (level) {
 		case 0:
@@ -57,7 +54,53 @@ public class ComputerPlayer extends Player {
 		default:
 			return "n/a";
 		}
+	}
 
+	public int askForLevel() {
+		Scanner in = Utils.getScanner();
+
+		int level = -1;
+
+		do {
+			System.out.println("Geben Sie das Level von " + this.getPlayerID() + " ein (1-5): ");
+			String lvl = in.nextLine();
+			if (lvl.matches("[1-5]\\b")) {
+				level = Integer.parseInt(lvl) - 1;
+			} else {
+				System.out.println("ungültige Eingabe.");
+			}
+		} while (level == -1);
+
+		return level;
+	}
+
+	@Override
+	public void notifyWinner() {
+		switch (level) {
+		case 0:
+			System.out.println("Peter hat gewonnen...");
+			break;
+		case 1:
+			System.out.println("Tyrone hat gewonnen.");
+			break;
+		case 2:
+			System.out.println("Ivo hat gewonnen.");
+			break;
+		case 3:
+			System.out.println("Thomas hat gewonnen.");
+			break;
+		case 4:
+			System.out.println("Nööög! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
+			break;
+		default:
+			System.out.println("n/a hat gewonnen.");
+			break;
+		}
+	}
+
+	@Override
+	public String askforName() {
+		return "";
 	}
 
 	/**
