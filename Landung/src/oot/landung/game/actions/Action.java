@@ -21,7 +21,7 @@ import oot.landung.game.utils.Vector;
  * @author Landung
  *
  */
-public class Action {
+public abstract class Action {
 
 	private final Player actor;
 	private final Vector<Integer> moveFrom;

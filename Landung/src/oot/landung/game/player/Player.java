@@ -162,12 +162,13 @@ public abstract class Player {
 	 */
 	public List<Action> getValidActions(Board board, int turn) {
 
+		//TODO:Hier geschieht etwas schlechtes mit den ActionTypen. Nur bei KI, d.h. irgendwo gehen Informationen verloren beim Casten 
 		List<Action> result = new ArrayList<>();
 
 		if (turn == 0 || turn == 1) {
-			return getValidSetActions(board);
+			result.addAll(getValidSetActions(board));
 		} else if (turn == 2 || turn > 3) {
-			return getValidMoveAndSetActions(board, turn);
+			result.addAll(getValidMoveAndSetActions(board, turn));
 		} else if (turn == 3) {
 			result.addAll(getValidSetActions(board));
 			result.addAll(getValidMoveAndSetActions(board, turn));
@@ -187,9 +188,9 @@ public abstract class Player {
 	 *            Zug
 	 * @return Liste
 	 */
-	private List<Action> getValidMoveAndSetActions(Board board, int turn) {
+	private List<MoveAndSetAction> getValidMoveAndSetActions(Board board, int turn) {
 
-		List<Action> result = new ArrayList<>();
+		List<MoveAndSetAction> result = new ArrayList<>();
 
 		for (Stone s : placedStones) {
 			for (int i = 0; i < Board.SIZE; i++) {
@@ -240,15 +241,15 @@ public abstract class Player {
 	 *            Spielbrett
 	 * @return Liste
 	 */
-	private List<Action> getValidSetActions(Board board) {
+	private List<SetAction> getValidSetActions(Board board) {
 
-		List<Action> result = new ArrayList<Action>();
+		List<SetAction> result = new ArrayList<SetAction>();
 
 		for (int i = 0; i < Board.SIZE; i++) {
 			for (int j = 0; j < Board.SIZE; j++) {
 
 				if (board.getStone(i, j) == null) {
-					Action a = new SetAction(false, this, new Vector<Integer>(
+					SetAction a = new SetAction(false, this, new Vector<Integer>(
 							i, j));
 					result.add(a);
 				}

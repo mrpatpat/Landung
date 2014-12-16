@@ -3,7 +3,9 @@ package oot.landung.game.player.ai;
 import java.util.List;
 
 import oot.landung.game.actions.Action;
+import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
+import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 
 /**
@@ -19,7 +21,9 @@ public interface AiInterface {
 	 * @param allPossibleActions Liste aller Aktionen die möglich sind
 	 * @return Der Zug der KI
 	 */
-	public Action getNextAction(Board board, List<Action> allPossibleActions, int turn);
+	public Action getNextSetAction(Board board, List<SetAction> allPossibleSetActions, int turn);
+	
+	public Action getNextMoveAndSetAction(Board board, List<MoveAndSetAction> allPossibleMoveAndSetActions, int turn);
 	
 	/**
 	 * Fordert die KI auf einen Stein zu entfernen.
