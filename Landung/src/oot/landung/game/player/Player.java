@@ -59,7 +59,7 @@ public abstract class Player {
 	 * @return Steine
 	 */
 	public int getStones() {
-		return 9 - placedStones.size();
+		return 10 - placedStones.size();
 	}
 
 	/**
