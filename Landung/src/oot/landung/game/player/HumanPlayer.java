@@ -65,7 +65,6 @@ public class HumanPlayer extends Player {
 		boolean sudo = false;
 		
 		
-		
 		// hilfe gefolgt von irgendwas
 				if (command.matches("hilfe.*")) {
 					printHelp();
