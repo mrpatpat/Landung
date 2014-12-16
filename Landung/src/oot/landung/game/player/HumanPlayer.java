@@ -63,6 +63,14 @@ public class HumanPlayer extends Player {
 		//Verarbeitung
 		
 		boolean sudo = false;
+		
+		
+		
+		// hilfe gefolgt von irgendwas
+				if (command.matches("hilfe.*")) {
+					printHelp();
+					return askforAction(turn, board);
+				}
 
 		// sudo_ gefolgt von irgendwas
 		if (command.matches("sudo .*")) {
