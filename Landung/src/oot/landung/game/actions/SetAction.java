@@ -15,6 +15,8 @@ import oot.landung.game.utils.Vector;
  */
 public class SetAction extends Action {
 
+	private Vector<Integer> setTo;
+	
 	/**
 	 * Erstellt eine neue Setzaktion.
 	 * 
@@ -26,7 +28,8 @@ public class SetAction extends Action {
 	 *            das Feld, auf das gesetzt werden soll
 	 */
 	public SetAction(boolean sudo, Player actor, Vector<Integer> setTo) {
-		super(sudo, actor, null, null, setTo);
+		super(sudo, actor, null, null);
+		this.setTo = setTo;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class SetAction extends Action {
 	}
 
 	public String toString() {
-		return "Spieler " + getActor().getName() + " setzt nach " + Utils.convertInternalVectorToExternalString(getSetTo());
+		return Utils.convertInternalVectorToExternalString(getSetTo());
 	}
 
 	@Override
@@ -70,6 +73,11 @@ public class SetAction extends Action {
 		if (getSetTo() != null)
 			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
 
+	}
+
+	@Override
+	public Vector<Integer> getSetTo() {
+		return setTo;
 	}
 
 }

@@ -1,5 +1,8 @@
 package oot.landung.game.actions;
 
+import java.util.List;
+
+import oot.landung.game.Game;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
@@ -27,12 +30,11 @@ public class MoveAndSetAction extends Action {
 	 *            das Feld zu dem gezogen werden soll
 	 */
 	public MoveAndSetAction(boolean sudo, Player actor, Vector<Integer> moveFrom, Vector<Integer> moveTo) {
-		super(sudo, actor, moveFrom, moveTo, null);
+		super(sudo, actor, moveFrom, moveTo);
 	}
 
 	public String toString() {
-		return "Spieler " + getActor().getName() + " zieht von " + Utils.convertInternalVectorToExternalString(getMoveFrom()) + " nach "
-				+ Utils.convertInternalVectorToExternalString(getMoveTo()) + " und setzt auf " + Utils.convertInternalVectorToExternalString(getSetTo());
+		return Utils.convertInternalVectorToExternalString(getMoveFrom()) + Utils.convertInternalVectorToExternalString(getMoveTo());
 	}
 
 	@Override
@@ -138,41 +140,16 @@ public class MoveAndSetAction extends Action {
 
 	}
 
-	@Override
 	public Vector<Integer> getSetTo() {
-
 		Vector<Integer> res = null;
 
-		if (getMoveTo() != null && getMoveFrom() != null) {
-
-			boolean isHorizontal = getMoveFrom().getY() == getMoveTo().getY();
-			boolean isVertical = getMoveFrom().getX() == getMoveTo().getX();
-			boolean isDiagonal = Math.abs(getMoveFrom().getX() - getMoveTo().getX()) == Math.abs(getMoveFrom().getY() - getMoveTo().getY());
-
-			if (isHorizontal) {
-
-				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1 : 1;
-				int dY = 0;
-
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
-
-			} else if (isVertical) {
-
-				int dX = 0;
-				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1 : 1;
-
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
-
-			} else if (isDiagonal) {
-
-				int dX = getMoveTo().getX() - getMoveFrom().getX() >= 0 ? -1 : 1;
-				int dY = getMoveTo().getY() - getMoveFrom().getY() >= 0 ? -1 : 1;
-
-				res = new Vector<Integer>(getMoveTo().getX() + dX, getMoveTo().getY() + dY);
-
-			}
-
-		}
+		Vector<Integer> from = getMoveFrom();
+		Vector<Integer> to = getMoveTo();
+		Vector<Integer> fromTo = new Vector<Integer>(from.getX() - to.getX(), from.getY() - to.getY());
+		int stepX = (int) (fromTo.getX() == 0 ? 0 : Math.signum(fromTo.getX()));
+		int stepY = (int) (fromTo.getY() == 0 ? 0 : Math.signum(fromTo.getY()));
+		Vector<Integer> step = new Vector<Integer>(stepX, stepY);
+		res = new Vector<Integer>(to.getX() + step.getX(), to.getY() + step.getY());
 
 		return res;
 
@@ -180,12 +157,16 @@ public class MoveAndSetAction extends Action {
 
 	@Override
 	public void execute(Board board) {
-			// execute move
-			if ((getMoveFrom() != null) && (getMoveTo() != null))
-				board.moveStone(getMoveFrom().getX(), getMoveFrom().getY(), getMoveTo().getX(), getMoveTo().getY());
-			// execute set
-			if (getSetTo() != null)
-				board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
+
+		Vector<Integer> set = getSetTo();
+		Vector<Integer> from = getMoveFrom();
+		Vector<Integer> to = getMoveTo();
+
+		// execute move
+		board.moveStone(from.getX(), from.getY(), to.getX(), to.getY());
+
+		// execute set
+		board.placeStone(set.getX(), set.getY(), new Stone(getActor(), set.getX(), set.getY()));
 	}
 
 }

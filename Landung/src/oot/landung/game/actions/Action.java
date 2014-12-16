@@ -26,7 +26,6 @@ public abstract class Action {
 	private final Player actor;
 	private final Vector<Integer> moveFrom;
 	private final Vector<Integer> moveTo;
-	private final Vector<Integer> setTo;
 	private final boolean sudo;
 
 	/**
@@ -44,13 +43,14 @@ public abstract class Action {
 	 *            das Feld, auf das gesetzt wird
 	 */
 	public Action(boolean sudo, Player actor, Vector<Integer> moveFrom,
-			Vector<Integer> moveTo, Vector<Integer> setTo) {
+			Vector<Integer> moveTo) {
 		this.actor = actor;
 		this.moveFrom = moveFrom;
 		this.moveTo = moveTo;
-		this.setTo = setTo;
 		this.sudo = sudo;
 	}
+
+	public abstract Vector<Integer> getSetTo();
 
 	/**
 	 * Gibt an, ob diese Aktion g�ltig ist. Beachtet Spielfeldgrenzen und wenn
@@ -155,78 +155,12 @@ public abstract class Action {
 	}
 
 	/**
-	 * Gibt den Vektor zur�ck, der die Koordinaten des Feldes besitzt, auf das
-	 * gesetzt wird.
-	 * 
-	 * @return Vektor
-	 */
-	public Vector<Integer> getSetTo() {
-		return setTo;
-	}
-
-	/**
 	 * Gibt an ob es eine sudo-Aktion ist
 	 * 
 	 * @return true, wenn sudo
 	 */
 	public boolean getSudo() {
 		return sudo;
-	}
-
-	/**
-	 * Stringrepr�sentation der Aktion
-	 */
-	public String toString() {
-		String s = "";
-		s += actor.getName() + ";";
-		s += Utils.convertInternalVectorToExternalString(moveFrom) + "->";
-		s += Utils.convertInternalVectorToExternalString(moveTo) + ";set:";
-		s += Utils.convertInternalVectorToExternalString(setTo) + ";";
-		return s;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((actor == null) ? 0 : actor.hashCode());
-		result = prime * result
-				+ ((moveFrom == null) ? 0 : moveFrom.hashCode());
-		result = prime * result + ((moveTo == null) ? 0 : moveTo.hashCode());
-		result = prime * result + ((setTo == null) ? 0 : setTo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Action other = (Action) obj;
-		if (actor == null) {
-			if (other.actor != null)
-				return false;
-		} else if (!actor.equals(other.actor))
-			return false;
-		if (moveFrom == null) {
-			if (other.moveFrom != null)
-				return false;
-		} else if (!moveFrom.equals(other.moveFrom))
-			return false;
-		if (moveTo == null) {
-			if (other.moveTo != null)
-				return false;
-		} else if (!moveTo.equals(other.moveTo))
-			return false;
-		if (setTo == null) {
-			if (other.setTo != null)
-				return false;
-		} else if (!setTo.equals(other.setTo))
-			return false;
-		return true;
 	}
 
 }

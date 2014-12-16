@@ -1,6 +1,7 @@
 package oot.landung.game.board;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import oot.landung.game.utils.Vector;
@@ -72,7 +73,7 @@ public class Board {
 	public void moveStone(int x1, int y1, int x2, int y2) {
 		if (tiles[x1][y1] != null) {
 			Stone s = removeStone(x1, y1);
-			placeStone(x2,y2,s);
+			placeStone(x2, y2, s);
 		}
 	}
 
@@ -138,16 +139,20 @@ public class Board {
 	 */
 	public List<Stone> getStonesBetween(Vector<Integer> a, Vector<Integer> b) {
 
-		List<Stone> list = new ArrayList<Stone>();
+		return getStones(getIndicesBetween(a, b));
+		
+	}
+	
+	public List<Vector<Integer>> getIndicesBetween(Vector<Integer> a, Vector<Integer> b) {
+
+		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		if (a.getY() == b.getY()) {
-			list.addAll(getStonesBetweenHorizontal(a.getX(), b.getX(), b.getY()));
+			list.addAll(getIndicesBetweenHorizontal(a.getX(), b.getX(), b.getY()));
 		} else if (a.getX() == b.getX()) {
-			list.addAll(getStonesBetweenVertical(a.getY(), b.getY(), b.getX()));
-		} else if (Math.abs(a.getX() - b.getX()) == Math.abs(a.getY()
-				- b.getY())) {
-			list.addAll(getStonesBetweenDiagonal(a.getX(), a.getY(), b.getX(),
-					b.getY()));
+			list.addAll(getIndicesBetweenVertical(a.getY(), b.getY(), b.getX()));
+		} else if (Math.abs(a.getX() - b.getX()) == Math.abs(a.getY() - b.getY())) {
+			list.addAll(getIndicesBetweenDiagonal(a.getX(), a.getY(), b.getX(), b.getY()));
 		}
 
 		return list;
@@ -155,8 +160,31 @@ public class Board {
 	}
 
 	private List<Stone> getStonesBetweenDiagonal(int x1, int y1, int x2, int y2) {
+		return getStones(getIndicesBetweenDiagonal(x1, y1, x2, y2));
+	}
 
+	private List<Stone> getStonesBetweenVertical(int y1, int y2, int x) {
+		return getStones(getIndicesBetweenVertical(y1, y2, x));
+	}
+
+	private List<Stone> getStonesBetweenHorizontal(int x1, int x2, int y) {
+		return getStones(getIndicesBetweenHorizontal(x1, x2, y));
+	}
+
+	public List<Stone> getStones(List<Vector<Integer>> indices) {
 		List<Stone> list = new ArrayList<Stone>();
+		for (Vector<Integer> v : indices) {
+			Stone s = getStone(v.getX(), v.getY());
+			if (s != null) {
+				list.add(s);
+			}
+		}
+		return list;
+	}
+
+	public List<Vector<Integer>> getIndicesBetweenDiagonal(int x1, int y1, int x2, int y2) {
+
+		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		int topY = Math.min(y1, y2);
 		int botX = Math.max(y1, y2);
@@ -172,12 +200,8 @@ public class Board {
 			int botRightX = x2 - 1;
 			int botRightY = y2 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX
-					&& j <= botRightY; i++, j++) {
-				Stone s = getStone(i, j);
-				if (s != null) {
-					list.add(s);
-				}
+			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+				list.add(new Vector<Integer>(i, j));
 			}
 
 		}
@@ -191,12 +215,8 @@ public class Board {
 			int botRightX = x1 - 1;
 			int botRightY = y1 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX
-					&& j <= botRightY; i++, j++) {
-				Stone s = getStone(i, j);
-				if (s != null) {
-					list.add(s);
-				}
+			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+				list.add(new Vector<Integer>(i, j));
 			}
 
 		}
@@ -210,12 +230,8 @@ public class Board {
 			int botLeftX = x2 + 1;
 			int botLeftY = y2 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX
-					&& j <= botLeftY; i--, j++) {
-				Stone s = getStone(i, j);
-				if (s != null) {
-					list.add(s);
-				}
+			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+				list.add(new Vector<Integer>(i, j));
 			}
 
 		}
@@ -229,12 +245,8 @@ public class Board {
 			int botLeftX = x1 + 1;
 			int botLeftY = y1 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX
-					&& j <= botLeftY; i--, j++) {
-				Stone s = getStone(i, j);
-				if (s != null) {
-					list.add(s);
-				}
+			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+				list.add(new Vector<Integer>(i, j));
 			}
 
 		}
@@ -242,33 +254,27 @@ public class Board {
 		return list;
 	}
 
-	private List<Stone> getStonesBetweenHorizontal(int x, int x2, int y) {
-		List<Stone> list = new ArrayList<Stone>();
+	private List<Vector<Integer>> getIndicesBetweenHorizontal(int x, int x2, int y) {
+		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		int left = Math.min(x, x2) + 1;
 		int right = Math.max(x, x2) - 1;
 
 		for (int i = left; i <= right; i++) {
-			Stone s = getStone(i, y);
-			if (s != null) {
-				list.add(s);
-			}
+			list.add(new Vector<Integer>(i, y));
 		}
 
 		return list;
 	}
 
-	private List<Stone> getStonesBetweenVertical(int y, int y2, int x) {
-		List<Stone> list = new ArrayList<Stone>();
+	private List<Vector<Integer>> getIndicesBetweenVertical(int y, int y2, int x) {
+		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		int top = Math.min(y, y2) + 1;
 		int bot = Math.max(y, y2) - 1;
 
 		for (int i = top; i <= bot; i++) {
-			Stone s = getStone(x, i);
-			if (s != null) {
-				list.add(s);
-			}
+			list.add(new Vector<Integer>(x, i));
 		}
 
 		return list;
@@ -289,11 +295,10 @@ public class Board {
 		for (int i = 0; i < SIZE; i++) {
 
 			String[] row = new String[SIZE + 1];
-			row[0] = Integer.toString(SIZE-i);
+			row[0] = Integer.toString(SIZE - i);
 
 			for (int j = 0; j < SIZE; j++) {
-				row[j + 1] = tiles[j][i] == null ? "" : " "
-						+ tiles[j][i].toString();
+				row[j + 1] = tiles[j][i] == null ? "" : " " + tiles[j][i].toString();
 			}
 
 			System.out.format(format, row);

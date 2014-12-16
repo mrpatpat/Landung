@@ -7,8 +7,10 @@ import oot.landung.game.utils.Vector;
 
 public class RemoveAction extends Action {
 
+	private Vector<Integer> setTo = null;
+
 	public RemoveAction(boolean sudo, Player actor, Vector<Integer> removeFrom) {
-		super(sudo, actor, removeFrom, null, null);
+		super(sudo, actor, removeFrom, null);
 	}
 
 	@Override
@@ -49,6 +51,11 @@ public class RemoveAction extends Action {
 		if ((getMoveFrom() != null))
 			board.removeStone(getMoveFrom().getX(), getMoveFrom().getY());
 
+	}
+	
+	@Override
+	public Vector<Integer> getSetTo() {
+		return setTo;
 	}
 
 }

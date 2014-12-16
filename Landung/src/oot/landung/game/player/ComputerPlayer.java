@@ -1,5 +1,7 @@
 package oot.landung.game.player;
 
+import java.util.List;
+
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
@@ -71,17 +73,14 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Action askforAction(int turn, Board board) {
 
-		System.out.println("m�gliche Z�ge: "
-				+ this.getValidActions(board, turn));
-		
+		List<Action> actions = getValidActions(board, turn);
+
 		int rand = (int) (Math.random() * 5);
 
 		if (rand <= level) {
-			return stupid.getNextAction(board,
-					this.getValidActions(board, turn), turn);
+			return stupid.getNextAction(board, actions, turn);
 		} else {
-			return smart.getNextAction(board,
-					this.getValidActions(board, turn), turn);
+			return smart.getNextAction(board, actions, turn);
 		}
 
 	}
@@ -93,8 +92,8 @@ public class ComputerPlayer extends Player {
 	}
 
 	/**
-	 * Gibt einen Entfernen-Zug des Spielers zur�ck. Benutzt je nach Stufe Z�ge der
-	 * intelligenten und dummen KI (in einem Verh�ltnis linear zum Level).
+	 * Gibt einen Entfernen-Zug des Spielers zur�ck. Benutzt je nach Stufe Z�ge
+	 * der intelligenten und dummen KI (in einem Verh�ltnis linear zum Level).
 	 * 
 	 * @param turn
 	 *            der zug
@@ -107,11 +106,9 @@ public class ComputerPlayer extends Player {
 		int rand = (int) (Math.random() * 5);
 
 		if (rand <= level) {
-			return stupid.getNextRemoveAction(board,
-					this.getValidRemoveActions(board, turn));
+			return stupid.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
 		} else {
-			return smart.getNextRemoveAction(board,
-					this.getValidRemoveActions(board, turn));
+			return smart.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
 		}
 	}
 

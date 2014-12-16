@@ -76,9 +76,9 @@ public class Game implements Serializable {
 	private static final int PLAYERS = 2;
 
 	/**
-	 * Spielfeld
+	 * Spielfeld static for test
 	 */
-	private Board board;
+	public static Board board;
 
 	/**
 	 * Spieler
@@ -161,17 +161,22 @@ public class Game implements Serializable {
 	}
 
 	private void runPlayerTurn(Player p) {
+		
 		Action a;
+		
 		boolean turnValid = false;
+		
+		
+		
 		do {
 			board.print();
+			System.out.println(p.getName()+"("+p.getSymbol()+") hat folgende Zuege: "+p.getValidActions(board, turn));
 			a = p.askforAction(turn, board);
-			System.out.println(a);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-
+		System.out.println(p.getName()+"("+p.getSymbol()+") wählt Zug: "+a);
 		a.execute(board);
 
 		if (p.getStones() <= 0) {
