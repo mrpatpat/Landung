@@ -27,7 +27,7 @@ public class MainMenu extends Menu {
 				choiceValid = true;
 				System.exit(0);
 			} else {
-				System.out.println("ungÃ¼ltige Eingabe");
+				System.out.println("ungültige Eingabe");
 			}
 
 		} while (!choiceValid);
@@ -40,7 +40,7 @@ public class MainMenu extends Menu {
 		String format2 = new String("|   %-15s   |\n");
 		String format3 = new String("+------<%-7s>------+\n");
 
-		System.out.format(format1, "HAUPTMENÃœ");
+		System.out.format(format1, "HAUPTMENÜ");
 		System.out.format(format2, "");
 		System.out.format(format2, "Neues Spiel");
 		if (current != null)

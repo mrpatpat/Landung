@@ -30,11 +30,11 @@ public class NewGameMenu extends Menu {
 			} else if (choice.equals("EvE") || choice.equals("3")) {
 				choiceValid = true;
 				getLandung().initGame(new Game(GameType.EVE, getParent()));
-			} else if (choice.equals("ZurÃ¼ck") || choice.equals("4")) {
+			} else if (choice.equals("Zurück") || choice.equals("4")) {
 				choiceValid = true;
 				getParent().open(current);
 			} else {
-				System.out.println("ungÃ¼ltige Eingabe");
+				System.out.println("ungültige Eingabe");
 			}
 
 		} while (!choiceValid);
@@ -52,7 +52,7 @@ public class NewGameMenu extends Menu {
 		System.out.format(format2, "PvP");
 		System.out.format(format2, "PvE");
 		System.out.format(format2, "EvE");
-		System.out.format(format2, "ZurÃ¼ck");
+		System.out.format(format2, "Zurück");
 		System.out.format(format2, "");
 		System.out.format(format3, "LANDUNG");
 

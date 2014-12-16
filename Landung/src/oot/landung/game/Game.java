@@ -137,7 +137,7 @@ public class Game {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName() + "(" + p.getSymbol() + ") w√§hlt Zug: " + a);
+		System.out.println(p.getName() + "(" + p.getSymbol() + ") w‰hlt Zug: " + a);
 		a.execute(board);
 
 		if (p.getStones() <= 0) {
