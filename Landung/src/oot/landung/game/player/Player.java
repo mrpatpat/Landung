@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import oot.landung.game.Game;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
@@ -114,7 +115,7 @@ public abstract class Player implements Serializable{
 	 *            aktueller Zug
 	 * @return Aktion
 	 */
-	public abstract Action askforAction(int turn, Board board);
+	public abstract Action askforAction(Game g);
 
 	/**
 	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausf�hren m�chte.

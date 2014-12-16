@@ -3,12 +3,14 @@ package oot.landung.game.player;
 import java.util.List;
 import java.util.Scanner;
 
+import oot.landung.game.Game;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.ai.AiInterface;
 import oot.landung.game.player.ai.StupidAi;
 import oot.landung.game.utils.Utils;
+import oot.landung.menu.Menu;
 
 /**
  * Computerspieler mit 5 Spielstufen (0-4)
@@ -114,16 +116,16 @@ public class ComputerPlayer extends Player {
 	 * @return der Zug
 	 */
 	@Override
-	public Action askforAction(int turn, Board board) {
+	public Action askforAction(Game g) {
 
-		List<Action> actions = getValidActions(board, turn);
+		List<Action> actions = getValidActions(g.getBoard(), g.getTurn());
 
 		int rand = (int) (Math.random() * 5);
 
 		if (rand <= level) {
-			return stupid.getNextAction(board, actions, turn);
+			return stupid.getNextAction(g.getBoard(), actions, g.getTurn());
 		} else {
-			return smart.getNextAction(board, actions, turn);
+			return smart.getNextAction(g.getBoard(), actions, g.getTurn());
 		}
 
 	}

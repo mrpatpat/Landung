@@ -1,15 +1,14 @@
 package oot.landung.game.player;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
+import oot.landung.game.Game;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.MoveAndSetAction;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.utils.Utils;
-import oot.landung.game.utils.Vector;
 
 /**
  * Instanz eines Menschlichen Spielers.
@@ -34,8 +33,7 @@ public class HumanPlayer extends Player {
 	@Override
 	public String askforName() {
 		Scanner in = Utils.getScanner();
-		System.out.println("Geben Sie Ihren Namen ein Spieler "
-				+ this.getPlayerID() + ": ");
+		System.out.println("Geben Sie Ihren Namen ein Spieler " + this.getPlayerID() + ": ");
 		String name = in.nextLine();
 		return name;
 	}
@@ -46,27 +44,30 @@ public class HumanPlayer extends Player {
 	 * dabei erlaubt eine Hilfe aufzurufen.
 	 */
 	@Override
-	public Action askforAction(int turn, Board board) {
+	public Action askforAction(Game g) {
 
-		//Ausgabe + Eingabe
+		// Ausgabe + Eingabe
 		Scanner in = Utils.getScanner();
 
-		System.out.println("\n" + this.getName() + " ist am Zug ("
-				+ this.getSymbol() + "):");
+		System.out.println("\n" + this.getName() + " ist am Zug (" + this.getSymbol() + "):");
 
 		String command = in.nextLine();
 
-		
-		//Verarbeitung
-		
+		// Verarbeitung
+
 		boolean sudo = false;
-		
-		
+
 		// hilfe gefolgt von irgendwas
-				if (command.matches("hilfe.*")) {
-					printHelp();
-					return askforAction(turn, board);
-				}
+		if (command.matches("hilfe.*")) {
+			printHelp();
+			return askforAction(g);
+		}
+
+		// hilfe gefolgt von irgendwas
+		if (command.matches("menu.*")) {
+			g.getMainMenu().open(g);
+			return askforAction(g);
+		}
 
 		// sudo_ gefolgt von irgendwas
 		if (command.matches("sudo .*")) {
@@ -80,23 +81,19 @@ public class HumanPlayer extends Player {
 		// {1} = matche es nur einmal
 		// \b = Wortgrenze
 		if (command.matches("\\b([a-e][1-5]){1}\\b")) {
-			
-			return new SetAction(sudo, this,
-					Utils.convertExternalStringToInternalVector(command));
-			
+
+			return new SetAction(sudo, this, Utils.convertExternalStringToInternalVector(command));
+
 		} else if (command.matches("\\b([a-e][1-5]){2}\\b")) {
-			
-			return new MoveAndSetAction(sudo, this,
-					Utils.convertExternalStringToInternalVector(command
-							.substring(0, 2)),
-					Utils.convertExternalStringToInternalVector(command
-							.substring(2, 4)));
-			
+
+			return new MoveAndSetAction(sudo, this, Utils.convertExternalStringToInternalVector(command.substring(0, 2)),
+					Utils.convertExternalStringToInternalVector(command.substring(2, 4)));
+
 		} else {
-			
+
 			System.out.println("Fehlerhafte Eingabe");
-			return askforAction(turn, board);
-			
+			return askforAction(g);
+
 		}
 
 	}
@@ -113,10 +110,7 @@ public class HumanPlayer extends Player {
 		System.out.format(f, "", "");
 
 		System.out.format(f, "Feldnotation", "BuchstbeZahl Bsp.: a0 oder b3 ");
-		System.out
-				.format(f,
-						"sudo",
-						"Vor jeden Befehl kann ein sudo gesetzt werden, das zum missachten der Regeln f�hrt");
+		System.out.format(f, "sudo", "Vor jeden Befehl kann ein sudo gesetzt werden, das zum missachten der Regeln f�hrt");
 
 		System.out.format(f, "", "");
 
@@ -125,8 +119,7 @@ public class HumanPlayer extends Player {
 		System.out.format(f, "", "");
 
 		System.out.format(f, "[Feld]", "Setze Stein auf [Feld]");
-		System.out.format(f, "[Feld1][Feld2]",
-				"Bewege Stein auf [Feld1] nach [Feld2]");
+		System.out.format(f, "[Feld1][Feld2]", "Bewege Stein auf [Feld1] nach [Feld2]");
 
 		System.out.format(f, "", "");
 
@@ -159,8 +152,7 @@ public class HumanPlayer extends Player {
 
 		Scanner in = Utils.getScanner();
 
-		System.out.println("\n" + this.getName() + " ist am Zug ("
-				+ this.getSymbol() + "). Bitte entferne einen deiner Steine.");
+		System.out.println("\n" + this.getName() + " ist am Zug (" + this.getSymbol() + "). Bitte entferne einen deiner Steine.");
 
 		String command = in.nextLine();
 
@@ -175,10 +167,7 @@ public class HumanPlayer extends Player {
 		}
 
 		if (commands.length == 1 + delta) {
-			return new RemoveAction(
-					sudo,
-					this,
-					Utils.convertExternalStringToInternalVector(commands[0 + delta]));
+			return new RemoveAction(sudo, this, Utils.convertExternalStringToInternalVector(commands[0 + delta]));
 		}
 
 		return null;

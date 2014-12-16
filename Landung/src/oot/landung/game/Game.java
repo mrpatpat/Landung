@@ -46,7 +46,7 @@ public class Game {
 	private int turn;
 
 	private int currentPlayer;
-	
+
 	private Menu main;
 
 	/**
@@ -55,7 +55,7 @@ public class Game {
 	public Game(GameType type, Menu main) {
 
 		this.main = main;
-		
+
 		// init players
 		player = new Player[Game.PLAYERS];
 
@@ -132,7 +132,7 @@ public class Game {
 		do {
 			board.print();
 			System.out.println(p.getName() + "(" + p.getSymbol() + ") hat folgende Zuege: " + p.getValidActions(board, turn));
-			a = p.askforAction(turn, board);
+			a = p.askforAction(this);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
@@ -259,6 +259,10 @@ public class Game {
 
 	public int getTurn() {
 		return turn;
+	}
+
+	public Menu getMainMenu() {
+		return main;
 	}
 
 }
