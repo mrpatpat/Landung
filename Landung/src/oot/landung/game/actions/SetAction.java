@@ -16,7 +16,7 @@ import oot.landung.game.utils.Vector;
 public class SetAction extends Action {
 
 	private Vector<Integer> setTo;
-	
+
 	/**
 	 * Erstellt eine neue Setzaktion.
 	 * 
@@ -68,16 +68,21 @@ public class SetAction extends Action {
 
 	@Override
 	public void execute(Board board) {
-
-		// execute set
-		if (getSetTo() != null)
-			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(getActor(), getSetTo().getX(), getSetTo().getY()));
-
+		execute(board,false);
 	}
 
 	@Override
 	public Vector<Integer> getSetTo() {
 		return setTo;
+	}
+
+	@Override
+	public void execute(Board board, boolean experimental) {
+		// execute set
+		if (getSetTo() != null)
+			board.placeStone(getSetTo().getX(), getSetTo().getY(), new Stone(
+					getActor(), getSetTo().getX(), getSetTo().getY()),experimental);
+
 	}
 
 }

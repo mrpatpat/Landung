@@ -18,15 +18,28 @@ public class MainMenu extends Menu {
 		do {
 
 			String choice = askForChoice();
+
 			if (choice.equals("Neues Spiel") || choice.equals("1")) {
+
 				choiceValid = true;
 				new NewGameMenu(getLandung(), this).open(current);
-			} else if (choice.equals("Weiterspielen") || choice.equals("2")) {
+
+			} else if ((choice.equals("Weiterspielen") || choice.equals("2"))&&current!=null) {
+
 				choiceValid = true;
-			} else if (choice.equals("Beenden") || current == null ? choice.equals("2") : choice.equals("3")) {
+
+			} else if ((choice.equals("KI Test") || choice.equals("2"))&&current==null) {
+
+				choiceValid = true;
+				getLandung().testAi();
+
+			} else if (choice.equals("Beenden") || choice.equals("3")) {
+
 				choiceValid = true;
 				System.exit(0);
+				
 			} else {
+
 				System.out.println("ungültige Eingabe");
 			}
 
@@ -45,6 +58,8 @@ public class MainMenu extends Menu {
 		System.out.format(format2, "Neues Spiel");
 		if (current != null)
 			System.out.format(format2, "Weiterspielen");
+		if (current == null)
+			System.out.format(format2, "KI Test");
 		System.out.format(format2, "Beenden");
 		System.out.format(format2, "");
 		System.out.format(format3, "LANDUNG");

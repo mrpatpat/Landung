@@ -4,17 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import oot.landung.game.actions.Action;
+import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
 /**
  * Das ist unsere Spielbrettklasse. Sie verwaltet die Spielsteine auf dem Brett.
- * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur f�r
- * unser Spiel.
+ * Diese Klasse kennt keine Regeln und ist jediglich eine Art Datenstruktur
+ * f�r unser Spiel.
  * 
  * @author Landung
  *
  */
-public class Board implements Serializable{
+public class Board implements Serializable {
 
 	/**
 	 * Gr��e des Spielbretts.
@@ -69,11 +71,12 @@ public class Board implements Serializable{
 	 *            x Endkoordinate
 	 * @param y2
 	 *            y Endkoordinate
+	 * @param experimental
 	 */
-	public void moveStone(int x1, int y1, int x2, int y2) {
+	public void moveStone(int x1, int y1, int x2, int y2, boolean experimental) {
 		if (tiles[x1][y1] != null) {
-			Stone s = removeStone(x1, y1);
-			placeStone(x2, y2, s);
+			Stone s = removeStone(x1, y1, experimental);
+			placeStone(x2, y2, s, experimental);
 		}
 	}
 
@@ -86,28 +89,30 @@ public class Board implements Serializable{
 	 *            y Koordinate
 	 * @param s
 	 *            der zu platzierende Stein
+	 * @param experimental
 	 */
-	public void placeStone(int x, int y, Stone s) {
+	public void placeStone(int x, int y, Stone s, boolean experimental) {
 		tiles[x][y] = s;
-		s.updatePosition(x, y);
-		s.getOwner().onStonePlaced(s);
+		if (!experimental) {
+			s.updatePosition(x, y);
+		}
 	}
 
 	/**
-	 * Entfernt einen Stein auf Feld xy, gibt ihn zur�ck und benachrichtigt den
-	 * Spieler �ber das Entfernen
+	 * Entfernt einen Stein auf Feld xy, gibt ihn zur�ck und benachrichtigt
+	 * den Spieler �ber das Entfernen
 	 * 
 	 * @param x
 	 *            x Koordinate
 	 * @param y
 	 *            y Koordinate
+	 * @param experimental
 	 * @return Stein
 	 */
-	public Stone removeStone(int x, int y) {
+	public Stone removeStone(int x, int y, boolean experimental) {
 		Stone s = getStone(x, y);
 		if (s != null) {
 			tiles[x][y] = null;
-			s.getOwner().onStoneRemoved(s);
 			return s;
 		} else
 			return null;
@@ -140,19 +145,23 @@ public class Board implements Serializable{
 	public List<Stone> getStonesBetween(Vector<Integer> a, Vector<Integer> b) {
 
 		return getStones(getIndicesBetween(a, b));
-		
+
 	}
-	
-	public List<Vector<Integer>> getIndicesBetween(Vector<Integer> a, Vector<Integer> b) {
+
+	public List<Vector<Integer>> getIndicesBetween(Vector<Integer> a,
+			Vector<Integer> b) {
 
 		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		if (a.getY() == b.getY()) {
-			list.addAll(getIndicesBetweenHorizontal(a.getX(), b.getX(), b.getY()));
+			list.addAll(getIndicesBetweenHorizontal(a.getX(), b.getX(),
+					b.getY()));
 		} else if (a.getX() == b.getX()) {
 			list.addAll(getIndicesBetweenVertical(a.getY(), b.getY(), b.getX()));
-		} else if (Math.abs(a.getX() - b.getX()) == Math.abs(a.getY() - b.getY())) {
-			list.addAll(getIndicesBetweenDiagonal(a.getX(), a.getY(), b.getX(), b.getY()));
+		} else if (Math.abs(a.getX() - b.getX()) == Math.abs(a.getY()
+				- b.getY())) {
+			list.addAll(getIndicesBetweenDiagonal(a.getX(), a.getY(), b.getX(),
+					b.getY()));
 		}
 
 		return list;
@@ -182,7 +191,8 @@ public class Board implements Serializable{
 		return list;
 	}
 
-	public List<Vector<Integer>> getIndicesBetweenDiagonal(int x1, int y1, int x2, int y2) {
+	public List<Vector<Integer>> getIndicesBetweenDiagonal(int x1, int y1,
+			int x2, int y2) {
 
 		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
@@ -200,7 +210,8 @@ public class Board implements Serializable{
 			int botRightX = x2 - 1;
 			int botRightY = y2 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+			for (int i = topLeftX, j = topLeftY; i <= botRightX
+					&& j <= botRightY; i++, j++) {
 				list.add(new Vector<Integer>(i, j));
 			}
 
@@ -215,7 +226,8 @@ public class Board implements Serializable{
 			int botRightX = x1 - 1;
 			int botRightY = y1 - 1;
 
-			for (int i = topLeftX, j = topLeftY; i <= botRightX && j <= botRightY; i++, j++) {
+			for (int i = topLeftX, j = topLeftY; i <= botRightX
+					&& j <= botRightY; i++, j++) {
 				list.add(new Vector<Integer>(i, j));
 			}
 
@@ -230,7 +242,8 @@ public class Board implements Serializable{
 			int botLeftX = x2 + 1;
 			int botLeftY = y2 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+			for (int i = topRightX, j = topRightY; i >= botLeftX
+					&& j <= botLeftY; i--, j++) {
 				list.add(new Vector<Integer>(i, j));
 			}
 
@@ -245,7 +258,8 @@ public class Board implements Serializable{
 			int botLeftX = x1 + 1;
 			int botLeftY = y1 - 1;
 
-			for (int i = topRightX, j = topRightY; i >= botLeftX && j <= botLeftY; i--, j++) {
+			for (int i = topRightX, j = topRightY; i >= botLeftX
+					&& j <= botLeftY; i--, j++) {
 				list.add(new Vector<Integer>(i, j));
 			}
 
@@ -254,7 +268,8 @@ public class Board implements Serializable{
 		return list;
 	}
 
-	private List<Vector<Integer>> getIndicesBetweenHorizontal(int x, int x2, int y) {
+	private List<Vector<Integer>> getIndicesBetweenHorizontal(int x, int x2,
+			int y) {
 		List<Vector<Integer>> list = new ArrayList<Vector<Integer>>();
 
 		int left = Math.min(x, x2) + 1;
@@ -298,7 +313,8 @@ public class Board implements Serializable{
 			row[0] = Integer.toString(SIZE - i);
 
 			for (int j = 0; j < SIZE; j++) {
-				row[j + 1] = tiles[j][i] == null ? "" : " " + tiles[j][i].toString();
+				row[j + 1] = tiles[j][i] == null ? "" : " "
+						+ tiles[j][i].toString();
 			}
 
 			System.out.format(format, row);
@@ -308,4 +324,48 @@ public class Board implements Serializable{
 		System.out.printf("   | A | B | C | D | E |%n");
 	}
 
+	public Board getTheoreticalNextBoard(Action a, Board board, int turn) {
+
+		// copy
+
+		Board n = new Board();
+
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+
+				n.tiles[i][j] = null;
+
+				if (tiles[i][j] != null) {
+
+					n.tiles[i][j] = new Stone(tiles[i][j].getOwner(),
+							tiles[i][j].getPosition().getX(), tiles[i][j]
+									.getPosition().getY());
+
+				}
+
+			}
+		}
+
+		// execute Action
+
+		a.execute(n, true);
+
+		return n;
+
+	}
+
+	public List<Stone> getPlacedStones(Player player) {
+		List<Stone> stones = new ArrayList<>();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				Stone s = tiles[i][j];
+				if (s != null) {
+					if (s.getOwner() == player) {
+						stones.add(s);
+					}
+				}
+			}
+		}
+		return stones;
+	}
 }

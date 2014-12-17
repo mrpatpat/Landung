@@ -157,16 +157,24 @@ public class MoveAndSetAction extends Action {
 
 	@Override
 	public void execute(Board board) {
+		
+		execute(board,false);
+		
+	}
 
+	@Override
+	public void execute(Board board, boolean experimental) {
+		
 		Vector<Integer> set = getSetTo();
 		Vector<Integer> from = getMoveFrom();
 		Vector<Integer> to = getMoveTo();
 
 		// execute move
-		board.moveStone(from.getX(), from.getY(), to.getX(), to.getY());
+		board.moveStone(from.getX(), from.getY(), to.getX(), to.getY(),experimental);
 
 		// execute set
-		board.placeStone(set.getX(), set.getY(), new Stone(getActor(), set.getX(), set.getY()));
+		board.placeStone(set.getX(), set.getY(), new Stone(getActor(), set.getX(), set.getY()),experimental);
+		
 	}
 
 }

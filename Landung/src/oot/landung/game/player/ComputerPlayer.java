@@ -8,9 +8,9 @@ import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.ai.AiInterface;
+import oot.landung.game.player.ai.SmartAi;
 import oot.landung.game.player.ai.StupidAi;
 import oot.landung.game.utils.Utils;
-import oot.landung.menu.Menu;
 
 /**
  * Computerspieler mit 5 Spielstufen (0-4)
@@ -37,7 +37,7 @@ public class ComputerPlayer extends Player {
 		this.level = askForLevel();
 		setName(genName());
 		this.stupid = new StupidAi();
-		this.smart = stupid;
+		this.smart = new SmartAi();
 	}
 
 	private String genName() {
@@ -117,15 +117,17 @@ public class ComputerPlayer extends Player {
 	 */
 	@Override
 	public Action askforAction(Game g) {
+		
+		Player enemy  = g.player[0] == this ? g.player[1]:g.player[0];
 
 		List<Action> actions = getValidActions(g.getBoard(), g.getTurn());
 
 		int rand = (int) (Math.random() * 5);
 
 		if (rand <= level) {
-			return stupid.getNextAction(g.getBoard(), actions, g.getTurn());
+			return stupid.getNextAction(g.getBoard(), actions, g.getTurn(),enemy);
 		} else {
-			return smart.getNextAction(g.getBoard(), actions, g.getTurn());
+			return smart.getNextAction(g.getBoard(), actions, g.getTurn(),enemy);
 		}
 
 	}

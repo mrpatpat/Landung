@@ -6,6 +6,7 @@ import java.util.List;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
+import oot.landung.game.player.Player;
 
 /**
  * Interface f�r eine K�nstliche Intelligenz. 
@@ -20,7 +21,7 @@ public interface AiInterface extends Serializable{
 	 * @param allPossibleActions Liste aller Aktionen die m�glich sind
 	 * @return Der Zug der KI
 	 */
-	public Action getNextAction(Board board, List<Action> possibleActions, int turn);
+	public Action getNextAction(Board board, List<Action> possibleActions, int turn, Player enemy);
 	
 	
 	/**

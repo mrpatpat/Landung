@@ -31,7 +31,6 @@ public abstract class Player implements Serializable{
 	private int points = 0;
 	private String symbol;
 	private int playerID;
-	private List<Stone> placedStones;
 
 	/**
 	 * Instanziiert einen neuen Spieler.
@@ -43,7 +42,6 @@ public abstract class Player implements Serializable{
 		this.playerID = playerID;
 		symbol = playerID == 1 ? "X" : "O";
 		this.name = askforName();
-		placedStones = new ArrayList<Stone>();
 	}
 	
 	public void setName(String name){
@@ -64,8 +62,12 @@ public abstract class Player implements Serializable{
 	 * 
 	 * @return Steine
 	 */
-	public int getStones() {
-		return 10 - placedStones.size();
+	public int getStones(Board board) {
+		return 10 - getPlacedStones(board).size();
+	}
+
+	private List<Stone> getPlacedStones(Board board) {
+		return board.getPlacedStones(this);
 	}
 
 	/**
@@ -134,14 +136,6 @@ public abstract class Player implements Serializable{
 	 */
 	public abstract RemoveAction askforRemoveAction(Board board, int turn);
 
-	public void onStonePlaced(Stone s) {
-		placedStones.add(s);
-	}
-
-	public void onStoneRemoved(Stone s) {
-		placedStones.remove(s);
-	}
-
 	/**
 	 * Gibt zur�ck, ob ein Spieler noch g�ltige Aktionen ausf�hren kann.
 	 * 
@@ -197,7 +191,7 @@ public abstract class Player implements Serializable{
 
 		List<MoveAndSetAction> result = new ArrayList<>();
 
-		for (Stone s : placedStones) {
+		for (Stone s : getPlacedStones(board)) {
 			for (int i = 0; i < Board.SIZE; i++) {
 				for (int j = 0; j < Board.SIZE; j++) {
 
@@ -227,7 +221,7 @@ public abstract class Player implements Serializable{
 
 		List<RemoveAction> result = new ArrayList<>();
 
-		for (Stone s : placedStones) {
+		for (Stone s : getPlacedStones(board)) {
 
 			RemoveAction a = new RemoveAction(false, this, s.getPosition());
 

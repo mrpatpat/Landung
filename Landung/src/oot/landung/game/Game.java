@@ -78,6 +78,24 @@ public class Game {
 
 	}
 
+	public Game(Menu main, Player p1, Player p2) {
+
+		this.main = main;
+
+		// init players
+		player = new Player[Game.PLAYERS];
+
+		player[0] = p1;
+		player[1] = p2;
+
+		// init board
+		board = new Board();
+
+		// init rest
+		turn = 0;
+
+	}
+
 	/**
 	 * Spielschleife gibt Sieger zurï¿½ck
 	 */
@@ -131,16 +149,20 @@ public class Game {
 
 		do {
 			board.print();
-			System.out.println(p.getName() + "(" + p.getSymbol() + ") hat folgende Zuege: " + p.getValidActions(board, turn));
+			System.out
+					.println(p.getName() + "(" + p.getSymbol()
+							+ ") hat folgende Zuege: "
+							+ p.getValidActions(board, turn));
 			a = p.askforAction(this);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName() + "(" + p.getSymbol() + ") wählt Zug: " + a);
+		System.out.println(p.getName() + "(" + p.getSymbol() + ") wählt Zug: "
+				+ a);
 		a.execute(board);
 
-		if (p.getStones() <= 0) {
+		if (p.getStones(board) <= 0) {
 
 			boolean remValid = false;
 			RemoveAction ra;
@@ -180,7 +202,9 @@ public class Game {
 				Stone c = board.getStone(i + 3, j);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -198,7 +222,9 @@ public class Game {
 				Stone c = board.getStone(j, i + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -216,7 +242,9 @@ public class Game {
 				Stone c = board.getStone(j + 3, i + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}
@@ -234,7 +262,9 @@ public class Game {
 				Stone c = board.getStone(i - 3, j + 3);
 
 				if (start != null & a != null & b != null & c != null) {
-					if (start.getOwner() == a.getOwner() & a.getOwner() == b.getOwner() & b.getOwner() == c.getOwner()) {
+					if (start.getOwner() == a.getOwner()
+							& a.getOwner() == b.getOwner()
+							& b.getOwner() == c.getOwner()) {
 						return start.getOwner();
 					}
 				}

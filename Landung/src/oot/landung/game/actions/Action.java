@@ -77,7 +77,7 @@ public abstract class Action {
 				}
 			} else if (turn == 2 || turn > 3) {
 				if (!(this instanceof MoveAndSetAction)) {
-					if (player.getStones() > 0
+					if (player.getStones(board) > 0
 							&& !(this instanceof RemoveAction)) {
 						if (print)
 							player.notifyUnvalidMove("In diesem Zug darf man nur bewegen und setzen.");
@@ -162,5 +162,7 @@ public abstract class Action {
 	public boolean getSudo() {
 		return sudo;
 	}
+
+	public abstract void execute(Board board, boolean experimental);
 
 }

@@ -48,14 +48,19 @@ public class RemoveAction extends Action {
 
 	public void execute(Board board) {
 
-		if ((getMoveFrom() != null))
-			board.removeStone(getMoveFrom().getX(), getMoveFrom().getY());
+		execute(board,false);
 
 	}
 	
 	@Override
 	public Vector<Integer> getSetTo() {
 		return setTo;
+	}
+
+	@Override
+	public void execute(Board board, boolean experimental) {
+		if ((getMoveFrom() != null))
+			board.removeStone(getMoveFrom().getX(), getMoveFrom().getY(),experimental);
 	}
 
 }
