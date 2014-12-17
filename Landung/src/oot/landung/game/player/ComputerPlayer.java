@@ -124,10 +124,10 @@ public class ComputerPlayer extends Player {
 
 		int rand = (int) (Math.random() * 5);
 
-		if (rand <= level) {
-			return stupid.getNextAction(g.getBoard(), actions, g.getTurn(),enemy);
-		} else {
+		if (rand < level) {
 			return smart.getNextAction(g.getBoard(), actions, g.getTurn(),enemy);
+		} else {
+			return stupid.getNextAction(g.getBoard(), actions, g.getTurn(),enemy);
 		}
 
 	}
@@ -152,10 +152,10 @@ public class ComputerPlayer extends Player {
 	public RemoveAction askforRemoveAction(Board board, int turn) {
 		int rand = (int) (Math.random() * 5);
 
-		if (rand <= level) {
-			return stupid.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
-		} else {
+		if (rand < level) {
 			return smart.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
+		} else {
+			return stupid.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
 		}
 	}
 

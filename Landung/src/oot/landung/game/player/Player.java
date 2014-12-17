@@ -17,20 +17,22 @@ import oot.landung.game.utils.Vector;
  * Das ist unsere abstrakte Spielerklasse. Sie ist abstrakt, da wir verschiedene
  * Arten von Spieler haben, die aber eine gemeinsame Schnittstelle und
  * gemeinsames Verhalten haben. Die Spielerklasse und ihre Kinder sind f�r die
- * Ein- und Ausgaben zust�ndig. Damit sind Ein- und Ausgaben von der Spiellogik
- * getrennt und die K.I. kann an dieser Stelle ihre Eingaben an das Spiel
- * weitergeben ohne die Programmlogik des Spiels kennen zu m�ssen. Sie wird
- * genauso wie ein menschlicher Spieler behandelt.
+ * Ein- und Ausgaben zust�ndig. Damit sind Ein- und Ausgaben von der
+ * Spiellogik getrennt und die K.I. kann an dieser Stelle ihre Eingaben an das
+ * Spiel weitergeben ohne die Programmlogik des Spiels kennen zu m�ssen. Sie
+ * wird genauso wie ein menschlicher Spieler behandelt.
  * 
  * @author Landung
  *
  */
-public abstract class Player implements Serializable{
+public abstract class Player implements Serializable {
 
 	private String name;
 	private int points = 0;
 	private String symbol;
 	private int playerID;
+
+	private boolean wasFirst = false;
 
 	/**
 	 * Instanziiert einen neuen Spieler.
@@ -43,8 +45,8 @@ public abstract class Player implements Serializable{
 		symbol = playerID == 1 ? "X" : "O";
 		this.name = askforName();
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -98,8 +100,9 @@ public abstract class Player implements Serializable{
 	}
 
 	/**
-	 * Das Spiel ruft diese Methode auf, wenn dieser Spieler als Sieger gew�hlt
-	 * wurde. Das Verhalten des Spielers wird in der Kindklasse definiert.
+	 * Das Spiel ruft diese Methode auf, wenn dieser Spieler als Sieger
+	 * gew�hlt wurde. Das Verhalten des Spielers wird in der Kindklasse
+	 * definiert.
 	 */
 	public abstract void notifyWinner();
 
@@ -120,7 +123,8 @@ public abstract class Player implements Serializable{
 	public abstract Action askforAction(Game g);
 
 	/**
-	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausf�hren m�chte.
+	 * Gibt dem Spieler bescheid, dass er einen falschen Zug ausf�hren
+	 * m�chte.
 	 * 
 	 * @param message
 	 *            Begr�ndung des Zuges
@@ -147,6 +151,10 @@ public abstract class Player implements Serializable{
 	 */
 	public boolean hasValidActions(Board board, int turn) {
 
+		//Dirty Hack
+		if (turn == 1)
+			wasFirst = true;
+		
 		return !getValidActions(board, turn).isEmpty();
 
 	}
@@ -187,7 +195,8 @@ public abstract class Player implements Serializable{
 	 *            Zug
 	 * @return Liste
 	 */
-	private List<MoveAndSetAction> getValidMoveAndSetActions(Board board, int turn) {
+	private List<MoveAndSetAction> getValidMoveAndSetActions(Board board,
+			int turn) {
 
 		List<MoveAndSetAction> result = new ArrayList<>();
 
@@ -195,7 +204,8 @@ public abstract class Player implements Serializable{
 			for (int i = 0; i < Board.SIZE; i++) {
 				for (int j = 0; j < Board.SIZE; j++) {
 
-					MoveAndSetAction a = new MoveAndSetAction(false, this, s.getPosition(), new Vector<Integer>(i, j));
+					MoveAndSetAction a = new MoveAndSetAction(false, this,
+							s.getPosition(), new Vector<Integer>(i, j));
 
 					if (a.isActionValid(board, turn, false)) {
 						result.add(a);
@@ -250,7 +260,8 @@ public abstract class Player implements Serializable{
 			for (int j = 0; j < Board.SIZE; j++) {
 
 				if (board.getStone(i, j) == null) {
-					SetAction a = new SetAction(false, this, new Vector<Integer>(i, j));
+					SetAction a = new SetAction(false, this,
+							new Vector<Integer>(i, j));
 					result.add(a);
 				}
 
@@ -259,6 +270,10 @@ public abstract class Player implements Serializable{
 
 		return result;
 
+	}
+
+	public boolean wasFirst() {
+		return wasFirst;
 	}
 
 }
