@@ -33,12 +33,12 @@ public class Game {
 	/**
 	 * Spielfeld static for test
 	 */
-	public Board board;
+	private Board board;
 
 	/**
 	 * Spieler
 	 */
-	public Player[] player;
+	private Player[] player;
 
 	/**
 	 * Spielzug
@@ -94,6 +94,12 @@ public class Game {
 		// init rest
 		turn = 0;
 
+	}
+
+	/**
+	 * BlankoKonstruktor für Turnier
+	 */
+	protected Game() {
 	}
 
 	/**
@@ -274,6 +280,10 @@ public class Game {
 
 		return null;
 	}
+	
+	public void initBoard(){
+		board = new Board();
+	}
 
 	public Board getBoard() {
 		return board;
@@ -293,6 +303,14 @@ public class Game {
 
 	public Menu getMainMenu() {
 		return main;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+
+	public void setPlayer(Player[] player) {
+		this.player = player;
 	}
 
 }

@@ -118,7 +118,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Action askforAction(Game g) {
 		
-		Player enemy  = g.player[0] == this ? g.player[1]:g.player[0];
+		Player enemy  = g.getPlayer()[0] == this ? g.getPlayer()[1]:g.getPlayer()[0];
 
 		List<Action> actions = getValidActions(g.getBoard(), g.getTurn());
 
