@@ -15,7 +15,7 @@ public class Tournament {
 		points[1] = 0;
 
 		try {
-			run(100);
+			run(1000);
 		} catch (NotInSyncException e) {
 			e.printStackTrace();
 		}
@@ -26,9 +26,11 @@ public class Tournament {
 		for (int i = 0; i < matches; i++) {
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
-				points[0]++;
+				points[0]+=3;
+				System.out.println("Winner("+i+"): "+winner);
 			} else if (winner == games[1]) {
-				points[1]++;
+				points[1]+=3;
+				System.out.println("Winner("+i+"): "+winner);
 			}
 		}
 
@@ -65,12 +67,6 @@ public class Tournament {
 						throw new NotInSyncException(
 								"Zug des ersten Spielers im anderen Programm ungültig");
 					}
-					
-					//print
-					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					first.printBoard();
-					second.printBoard();
-					System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
 				} else {
 					// did someone win ?
@@ -125,12 +121,6 @@ public class Tournament {
 						&& (first.whoWon() == 1 || second.whoWon() == 1)) {
 					return first.whoWon() == 1 ? first : second;
 				}
-				
-				//print
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-				first.printBoard();
-				second.printBoard();
-				System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
 			} else {
 				throw new NotInSyncException("isRunning not in sync");
