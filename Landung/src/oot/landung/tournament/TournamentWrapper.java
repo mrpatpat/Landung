@@ -20,7 +20,7 @@ public class TournamentWrapper extends Game implements IGame {
 
 	public TournamentWrapper() {
 		super();
-		me = new FixedComputerPlayer(0, 1);
+		me = new FixedComputerPlayer(0, 5);
 		enemy = new ProgrammablePlayer(1);
 		this.initBoard();
 		setTurn(0);
@@ -31,12 +31,18 @@ public class TournamentWrapper extends Game implements IGame {
 	public void youAreFirst() {
 		this.getPlayer()[0] = me;
 		this.getPlayer()[1] = enemy;
+		me.setId(0);
+		enemy.setId(1);
+		isRunning = true;
 	}
 
 	@Override
 	public void youAreSecond() {
 		this.getPlayer()[1] = me;
 		this.getPlayer()[0] = enemy;
+		me.setId(1);
+		enemy.setId(0);
+		isRunning = true;
 	}
 
 	@Override
@@ -46,11 +52,13 @@ public class TournamentWrapper extends Game implements IGame {
 
 	@Override
 	public int whoWon() {
-		if (this.getWinner() == me || winner == me)
+		if (this.getWinner() == me || winner == me) {
+			isRunning = false;
 			return 1; // ?????
-		else if (this.getWinner() == enemy || winner == enemy)
+		} else if (this.getWinner() == enemy || winner == enemy) {
+			isRunning = false;
 			return -1; // ?????
-		else
+		} else
 			return 0;
 	}
 
@@ -58,8 +66,12 @@ public class TournamentWrapper extends Game implements IGame {
 	public boolean takeYourMove(String gegnerZug) {
 
 		String command = gegnerZug;
+		
+		System.out.println("COMMAND="+command);
+		System.out.println("1="+command.matches("^([a-e][1-5]){1}$"));
+		System.out.println("2="+command.matches("^([a-e][1-5]){2}$"));
 
-		if (command.matches("\\b([a-e][1-5]){1}\\b")) {
+		if (command.matches("^([a-e][1-5]){1}$")) {
 
 			Action a = new SetAction(false, enemy,
 					Utils.convertExternalStringToInternalVector(command));
@@ -81,7 +93,7 @@ public class TournamentWrapper extends Game implements IGame {
 
 			}
 
-		} else if (command.matches("\\b([a-e][1-5]){2}\\b")) {
+		} else if (command.matches("^([a-e][1-5]){2}$")) {
 
 			Action a = new MoveAndSetAction(false, enemy,
 					Utils.convertExternalStringToInternalVector(command
@@ -105,16 +117,11 @@ public class TournamentWrapper extends Game implements IGame {
 
 	}
 
-	private void checkForMoves(Player p) {
-		if (!p.hasValidActions(getBoard(), getTurn())) {
-			winner = p == me ? enemy : me;
-			isRunning = false;
-		}
-	}
-
 	@Override
 	public String getMyMove() {
-		return me.askforAction(this).toString();
+		Action a = me.askforAction(this);
+		a.execute(getBoard());
+		return a.toString();
 	}
 
 	@Override

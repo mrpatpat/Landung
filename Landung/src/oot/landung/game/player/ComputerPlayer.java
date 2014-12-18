@@ -121,7 +121,7 @@ public class ComputerPlayer extends Player {
 		Player enemy  = g.getPlayer()[0] == this ? g.getPlayer()[1]:g.getPlayer()[0];
 
 		List<Action> actions = getValidActions(g.getBoard(), g.getTurn());
-
+		
 		int rand = (int) (Math.random() * 5);
 
 		if (rand < level) {

@@ -45,6 +45,11 @@ public abstract class Player implements Serializable {
 		symbol = playerID == 1 ? "X" : "O";
 		this.name = askforName();
 	}
+	
+	public void setId(int id){
+		this.playerID = id;
+		symbol = id == 1 ? "X" : "O";
+	}
 
 	public void setName(String name) {
 		this.name = name;
