@@ -5,24 +5,26 @@ public class Tournament {
 	private IGame[] games;
 	private int[] points;
 
-	public Tournament(IGame gameA, IGame gameB) {
-		games = new IGame[2];
-		games[0] = gameA;
-		games[1] = gameB;
-
+	public Tournament() {
+		
 		points = new int[2];
 		points[0] = 0;
 		points[1] = 0;
-
+		
 		try {
-			run(1000);
+			run(100);
 		} catch (NotInSyncException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	private void run(int matches) throws NotInSyncException {
-
+		
+		games = new IGame[2];
+		games[0] = new TournamentWrapper();
+		games[1] = new TournamentWrapper();
+		
 		for (int i = 0; i < matches; i++) {
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
@@ -53,6 +55,8 @@ public class Tournament {
 		// game loop
 		while (running) {
 
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+			
 			// both running?
 			if (first.isRunning() && second.isRunning()) {
 
