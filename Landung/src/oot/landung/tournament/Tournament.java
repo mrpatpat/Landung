@@ -21,11 +21,10 @@ public class Tournament {
 
 	private void run(int matches) throws NotInSyncException {
 		
-		games = new IGame[2];
-		games[0] = new TournamentWrapper();
-		games[1] = new TournamentWrapper();
-		
 		for (int i = 0; i < matches; i++) {
+			games = new IGame[2];
+			games[0] = new TournamentWrapper();
+			games[1] = new TournamentWrapper();
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
 				points[0]+=3;
