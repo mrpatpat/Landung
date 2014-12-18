@@ -66,17 +66,13 @@ public class TournamentWrapper extends Game implements IGame {
 	public boolean takeYourMove(String gegnerZug) {
 
 		String command = gegnerZug;
-		
-		System.out.println("COMMAND="+command);
-		System.out.println("1="+command.matches("^([a-e][1-5]){1}$"));
-		System.out.println("2="+command.matches("^([a-e][1-5]){2}$"));
 
 		if (command.matches("^([a-e][1-5]){1}$")) {
 
 			Action a = new SetAction(false, enemy,
 					Utils.convertExternalStringToInternalVector(command));
 
-			if (a.isActionValid(getBoard(), getTurn(), false)) {
+			if (a.isActionValid(getBoard(), getTurn(), true)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);
 				return true;
@@ -100,7 +96,6 @@ public class TournamentWrapper extends Game implements IGame {
 							.substring(0, 2)),
 					Utils.convertExternalStringToInternalVector(command
 							.substring(2, 4)));
-
 			if (a.isActionValid(getBoard(), getTurn(), false)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);

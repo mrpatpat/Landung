@@ -105,6 +105,7 @@ public class Tournament {
 
 					// does first recognize it as valid?
 					if (!valid) {
+						System.out.println(move);
 						throw new NotInSyncException(
 								"Zug des zweiten Spielers im anderen Programm ungültig");
 					}
