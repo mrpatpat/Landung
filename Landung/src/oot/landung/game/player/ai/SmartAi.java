@@ -56,10 +56,10 @@ public class SmartAi implements AiInterface {
 		int enemyIndex = index - index2;
 
 		return myIndex + enemyIndex;
-		
+
 		// Ki drastisch verbessert, aber nur in eine Richtung
-		//	return enemyIndex;
-		//	return -myIndex;
+		// return enemyIndex;
+		// return -myIndex;
 
 	}
 

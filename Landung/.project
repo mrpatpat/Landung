@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>srcTurnier</name>
+			<type>2</type>
+			<location>C:/Users/Adrian/workspace/Landung-Turnier/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>
