@@ -75,6 +75,7 @@ public class TournamentWrapper extends Game implements IGame {
 			if (a.isActionValid(getBoard(), getTurn(), true)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);
+				this.setLastPlayer(enemy);
 				return true;
 			} else {
 
@@ -84,6 +85,7 @@ public class TournamentWrapper extends Game implements IGame {
 				if (r.isActionValid(getBoard(), getTurn(), false)) {
 					r.execute(getBoard());
 					this.setTurn(getTurn() + 1);
+					this.setLastPlayer(enemy);
 					return true;
 				}
 
@@ -100,6 +102,7 @@ public class TournamentWrapper extends Game implements IGame {
 			if (a.isActionValid(getBoard(), getTurn(), false)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);
+				this.setLastPlayer(enemy);
 				return true;
 			}
 
@@ -118,6 +121,7 @@ public class TournamentWrapper extends Game implements IGame {
 		Action a = me.askforAction(this);
 		a.execute(getBoard());
 		this.setTurn(getTurn() + 1);
+		this.setLastPlayer(me);
 		return a.toString();
 	}
 

@@ -49,6 +49,8 @@ public class Game {
 
 	private Menu main;
 
+	private Player lastPlayer;
+
 	/**
 	 * Konstruktor fÃ¼r eine neue Spielinstanz.
 	 */
@@ -187,6 +189,8 @@ public class Game {
 
 		turn++;
 
+		this.setLastPlayer(p);
+
 	}
 
 	/**
@@ -195,6 +199,13 @@ public class Game {
 	 * @return
 	 */
 	public Player getWinner() {
+
+		// keine Züge mehr
+		Player toCheck = this.getLastPlayer() == player[0] ? player[1]
+				: player[0];
+		if (toCheck.hasValidActions(board, turn) == false) {
+			return this.getLastPlayer();
+		}
 
 		// 4 gewinnt regel
 
@@ -280,8 +291,8 @@ public class Game {
 
 		return null;
 	}
-	
-	public void initBoard(){
+
+	public void initBoard() {
 		board = new Board();
 	}
 
@@ -311,6 +322,14 @@ public class Game {
 
 	public void setPlayer(Player[] player) {
 		this.player = player;
+	}
+
+	public Player getLastPlayer() {
+		return lastPlayer;
+	}
+
+	public void setLastPlayer(Player lastPlayer) {
+		this.lastPlayer = lastPlayer;
 	}
 
 }
