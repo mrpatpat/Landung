@@ -54,7 +54,6 @@ public class Tournament {
 		// game loop
 		while (running) {
 
-			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 			
 			// both running?
 			if (first.isRunning() && second.isRunning()) {
