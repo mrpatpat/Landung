@@ -26,9 +26,7 @@ public class ProgrammablePlayer extends Player {
 
 	@Override
 	public Action askforAction(Game g) {
-
 		return null;
-
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class ProgrammablePlayer extends Player {
 
 	@Override
 	public RemoveAction askforRemoveAction(Board board, int turn) {
-
 		return null;
 	}
+	
 }

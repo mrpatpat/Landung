@@ -49,7 +49,7 @@ public class TournamentWrapper extends Game implements IGame {
 	public boolean isRunning() {
 		return isRunning;
 	}
-
+	
 	@Override
 	public int whoWon() {
 		if (this.getWinner() == me || winner == me) {
@@ -96,6 +96,7 @@ public class TournamentWrapper extends Game implements IGame {
 							.substring(0, 2)),
 					Utils.convertExternalStringToInternalVector(command
 							.substring(2, 4)));
+			
 			if (a.isActionValid(getBoard(), getTurn(), false)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);
@@ -116,6 +117,7 @@ public class TournamentWrapper extends Game implements IGame {
 	public String getMyMove() {
 		Action a = me.askforAction(this);
 		a.execute(getBoard());
+		this.setTurn(getTurn() + 1);
 		return a.toString();
 	}
 
