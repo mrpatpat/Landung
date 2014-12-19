@@ -78,6 +78,7 @@ public class Tournament {
 			// can actor move ?
 			if (actor.canIMove() && enemy.canYouMove()) {
 
+				//make a move
 				String move = actor.getMyMove();
 				boolean valid = enemy.takeYourMove(move);
 
