@@ -56,80 +56,57 @@ public class Tournament {
 		// game loop
 		while (running) {
 
-			// both running?
-			if (first.isRunning() && second.isRunning()) {
-
-				// can first move ?
-				if (first.canIMove() && second.canYouMove()) {
-
-					String move = first.getMyMove();
-					boolean valid = second.takeYourMove(move);
-
-					// does second recognize it as valid?
-					if (!valid) {
-						throw new NotInSyncException(
-								"Zug des ersten Spielers im anderen Programm ungültig");
-					}
-
-				} else {
-					
-					// did someone win ?
-					winner = getWinner(first, second);
-					if (winner != null)
-						return winner;
-					
-					throw new NotInSyncException(
-							"canIMove/canYouMove not in sync");
-				}
-
-				winner = getWinner(first, second);
-				if (winner != null)
-					return winner;
-
-			} else {
-				throw new NotInSyncException("isRunning not in sync");
-			}
-
-			// SECOND PLAYER
-
-			// both running?
-			if (first.isRunning() && second.isRunning()) {
-
-				// can second move ?
-				if (second.canIMove() && first.canYouMove()) {
-
-					String move = second.getMyMove();
-					boolean valid = first.takeYourMove(move);
-
-					// does first recognize it as valid?
-					if (!valid) {
-						System.out.println(move);
-						throw new NotInSyncException(
-								"Zug des zweiten Spielers im anderen Programm ungültig");
-					}
-
-				} else {
-					
-					winner = getWinner(first, second);
-					if (winner != null)
-						return winner;
-					
-					throw new NotInSyncException(
-							"canIMove/canYouMove not in sync");
-				}
-
-				winner = getWinner(first, second);
-				if (winner != null)
-					return winner;
-
-			} else {
-				throw new NotInSyncException("isRunning not in sync");
-			}
+			winner = makeTurn(first,second,winner);
+			if (winner != null)
+				return winner;
+			
+			winner = makeTurn(second,first,winner);
+			if (winner != null)
+				return winner;
 
 		}
 
 		// bad
 		return null;
+	}
+
+	private IGame makeTurn(IGame actor, IGame enemy, IGame winner) throws NotInSyncException {
+
+		// both running?
+		if (actor.isRunning() && enemy.isRunning()) {
+
+			// can actor move ?
+			if (actor.canIMove() && enemy.canYouMove()) {
+
+				String move = actor.getMyMove();
+				boolean valid = enemy.takeYourMove(move);
+
+				// does enemy recognize it as valid?
+				if (!valid) {
+					throw new NotInSyncException(
+							"Zug des ersten Spielers im anderen Programm ungültig");
+				}
+
+			} else {
+
+				// did someone win ?
+				winner = getWinner(actor, enemy);
+				if (winner != null)
+					return winner;
+
+				throw new NotInSyncException("canIMove/canYouMove not in sync");
+			}
+
+			winner = getWinner(actor, enemy);
+			if (winner != null)
+				return winner;
+
+		} else {
+			throw new NotInSyncException("isRunning not in sync");
+		}
+		
+		return null;
+
 	}
 
 	/**
