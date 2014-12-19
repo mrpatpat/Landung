@@ -16,7 +16,6 @@ public class TournamentWrapper extends Game implements IGame {
 	private ProgrammablePlayer enemy;
 
 	private boolean isRunning;
-	private Player winner;
 
 	public TournamentWrapper() {
 		super();
@@ -52,10 +51,10 @@ public class TournamentWrapper extends Game implements IGame {
 	
 	@Override
 	public int whoWon() {
-		if (this.getWinner() == me || winner == me) {
+		if (this.getWinner() == me) {
 			isRunning = false;
 			return 1; // ?????
-		} else if (this.getWinner() == enemy || winner == enemy) {
+		} else if (this.getWinner() == enemy) {
 			isRunning = false;
 			return -1; // ?????
 		} else
