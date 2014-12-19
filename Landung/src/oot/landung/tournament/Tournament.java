@@ -10,7 +10,7 @@ public class Tournament {
 	}
 	
 	public static IGame getGameB(){
-		return new CopyOfTournamentWrapper();
+		return new TournamentWrapper();
 	}
 
 	public Tournament() {
