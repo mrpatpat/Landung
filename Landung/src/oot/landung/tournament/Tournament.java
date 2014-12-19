@@ -6,32 +6,32 @@ public class Tournament {
 	private int[] points;
 
 	public Tournament() {
-		
+
 		points = new int[2];
 		points[0] = 0;
 		points[1] = 0;
-		
+
 		try {
 			run(100);
 		} catch (NotInSyncException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void run(int matches) throws NotInSyncException {
-		
+
 		for (int i = 0; i < matches; i++) {
 			games = new IGame[2];
 			games[0] = new TournamentWrapper();
 			games[1] = new TournamentWrapper();
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
-				points[0]+=3;
-				System.out.println("Winner("+i+"): "+winner);
+				points[0] += 3;
+				System.out.println("Winner(" + i + "): " + winner);
 			} else if (winner == games[1]) {
-				points[1]+=3;
-				System.out.println("Winner("+i+"): "+winner);
+				points[1] += 3;
+				System.out.println("Winner(" + i + "): " + winner);
 			}
 		}
 
@@ -45,6 +45,8 @@ public class Tournament {
 		// determine second player and notify him
 		IGame second = first == games[0] ? games[1] : games[0];
 
+		IGame winner = null;
+
 		second.youAreSecond();
 		first.youAreFirst();
 
@@ -54,7 +56,6 @@ public class Tournament {
 		// game loop
 		while (running) {
 
-			
 			// both running?
 			if (first.isRunning() && second.isRunning()) {
 
@@ -71,20 +72,19 @@ public class Tournament {
 					}
 
 				} else {
+					
 					// did someone win ?
-					if (first.whoWon() == -1 * second.whoWon()
-							&& (first.whoWon() == 1 || second.whoWon() == 1)) {
-						return first.whoWon() == 1 ? first : second;
-					}
+					winner = getWinner(first, second);
+					if (winner != null)
+						return winner;
+					
 					throw new NotInSyncException(
 							"canIMove/canYouMove not in sync");
 				}
 
-				// did someone win ?
-				if (first.whoWon() == -1 * second.whoWon()
-						&& (first.whoWon() == 1 || second.whoWon() == 1)) {
-					return first.whoWon() == 1 ? first : second;
-				}
+				getWinner(first, second);
+				if (winner != null)
+					return winner;
 
 			} else {
 				throw new NotInSyncException("isRunning not in sync");
@@ -109,20 +109,18 @@ public class Tournament {
 					}
 
 				} else {
-					// did someone win ?
-					if (first.whoWon() == -1 * second.whoWon()
-							&& (first.whoWon() == 1 || second.whoWon() == 1)) {
-						return first.whoWon() == 1 ? first : second;
-					}
+					
+					getWinner(first, second);
+					if (winner != null)
+						return winner;
+					
 					throw new NotInSyncException(
 							"canIMove/canYouMove not in sync");
 				}
 
-				// did someone win ?
-				if (first.whoWon() == -1 * second.whoWon()
-						&& (first.whoWon() == 1 || second.whoWon() == 1)) {
-					return first.whoWon() == 1 ? first : second;
-				}
+				getWinner(first, second);
+				if (winner != null)
+					return winner;
 
 			} else {
 				throw new NotInSyncException("isRunning not in sync");
@@ -131,6 +129,18 @@ public class Tournament {
 		}
 
 		// bad
+		return null;
+	}
+
+	/**
+	 * @param a
+	 * @param b
+	 */
+	private IGame getWinner(IGame a, IGame b) {
+		if (a.whoWon() == -1 * b.whoWon()
+				&& (a.whoWon() == 1 || b.whoWon() == 1)) {
+			return a.whoWon() == 1 ? a : b;
+		}
 		return null;
 	}
 
