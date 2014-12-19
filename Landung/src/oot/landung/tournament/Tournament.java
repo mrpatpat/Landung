@@ -82,7 +82,7 @@ public class Tournament {
 							"canIMove/canYouMove not in sync");
 				}
 
-				getWinner(first, second);
+				winner = getWinner(first, second);
 				if (winner != null)
 					return winner;
 
@@ -110,7 +110,7 @@ public class Tournament {
 
 				} else {
 					
-					getWinner(first, second);
+					winner = getWinner(first, second);
 					if (winner != null)
 						return winner;
 					
@@ -118,7 +118,7 @@ public class Tournament {
 							"canIMove/canYouMove not in sync");
 				}
 
-				getWinner(first, second);
+				winner = getWinner(first, second);
 				if (winner != null)
 					return winner;
 
