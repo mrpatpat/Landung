@@ -1,5 +1,10 @@
 package oot.landung.tournament;
 
+
+/**
+ * Turnierklasse
+ */
+
 public class Tournament {
 
 	private IGame[] games;
@@ -12,6 +17,14 @@ public class Tournament {
 	public static IGame getGameB(){
 		return new TournamentWrapper();
 	}
+	
+	
+	
+	/**
+	 * Konstruktor für Tournament
+	 * 
+	 * Spieler bekommen erstmal eine standart ID
+	 */
 
 	public Tournament() {
 
@@ -26,6 +39,15 @@ public class Tournament {
 		}
 
 	}
+	
+	
+	/**
+	 * 
+	 * startet und verwaltet das tunier
+	 * 
+	 * @param matches
+	 * @throws NotInSyncException
+	 */
 
 	private void run(int matches) throws NotInSyncException {
 
@@ -50,6 +72,14 @@ public class Tournament {
 		System.out.println("Points B:" + points[1]);
 
 	}
+	
+	/**
+	 * Startet und verwaltet ein Spiel
+	 * 
+	 * @param first
+	 * @return winner
+	 * @throws NotInSyncException
+	 */
 
 	private IGame runSingleGame(IGame first) throws NotInSyncException {
 
@@ -80,7 +110,19 @@ public class Tournament {
 		// bad
 		return null;
 	}
-
+	
+	/**
+	 * 
+	 * Zug eines Spielers
+	 * 
+	 * 
+	 * @param actor
+	 * @param enemy
+	 * @param winner
+	 * @return winner  // wenn einer da ist ansonsten null
+	 * @throws NotInSyncException
+	 */
+	
 	private IGame makeTurn(IGame actor, IGame enemy, IGame winner) throws NotInSyncException {
 
 		// both running?
@@ -122,6 +164,9 @@ public class Tournament {
 	}
 
 	/**
+	 * 
+	 * Überprüft ob ein Spieler gewonnen hat
+	 * 
 	 * @param a
 	 * @param b
 	 */

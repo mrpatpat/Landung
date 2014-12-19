@@ -10,12 +10,20 @@ import oot.landung.game.player.Player;
 import oot.landung.game.player.ProgrammablePlayer;
 import oot.landung.game.utils.Utils;
 
+
+
+/**
+ * 
+ * @author Christopher
+ *
+ */
 public class TournamentWrapper extends Game implements IGame {
 
 	private FixedComputerPlayer me;
 	private ProgrammablePlayer enemy;
 
 	private boolean isRunning;
+	private Player winner;
 
 	public TournamentWrapper() {
 		super();
@@ -51,10 +59,10 @@ public class TournamentWrapper extends Game implements IGame {
 	
 	@Override
 	public int whoWon() {
-		if (this.getWinner() == me) {
+		if (this.getWinner() == me || winner == me) {
 			isRunning = false;
 			return 1; // ?????
-		} else if (this.getWinner() == enemy) {
+		} else if (this.getWinner() == enemy || winner == enemy) {
 			isRunning = false;
 			return -1; // ?????
 		} else
