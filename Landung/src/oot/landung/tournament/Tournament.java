@@ -4,6 +4,14 @@ public class Tournament {
 
 	private IGame[] games;
 	private int[] points;
+	
+	public static IGame getGameA(){
+		return new TournamentWrapper();
+	}
+	
+	public static IGame getGameB(){
+		return new CopyOfTournamentWrapper();
+	}
 
 	public Tournament() {
 
@@ -12,7 +20,7 @@ public class Tournament {
 		points[1] = 0;
 
 		try {
-			run(100);
+			run(10);
 		} catch (NotInSyncException e) {
 			e.printStackTrace();
 		}
@@ -23,18 +31,21 @@ public class Tournament {
 
 		for (int i = 0; i < matches; i++) {
 			games = new IGame[2];
-			games[0] = new TournamentWrapper();
-			games[1] = new TournamentWrapper();
+			
+			games[0] = Tournament.getGameA();
+			games[1] = Tournament.getGameB();
+			
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
 				points[0] += 3;
-				System.out.println("Winner(" + i + "): " + winner);
+				System.out.println("Winner(" + i + "): Game A");
 			} else if (winner == games[1]) {
 				points[1] += 3;
-				System.out.println("Winner(" + i + "): " + winner);
+				System.out.println("Winner(" + i + "): Game B");
 			}
 		}
 
+		System.out.println("-----------------");
 		System.out.println("Points A:" + points[0]);
 		System.out.println("Points B:" + points[1]);
 
