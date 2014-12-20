@@ -353,6 +353,20 @@ public class Board implements Serializable {
 		return n;
 
 	}
+	
+	public int getScore() {
+		int score = 0;
+		
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if(getStone(i,j)==null){
+					score++;
+				}
+			}
+		}
+		
+		return score;
+	}
 
 	public List<Stone> getPlacedStones(Player player) {
 		List<Stone> stones = new ArrayList<>();

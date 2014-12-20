@@ -14,7 +14,7 @@ import oot.landung.game.utils.Utils;
 
 /**
  * 
- * @author Christopher
+ * Unser Wrapper für das Turnier
  *
  */
 public class TournamentWrapper extends Game implements IGame {

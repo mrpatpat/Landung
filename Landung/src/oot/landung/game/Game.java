@@ -1,9 +1,14 @@
 package oot.landung.game;
 
+import java.io.IOException;
+
+import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
+import oot.landung.game.highscore.Highscore;
+import oot.landung.game.highscore.Highscores;
 import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
@@ -109,28 +114,16 @@ public class Game {
 	 */
 	public Player run() {
 
+
 		Player w = null;
 
 		do {
 			runPlayerTurn(player[0]);
 
-			if (!player[1].hasValidActions(board, turn)) {
-				w = player[0];
-				board.print();
-				w.notifyWinner();
-				return w;
-			}
 			w = getWinner();
 
 			if (w == null) {
 				runPlayerTurn(player[1]);
-
-				if (!player[0].hasValidActions(board, turn)) {
-					w = player[1];
-					board.print();
-					w.notifyWinner();
-					return w;
-				}
 
 				w = getWinner();
 
@@ -140,9 +133,21 @@ public class Game {
 								// null ist returned er in der while schleife
 
 		board.print();
-
 		w.notifyWinner();
 
+		//init Highscores
+		try {
+			Highscores h = HighscoreFileHandler.loadHighscores();
+			int score = board.getScore();
+			System.out.println(score);
+			h.addHighscore(new Highscore(score, w.getName()));
+			HighscoreFileHandler.saveHighscores(h);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return w;
 
 	}
@@ -193,12 +198,15 @@ public class Game {
 
 	}
 
+	public Player getWinner() {
+		return getWinner(board);
+	}
 	/**
 	 * null if no winner
 	 * 
 	 * @return
 	 */
-	public Player getWinner() {
+	public Player getWinner(Board board) {
 
 		// keine Züge mehr
 		Player toCheck = this.getLastPlayer() == player[0] ? player[1]
