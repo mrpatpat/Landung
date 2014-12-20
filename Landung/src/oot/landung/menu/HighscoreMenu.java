@@ -66,7 +66,7 @@ public class HighscoreMenu extends Menu {
 		} catch (IOException e) {
 			System.out.format(format2,"Error");
 		}
-		
+		System.out.format(format2, "");
 		System.out.format(format2, "Reset");
 		System.out.format(format2, "Zurück");
 		System.out.format(format2, "");
