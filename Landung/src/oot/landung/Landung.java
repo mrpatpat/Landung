@@ -1,5 +1,7 @@
 package oot.landung;
 
+import java.util.Scanner;
+
 import oot.landung.game.Game;
 import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
@@ -18,20 +20,25 @@ public class Landung {
 	}
 
 	public void testAi() {
-
+		
 		Player worst = new FixedComputerPlayer(1, 0);
 		Player enemy;
-
+		
+		Scanner in = Utils.getScanner();
+		System.out.println("Wie viele Spiele soll die KI Spielen?");
+		int runs = in.nextInt();
+	
+	
 		int[] res = new int[5];
 
 		for (int i = 0; i < 5; i++) {
 
 			enemy = new FixedComputerPlayer(0, i);
 
-			for (int j = 0; j < 1000; j++) {
+			for (int j = 0; j < runs; j++) {
 
 				Game g = new Game(null, enemy, worst);
-				Player winner = g.run();
+				Player winner = g.runKI();
 
 				if (winner == enemy) {
 					res[i]++;
@@ -51,10 +58,10 @@ public class Landung {
 
 			enemy = new FixedComputerPlayer(0, i);
 
-			for (int j = 0; j < 1000; j++) {
+			for (int j = 0; j < runs; j++) {
 
 				Game g = new Game(null, worst, enemy);
-				Player winner = g.run();
+				Player winner = g.runKI();
 
 				if (winner == enemy) {
 					res2[i]++;
@@ -66,30 +73,25 @@ public class Landung {
 		
 		//PRINTS
 
-		System.out.println("KI(1-5) beginnt:");
+		System.out.println("\nKI(1-5) beginnt: \n");
 
 		for (int i = 0; i < 5; i++) {
-
-			int lvl1 = 1;
-			int lvl2 = i;
 
 			System.out.println("KI(" + (i + 1) + ") hat gegen KI(1) " + res[i]
-					+ " von 1000 Malen gewonnen.");
+					+ " von "+ runs +" Malen gewonnen.");
 
 		}
-
-		System.out.println("KI(1) beginnt:");
+		
+		System.out.println("\nKI(1) beginnt: \n");
 
 		for (int i = 0; i < 5; i++) {
 
-			int lvl1 = 1;
-			int lvl2 = i;
-
-			System.out.println("KI(" + (i + 1) + ") hat gegen KI(1) " + res2[i]
-					+ " von 1000 Malen gewonnen.");
+				System.out.println("KI(" + (i + 1) + ") hat gegen KI(1) " + res2[i]
+					+ " von " + runs + " Malen gewonnen.");
 
 		}
-
+		
+		menu.open(game);
 	}
 
 	public void initGame(Game g) {

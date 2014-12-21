@@ -152,6 +152,35 @@ public class Game {
 
 	}
 
+	
+	
+	public Player runKI() {
+
+
+		Player w = null;
+
+		do {
+			runPlayerTurnKI(player[0]);
+
+			w = getWinner();
+
+			if (w == null) {
+				runPlayerTurnKI(player[1]);
+
+				w = getWinner();
+
+			}
+
+		} while (w == null); // ist unbn�tig !! wird nie genutzt ?? wenn w =
+								// null ist returned er in der while schleife
+
+	
+		
+		
+		return w;
+
+	}
+	
 	private void runPlayerTurn(Player p) {
 
 		Action a;
@@ -182,6 +211,47 @@ public class Game {
 
 			do {
 				board.print();
+				ra = p.askforRemoveAction(board, turn);
+				if (ra.isActionValid(board, turn, true)) {
+					remValid = true;
+				}
+			} while (remValid == false);
+
+			ra.execute(board);
+
+		}
+
+		turn++;
+
+		this.setLastPlayer(p);
+
+	}
+	
+	
+	
+	private void runPlayerTurnKI(Player p) {
+
+		Action a;
+
+		boolean turnValid = false;
+
+		currentPlayer = p.getPlayerID();
+
+		do {
+			a = p.askforAction(this);
+			if (a.isActionValid(board, turn, true)) {
+				turnValid = true;
+			}
+		} while (turnValid == false);
+		a.execute(board);
+
+		if (p.getStones(board) <= 0) {
+
+			boolean remValid = false;
+			RemoveAction ra;
+
+			do {
+				
 				ra = p.askforRemoveAction(board, turn);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
