@@ -102,6 +102,27 @@ public class Game {
 		turn = 0;
 
 	}
+	
+	
+	
+	
+	public Game(Menu main, Player p1, Player p2, Board board, int turn) {
+
+		this.main = main;
+
+		// init players
+		player = new Player[Game.PLAYERS];
+
+		player[0] = p1;
+		player[1] = p2;
+
+		// init board
+		this.board = board;
+
+		// init rest
+		this.turn = turn;
+
+	}
 
 	/**
 	 * BlankoKonstruktor für Turnier
