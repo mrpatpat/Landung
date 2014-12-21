@@ -29,11 +29,11 @@ public class Highscore implements Serializable, Comparable<Highscore>{
 	@Override
 	public int compareTo(Highscore b) {
 		if (this.getScore() < b.getScore()) {
-			return -1;
+			return 1;
 		} else if (this.getScore() == b.getScore()) {
 			return 0;
 		} else {
-			return +1;
+			return -1;
 		}
 	}
 

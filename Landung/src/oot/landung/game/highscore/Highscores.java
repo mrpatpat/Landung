@@ -21,7 +21,9 @@ public class Highscores implements Serializable {
 	}
 
 	public void addHighscore(Highscore h) {
+		
 		highscores.add(h);
+		highscores.sort(null);
 		//TODO:sortieren und trimmen!
 	}
 
