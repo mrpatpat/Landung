@@ -26,8 +26,8 @@ public class Landung {
 		
 		Scanner in = Utils.getScanner();
 		System.out.println("Wie viele Spiele soll die KI Spielen?");
-		int runs = in.nextInt();
-	
+		String input = in.nextLine();
+		int runs = Integer.parseInt(input);
 	
 		int[] res = new int[5];
 
