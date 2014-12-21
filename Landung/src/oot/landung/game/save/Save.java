@@ -9,6 +9,7 @@ import java.util.List;
 
 import oot.landung.filemanager.FileHandler;
 import oot.landung.game.Game;
+import oot.landung.game.highscore.Highscore;
 
 public class Save implements Serializable {
 
@@ -26,6 +27,14 @@ public class Save implements Serializable {
 		
 	
 	}
+	
+
+	public List<Game> getSaves() {
+	
+		return saves;
+		
+		}
+	
 
 
 }

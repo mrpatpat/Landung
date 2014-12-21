@@ -24,22 +24,27 @@ public class MainMenu extends Menu {
 				choiceValid = true;
 				new NewGameMenu(getLandung(), this).open(current);
 
-			} else if ((choice.equals("Weiterspielen") || choice.equals("2"))
+			} else if (choice.equals("Laden") || choice.equals("2")) {
+
+				choiceValid = true;
+				new LadenMenu(getLandung(), this).open(current);
+			}
+			else if ((choice.equals("Weiterspielen") || choice.equals("3"))
 					&& current != null) {
 
 				choiceValid = true;
 
-			} else if ((choice.equals("KI Test") || choice.equals("2"))
+			} else if ((choice.equals("KI Test") || choice.equals("3"))
 					&& current == null) {
 
 				choiceValid = true;
 				getLandung().testAi();
 
-			} else if (choice.equals("Highscores") || choice.equals("3")) {
+			} else if (choice.equals("Highscores") || choice.equals("4")) {
 				new HighscoreMenu(getLandung(), this).open(current);
 				choiceValid = true;
 
-			} else if (choice.equals("Beenden") || choice.equals("4")) {
+			} else if (choice.equals("Beenden") || choice.equals("5")) {
 
 				choiceValid = true;
 				System.exit(0);
@@ -62,6 +67,7 @@ public class MainMenu extends Menu {
 		System.out.format(format1, "HAUPTMENÜ");
 		System.out.format(format2, "");
 		System.out.format(format2, "Neues Spiel");
+		System.out.format(format2, "Laden");
 		if (current != null)
 			System.out.format(format2, "Weiterspielen");
 		if (current == null)
