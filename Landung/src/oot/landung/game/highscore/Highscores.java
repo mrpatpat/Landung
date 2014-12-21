@@ -31,7 +31,8 @@ public class Highscores implements Serializable {
 		if(highscores.size() < 10){
 		return highscores;
 		}else{
-		return highscores.subList(0, 10);
+		highscores = highscores.subList(0, 10);
+		return highscores; 
 		}
 	}
 
