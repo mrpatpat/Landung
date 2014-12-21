@@ -12,9 +12,8 @@ import oot.landung.filemanager.FileHandler;
 public class Highscores implements Serializable {
 
 	private static final long serialVersionUID = -7262225533733737701L;
-
 	private List<Highscore> highscores;
-	private static final int MAX = 10;
+	
 
 	public Highscores() {
 		highscores = new ArrayList<Highscore>();
@@ -24,11 +23,16 @@ public class Highscores implements Serializable {
 		
 		highscores.add(h);
 		highscores.sort(null);
-		//TODO:sortieren und trimmen!
+	
 	}
 
 	public List<Highscore> getHighscores() {
+		
+		if(highscores.size() < 10){
 		return highscores;
+		}else{
+		return highscores.subList(0, 10);
+		}
 	}
 
 }
