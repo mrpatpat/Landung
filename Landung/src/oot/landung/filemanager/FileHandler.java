@@ -62,7 +62,7 @@ public class FileHandler {
 
 	public static void writeSerializableToFile(Serializable s, String file)
 			throws IOException {
-
+		deleteFile(file);
 		OutputStream oos = new FileOutputStream(file);
 		OutputStream buffer = new BufferedOutputStream(oos);
 		ObjectOutput output = new ObjectOutputStream(buffer);
