@@ -3,11 +3,8 @@ package oot.landung.menu;
 import java.io.IOException;
 
 import oot.landung.Landung;
-import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
-import oot.landung.game.highscore.Highscore;
-import oot.landung.game.highscore.Highscores;
 import oot.landung.game.save.Save;
 
 public class LadenMenu extends Menu {
