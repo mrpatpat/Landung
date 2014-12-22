@@ -5,6 +5,8 @@ import java.io.IOException;
 import oot.landung.Landung;
 import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
+import oot.landung.game.board.Board;
+import oot.landung.game.player.Player;
 import oot.landung.game.save.Save;
 
 public class LadenMenu extends Menu {
@@ -32,7 +34,9 @@ public class LadenMenu extends Menu {
 					int i = 1;
 					for (Game a : h.getSaves()) {
 						if (i == b) {
-							a.run();
+							
+							Game c = new Game(a.getMainMenu(), a.getPlayer()[(a.getCurrentPlayer()-1)], a.getLastPlayer(), a.getBoard(),a.getTurn());
+							c.run();
 						}
 						i++;
 					}
@@ -80,8 +84,12 @@ public class LadenMenu extends Menu {
 
 			int i = 1;
 			for (Game a : h.getSaves()) {
-				System.out.format(format2, "(" + i + ") " + a.getName());
+				System.out.format(format2,+ i + " " + a.getName());
 				i++;
+			}
+			
+			for(;i<=5;i++){
+			System.out.format(format2,(i)+" .........");
 			}
 
 		} catch (ClassNotFoundException e) {

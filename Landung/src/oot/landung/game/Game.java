@@ -142,12 +142,11 @@ public class Game implements Serializable{
 
 		do {
 			runPlayerTurn(player[0]);
-
 			w = getWinner();
 
 			if (w == null) {
 				runPlayerTurn(player[1]);
-
+				
 				w = getWinner();
 
 			}
@@ -184,7 +183,7 @@ public class Game implements Serializable{
 
 		do {
 			runPlayerTurnKI(player[0]);
-
+			
 			w = getWinner();
 
 			if (w == null) {
@@ -439,6 +438,11 @@ public class Game implements Serializable{
 
 	public void setLastPlayer(Player lastPlayer) {
 		this.lastPlayer = lastPlayer;
+	}
+	
+	
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 }
