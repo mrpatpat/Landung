@@ -108,7 +108,7 @@ public class MainMenu extends Menu {
 				}
 				System.out.println("\nWählen Sie einen Spielstand zum Löschen aus");
 				int remove = Integer.parseInt(askForChoice());
-				h.getSaves().remove(remove);
+				h.getSaves().remove(remove-1);
 			}
 			System.out.println("\nBitte geben Sie einen Namen zum Speichern ein:");
 			g.setName(askForChoice());
