@@ -1,5 +1,6 @@
 package oot.landung;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import oot.landung.game.Game;
@@ -9,7 +10,7 @@ import oot.landung.game.utils.Utils;
 import oot.landung.menu.MainMenu;
 import oot.landung.menu.Menu;
 
-public class Landung {
+public class Landung implements Serializable{
 
 	private Menu menu;
 	private Game game;

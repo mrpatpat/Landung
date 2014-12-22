@@ -57,7 +57,7 @@ public class LadenMenu extends Menu {
 			
 			int i = 1;
 			for(Game a:h.getSaves()){
-				System.out.format("Spielstand "+i);
+				System.out.format(format2, "("+i+") " + a.getName());
 				i++;
 			}
 			

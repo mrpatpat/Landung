@@ -1,12 +1,13 @@
 package oot.landung.menu;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import oot.landung.Landung;
 import oot.landung.game.Game;
 import oot.landung.game.utils.Utils;
 
-public abstract class Menu {
+public abstract class Menu implements Serializable{
 
 	private Landung landung;
 	private Menu parent;

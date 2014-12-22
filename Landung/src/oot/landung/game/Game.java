@@ -1,6 +1,7 @@
 package oot.landung.game;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.game.actions.Action;
@@ -21,7 +22,7 @@ import oot.landung.menu.Menu;
  * Klassen, die Game benutzt müssen auch serialisierbar sein. Die Spielklasse
  * managed alles was zum Spiel gehört.
  */
-public class Game {
+public class Game implements Serializable{
 
 	/**
 	 * Spielmodi
@@ -55,7 +56,8 @@ public class Game {
 	private Menu main;
 
 	private Player lastPlayer;
-
+	
+	private String name = "";
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
@@ -422,7 +424,15 @@ public class Game {
 	public void setPlayer(Player[] player) {
 		this.player = player;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public Player getLastPlayer() {
 		return lastPlayer;
 	}

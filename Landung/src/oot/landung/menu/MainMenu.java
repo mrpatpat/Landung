@@ -100,6 +100,8 @@ public class MainMenu extends Menu {
 	
 		try {
 			Save h = SaveFileHandler.loadSaves();
+			System.out.println("\nBitte geben Sie einen Namen zum Speichern ein:");
+			g.setName(askForChoice());
 			h.addGame(g);
 			SaveFileHandler.saveGame(h);
 		} catch (ClassNotFoundException e) {
