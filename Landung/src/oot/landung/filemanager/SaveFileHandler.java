@@ -16,7 +16,7 @@ public class SaveFileHandler {
 		System.out.println("written");
 	}
 	
-	public static Save loadHighscores() throws ClassNotFoundException, IOException{
+	public static Save loadSaves() throws ClassNotFoundException, IOException{
 		if(!FileHandler.fileExists(file)){
 			return new Save();
 		}

@@ -209,7 +209,7 @@ public class Game {
 		boolean turnValid = false;
 
 		currentPlayer = p.getPlayerID();
-
+		
 		do {
 			board.print();
 			System.out

@@ -1,7 +1,14 @@
 package oot.landung.menu;
 
+import java.io.IOException;
+
 import oot.landung.Landung;
+import oot.landung.filemanager.HighscoreFileHandler;
+import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
+import oot.landung.game.highscore.Highscore;
+import oot.landung.game.highscore.Highscores;
+import oot.landung.game.save.Save;
 
 public class MainMenu extends Menu {
 
@@ -29,11 +36,18 @@ public class MainMenu extends Menu {
 				choiceValid = true;
 				new LadenMenu(getLandung(), this).open(current);
 			}
-			else if ((choice.equals("Weiterspielen") || choice.equals("3"))
-					&& current != null) {
-
+			else if ((choice.equals("Speichern") || choice.equals("3") && current != null)
+						&& current != null) {
+				
+				saveGame(current);
 				choiceValid = true;
-
+					
+			}		
+			else if ((choice.equals("Weiterspielen") || choice.equals("4"))
+					&& current != null) {
+					
+				choiceValid = true;
+				
 			} else if ((choice.equals("KI Test") || choice.equals("3"))
 					&& current == null) {
 
@@ -69,6 +83,8 @@ public class MainMenu extends Menu {
 		System.out.format(format2, "Neues Spiel");
 		System.out.format(format2, "Laden");
 		if (current != null)
+		System.out.format(format2, "Speichern");
+		if (current != null)
 			System.out.format(format2, "Weiterspielen");
 		if (current == null)
 			System.out.format(format2, "KI Test");
@@ -79,4 +95,18 @@ public class MainMenu extends Menu {
 
 	}
 
+	
+	public void saveGame(Game g){
+	
+		try {
+			Save h = SaveFileHandler.loadSaves();
+			h.addGame(g);
+			SaveFileHandler.saveGame(h);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

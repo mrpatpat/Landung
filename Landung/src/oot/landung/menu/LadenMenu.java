@@ -48,13 +48,12 @@ public class LadenMenu extends Menu {
 		String format1 = new String("+-------<%-5s>-------+\n");
 		String format2 = new String("|   %-15s   |\n");
 		String format3 = new String("+------<%-7s>------+\n");
-		String format4 = new String("|   %-10s%-5s   |\n");
 
 		System.out.format(format1, "LADEN");
 		System.out.format(format2, "");
 		
 		try {
-			Save h = SaveFileHandler.loadHighscores();
+			Save h = SaveFileHandler.loadSaves();
 			
 			int i = 1;
 			for(Game a:h.getSaves()){
