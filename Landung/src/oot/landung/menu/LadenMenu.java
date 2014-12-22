@@ -23,12 +23,35 @@ public class LadenMenu extends Menu {
 		do {
 
 			String choice = askForChoice();
+			
+			if (choice.matches("\\b([1-5]){1}\\b")) {
+				
+				try {
+					Save h = SaveFileHandler.loadSaves();
+					int b = Integer.parseInt(choice);
+					int i = 1;
+					for (Game a : h.getSaves()) {
+						if (i == b) {
+							a.run();
+						}
+						i++;
+					}
+					
 
-			if (choice.equals("Reset") || choice.equals("1")) {
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			} 
+			
+			
+			if (choice.equals("Reset")) {
 				choiceValid = true;
 				reset();
 				open(current);
-			} else if (choice.equals("Zurück") || choice.equals("2")) {
+			} else if (choice.equals("Zurück")) {
 				this.getParent().open(current);
 				choiceValid = true;
 			} else {
@@ -51,20 +74,20 @@ public class LadenMenu extends Menu {
 
 		System.out.format(format1, "LADEN");
 		System.out.format(format2, "");
-		
+
 		try {
 			Save h = SaveFileHandler.loadSaves();
-			
+
 			int i = 1;
-			for(Game a:h.getSaves()){
-				System.out.format(format2, "("+i+") " + a.getName());
+			for (Game a : h.getSaves()) {
+				System.out.format(format2, "(" + i + ") " + a.getName());
 				i++;
 			}
-			
+
 		} catch (ClassNotFoundException e) {
-			System.out.format(format2,"Error");
+			System.out.format(format2, "Error");
 		} catch (IOException e) {
-			System.out.format(format2,"Error");
+			System.out.format(format2, "Error");
 		}
 		System.out.format(format2, "");
 		System.out.format(format2, "Reset");
