@@ -50,8 +50,11 @@ public class LadenMenu extends Menu {
 
 			} 
 			
-			
-			if (choice.equals("Reset")) {
+			if (choice.equals("Löschen")) {
+				choiceValid = true;
+				removeGame();
+				open(current);
+			}else if (choice.equals("Reset")) {
 				choiceValid = true;
 				reset();
 				open(current);
@@ -98,11 +101,36 @@ public class LadenMenu extends Menu {
 			System.out.format(format2, "Error");
 		}
 		System.out.format(format2, "");
+		System.out.format(format2, "Löschen");
 		System.out.format(format2, "Reset");
 		System.out.format(format2, "Zurück");
 		System.out.format(format2, "");
 		System.out.format(format3, "LANDUNG");
 
+	}
+	
+	public void removeGame(){
+		
+		try {
+			Save h = SaveFileHandler.loadSaves();
+			if(h.getSaves().size() >= 5){
+				int i = 1;
+				for (Game a : h.getSaves()) {
+					System.out.format(+ i + " " + a.getName()+"\n");
+					i++;
+				}
+				System.out.println("\nWählen Sie einen Spielstand zum Löschen aus");
+				int remove = Integer.parseInt(askForChoice());
+				h.getSaves().remove(remove-1);
+			}
+			SaveFileHandler.resetSaves();
+			SaveFileHandler.saveGame(h);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
