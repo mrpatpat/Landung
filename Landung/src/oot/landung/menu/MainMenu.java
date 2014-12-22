@@ -100,9 +100,19 @@ public class MainMenu extends Menu {
 	
 		try {
 			Save h = SaveFileHandler.loadSaves();
+			if(h.getSaves().size() == 5){
+				int i = 1;
+				for (Game a : h.getSaves()) {
+					System.out.format(+ i + " " + a.getName()+"\n");
+					i++;
+				}
+				System.out.println("\nWählen Sie einen Spielstand zum Löschen aus");
+				h.getSaves().remove(askForChoice());
+			}
 			System.out.println("\nBitte geben Sie einen Namen zum Speichern ein:");
 			g.setName(askForChoice());
 			h.addGame(g);
+			SaveFileHandler.resetSaves();
 			SaveFileHandler.saveGame(h);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
