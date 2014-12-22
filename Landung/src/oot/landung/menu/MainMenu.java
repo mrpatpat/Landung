@@ -39,7 +39,7 @@ public class MainMenu extends Menu {
 			else if ((choice.equals("Speichern") || choice.equals("3") && current != null)
 						&& current != null) {
 				
-				saveGame(current);
+				new SpeicherMenu(getLandung(), this).open(current);
 				choiceValid = true;
 					
 			}		
@@ -95,33 +95,6 @@ public class MainMenu extends Menu {
 
 	}
 
-	
-	public void saveGame(Game g){
-	
-		try {
-			Save h = SaveFileHandler.loadSaves();
-			if(h.getSaves().size() >= 5){
-				int i = 1;
-				for (Game a : h.getSaves()) {
-					System.out.format(+ i + " " + a.getName()+"\n");
-					i++;
-				}
-				System.out.println("\nWählen Sie einen Spielstand zum Löschen aus");
-				int remove = Integer.parseInt(askForChoice());
-				h.getSaves().remove(remove-1);
-			}
-			System.out.println("\nBitte geben Sie einen Namen zum Speichern ein:");
-			g.setName(askForChoice());
-			h.addGame(g);
-			SaveFileHandler.resetSaves();
-			SaveFileHandler.saveGame(h);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
 
 }
