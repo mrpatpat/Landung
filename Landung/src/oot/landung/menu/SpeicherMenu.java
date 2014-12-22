@@ -6,11 +6,19 @@ import java.io.IOException;
 import oot.landung.Landung;
 import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
-import oot.landung.game.board.Board;
-import oot.landung.game.player.Player;
 import oot.landung.game.save.Save;
 
 public class SpeicherMenu extends Menu {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2084645489599745286L;
+
+	/**
+	 * 
+	 */
+
 
 	public SpeicherMenu(Landung l, Menu parent) {
 		super(l, parent);
