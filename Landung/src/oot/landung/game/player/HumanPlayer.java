@@ -9,6 +9,7 @@ import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.utils.Utils;
+import oot.landung.menu.HelpMenu;
 
 /**
  * Instanz eines Menschlichen Spielers.
@@ -59,13 +60,26 @@ public class HumanPlayer extends Player {
 
 		// hilfe gefolgt von irgendwas
 		if (command.matches("hilfe.*")) {
-			printHelp();
+			new HelpMenu(null, null).open(null);
+			;
 			return askforAction(g);
 		}
 
-		// hilfe gefolgt von irgendwas
+		// menu gefolgt von irgendwas
 		if (command.matches("menu.*")) {
 			g.getMainMenu().open(g);
+			return askforAction(g);
+		}
+
+		// zug gefolgt von irgendwas
+		if (command.matches("zug.*")) {
+			System.out.println("Möglicher Zug: " + this.getValidActions(g.getBoard(), g.getTurn()).get(0));
+			return askforAction(g);
+		}
+
+		// spielbrett gefolgt von irgendwas
+		if (command.matches("brett.*")) {
+			g.getBoard().print();
 			return askforAction(g);
 		}
 
@@ -95,39 +109,6 @@ public class HumanPlayer extends Player {
 			return askforAction(g);
 
 		}
-
-	}
-
-	/**
-	 * Gibt eine Hilfeseite auf der Standardkonsole aus.
-	 */
-	public void printHelp() {
-		System.out.println();
-		String f = "%-30s %-50s %n";
-
-		System.out.format(f, "Schreibweisen", "");
-
-		System.out.format(f, "", "");
-
-		System.out.format(f, "Feldnotation", "BuchstbeZahl Bsp.: a0 oder b3 ");
-		System.out.format(f, "sudo", "Vor jeden Befehl kann ein sudo gesetzt werden, das zum missachten der Regeln f�hrt");
-
-		System.out.format(f, "", "");
-
-		System.out.format(f, "Befehlssyntax", "");
-
-		System.out.format(f, "", "");
-
-		System.out.format(f, "[Feld]", "Setze Stein auf [Feld]");
-		System.out.format(f, "[Feld1][Feld2]", "Bewege Stein auf [Feld1] nach [Feld2]");
-
-		System.out.format(f, "", "");
-
-		System.out.format(f, "Regelwerk", "");
-
-		System.out.format(f, "", "");
-
-		System.out.format(f, "[1]", "regel 1");
 
 	}
 

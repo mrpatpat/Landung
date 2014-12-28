@@ -27,45 +27,33 @@ public class MainMenu extends Menu {
 			String choice = askForChoice();
 
 			if (choice.equals("Neues Spiel") || choice.equals("1")) {
-
 				choiceValid = true;
 				new NewGameMenu(getLandung(), this).open(current);
-
 			} else if (choice.equals("Laden") || choice.equals("2")) {
-
 				choiceValid = true;
 				new LadenMenu(getLandung(), this).open(current);
-			}
-			else if ((choice.equals("Speichern") || choice.equals("3") && current != null)
-						&& current != null) {
-				
+			} else if ((choice.equals("Speichern") || choice.equals("3") && current != null) && current != null) {
 				new SpeicherMenu(getLandung(), this).open(current);
 				choiceValid = true;
-					
-			}		
-			else if ((choice.equals("Weiterspielen") || choice.equals("4"))
-					&& current != null) {
-					
+			} else if ((choice.equals("Weiterspielen") || choice.equals("4")) && current != null) {
 				choiceValid = true;
-				
-			} else if ((choice.equals("KI Test") || choice.equals("3"))
-					&& current == null) {
-
+			} else if ((choice.equals("KI Test") || choice.equals("3")) && current == null) {
 				choiceValid = true;
 				getLandung().testAi();
-
 			} else if (choice.equals("Highscores") || choice.equals("4")) {
 				new HighscoreMenu(getLandung(), this).open(current);
 				choiceValid = true;
-
-			} else if (choice.equals("Beenden") || choice.equals("5")) {
+			} else if (choice.equals("Hilfe") || choice.equals("5")) {
+				new HelpMenu(getLandung(), this).open(current);
+				choiceValid = true;
+			} else if (choice.equals("Beenden") || choice.equals("6")) {
 
 				choiceValid = true;
 				System.exit(0);
 
 			} else {
 
-				System.out.println("ungültige Eingabe");
+				System.out.println("ungï¿½ltige Eingabe");
 			}
 
 		} while (!choiceValid);
@@ -78,23 +66,22 @@ public class MainMenu extends Menu {
 		String format2 = new String("|   %-15s   |\n");
 		String format3 = new String("+------<%-7s>------+\n");
 
-		System.out.format(format1, "HAUPTMENÜ");
+		System.out.format(format1, "HAUPTMENï¿½");
 		System.out.format(format2, "");
 		System.out.format(format2, "Neues Spiel");
 		System.out.format(format2, "Laden");
 		if (current != null)
-		System.out.format(format2, "Speichern");
+			System.out.format(format2, "Speichern");
 		if (current != null)
 			System.out.format(format2, "Weiterspielen");
 		if (current == null)
 			System.out.format(format2, "KI Test");
 		System.out.format(format2, "Highscores");
+		System.out.format(format2, "Hilfe");
 		System.out.format(format2, "Beenden");
 		System.out.format(format2, "");
 		System.out.format(format3, "LANDUNG");
 
 	}
-
-	
 
 }

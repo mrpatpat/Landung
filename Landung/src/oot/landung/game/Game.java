@@ -127,7 +127,7 @@ public class Game implements Serializable{
 	}
 
 	/**
-	 * BlankoKonstruktor für Turnier
+	 * BlankoKonstruktor fï¿½r Turnier
 	 */
 	protected Game() {
 	}
@@ -213,16 +213,12 @@ public class Game implements Serializable{
 		
 		do {
 			board.print();
-			System.out
-					.println(p.getName() + "(" + p.getSymbol()
-							+ ") hat folgende Zuege: "
-							+ p.getValidActions(board, turn));
 			a = p.askforAction(this);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName() + "(" + p.getSymbol() + ") wählt Zug: "
+		System.out.println(p.getName() + "(" + p.getSymbol() + ") wï¿½hlt Zug: "
 				+ a);
 		a.execute(board);
 
@@ -300,7 +296,7 @@ public class Game implements Serializable{
 	 */
 	public Player getWinner(Board board) {
 
-		// keine Züge mehr
+		// keine Zï¿½ge mehr
 		Player toCheck = this.getLastPlayer() == player[0] ? player[1]
 				: player[0];
 		if (toCheck.hasValidActions(board, turn) == false) {
