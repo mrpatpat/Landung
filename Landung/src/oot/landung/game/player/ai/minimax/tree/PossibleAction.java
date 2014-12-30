@@ -109,7 +109,7 @@ public class PossibleAction {
 				}
 				return s;
 			} else {
-				return 0;
+				return (active==actor?1:-1)*((active==actor?active:passive).getValidActions(resultingBoard, resultingTurn).size()-(active==actor?passive:active).getValidActions(resultingBoard, resultingTurn).size());
 			}
 		}
 
