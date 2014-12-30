@@ -20,7 +20,7 @@ import oot.landung.game.utils.Utils;
  */
 public class ComputerPlayer extends Player {
 
-	private int level;
+	protected int level;
 	private AiInterface stupid;
 	private AiInterface smart;
 
@@ -92,7 +92,7 @@ public class ComputerPlayer extends Player {
 			System.out.println("Thomas hat gewonnen.");
 			break;
 		case 4:
-			System.out.println("Nööög! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
+			System.out.println("Nï¿½ï¿½ï¿½g! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
 			break;
 		default:
 			System.out.println("n/a hat gewonnen.");
