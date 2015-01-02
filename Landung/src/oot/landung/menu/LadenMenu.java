@@ -50,17 +50,18 @@ public class LadenMenu extends Menu {
 
 			} 
 			
-			if (choice.equals("Löschen")) {
+			if (choice.equals("Löschen")|| choice.equals("1")) {
 				choiceValid = true;
 				removeGame();
 				open(current);
-			}else if (choice.equals("Reset")) {
+			}else if (choice.equals("Reset")|| choice.equals("2")) {
 				choiceValid = true;
 				reset();
 				open(current);
-			} else if (choice.equals("Zurück")) {
-				this.getParent().open(current);
+			} else if (choice.equals("Zurück")|| choice.equals("3")) {
 				choiceValid = true;
+				this.getParent().open(current);
+				
 			} else {
 				System.out.println("ungültige Eingabe");
 			}

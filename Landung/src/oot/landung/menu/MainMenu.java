@@ -1,14 +1,7 @@
 package oot.landung.menu;
 
-import java.io.IOException;
-
 import oot.landung.Landung;
-import oot.landung.filemanager.HighscoreFileHandler;
-import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
-import oot.landung.game.highscore.Highscore;
-import oot.landung.game.highscore.Highscores;
-import oot.landung.game.save.Save;
 
 public class MainMenu extends Menu {
 
@@ -53,7 +46,7 @@ public class MainMenu extends Menu {
 
 			} else {
 
-				System.out.println("ungï¿½ltige Eingabe");
+				System.out.println("ungültige Eingabe");
 			}
 
 		} while (!choiceValid);
@@ -66,7 +59,7 @@ public class MainMenu extends Menu {
 		String format2 = new String("|   %-15s   |\n");
 		String format3 = new String("+------<%-7s>------+\n");
 
-		System.out.format(format1, "HAUPTMENï¿½");
+		System.out.format(format1, "HAUPTMENÜ");
 		System.out.format(format2, "");
 		System.out.format(format2, "Neues Spiel");
 		System.out.format(format2, "Laden");
