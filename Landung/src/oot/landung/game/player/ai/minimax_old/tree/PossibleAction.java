@@ -1,4 +1,4 @@
-package oot.landung.game.player.ai.minimax.tree;
+package oot.landung.game.player.ai.minimax_old.tree;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
-package oot.landung.game.player.ai.minimax;
+package oot.landung.game.player.ai.minimax_old;
 
 import oot.landung.game.board.Board;
 import oot.landung.game.board.Stone;
 import oot.landung.game.player.Player;
 import oot.landung.game.player.ProgrammablePlayer;
-import oot.landung.game.player.ai.minimax.tree.ActionTree;
+import oot.landung.game.player.ai.minimax_old.tree.ActionTree;
 
 public class Test {
 

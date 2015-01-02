@@ -289,18 +289,22 @@ public class Game implements Serializable{
 	public Player getWinner() {
 		return getWinner(board);
 	}
+	
+	public Player getWinner(Board board) {
+		return getWinner(board,this.getLastPlayer(),this.getLastPlayer()==player[0]?player[1]:player[0], turn);
+	}
+	
 	/**
 	 * null if no winner
 	 * 
 	 * @return
 	 */
-	public Player getWinner(Board board) {
+	public static Player getWinner(Board board, Player last, Player current, int turn) {
 
 		// keine Z�ge mehr
-		Player toCheck = this.getLastPlayer() == player[0] ? player[1]
-				: player[0];
+		Player toCheck = current;
 		if (toCheck.hasValidActions(board, turn) == false) {
-			return this.getLastPlayer();
+			return last;
 		}
 
 		// 4 gewinnt regel

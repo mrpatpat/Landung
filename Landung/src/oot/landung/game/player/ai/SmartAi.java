@@ -8,7 +8,8 @@ import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.Player;
-import oot.landung.game.player.ai.minimax.tree.ActionTree;
+import oot.landung.game.player.ai.minimax_old.tree.ActionTree;
+import oot.landung.game.player.ai.negamax.Negamax;
 import oot.landung.game.utils.Vector;
 
 /**
@@ -44,7 +45,7 @@ public class SmartAi implements AiInterface {
 			possibleActions.add(new SetAction(false, actor, new Vector<Integer>(1,1)));
 		}
 
-		return new ActionTree(actor, enemy,board,turn, 2).getBest();
+		return Negamax.getBestParallel(possibleActions, actor, enemy, board, turn, 6);
 		
 	}
 
