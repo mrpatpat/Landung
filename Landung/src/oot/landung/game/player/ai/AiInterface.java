@@ -30,6 +30,6 @@ public interface AiInterface extends Serializable{
 	 * @param allPossibleActions Liste aller Aktionen die m�glich sind
 	 * @return Der Zug der KI
 	 */
-	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions);	
+	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions,int turn, Player enemy);	
 
 }
