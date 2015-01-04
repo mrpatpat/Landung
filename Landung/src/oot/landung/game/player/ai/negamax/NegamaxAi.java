@@ -1,6 +1,5 @@
 package oot.landung.game.player.ai.negamax;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +11,10 @@ import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
 public class NegamaxAi {
+	
+	private static int maxDepth = 10;
 
-	public static Action getBestParallel(List<Action> actions, Player actor, Player enemy, Board board, int turn, int maxDepth) {
+	public static Action getBestParallel(List<Action> actions, Player actor, Player enemy, Board board, int turn) {
 
 		// Opener
 		if (turn == 0 || turn == 1) {
@@ -23,15 +24,15 @@ public class NegamaxAi {
 			a = new SetAction(false, actor, new Vector<Integer>(1, 1));
 			if (a.isActionValid(board, turn, false))
 				actions.add(a);
-			
+
 			a = new SetAction(false, actor, new Vector<Integer>(3, 1));
 			if (a.isActionValid(board, turn, false))
 				actions.add(a);
-			
+
 			a = new SetAction(false, actor, new Vector<Integer>(1, 3));
 			if (a.isActionValid(board, turn, false))
 				actions.add(a);
-			
+
 			a = new SetAction(false, actor, new Vector<Integer>(3, 3));
 			if (a.isActionValid(board, turn, false))
 				actions.add(a);
@@ -49,36 +50,32 @@ public class NegamaxAi {
 						a -> miniMax(maxDepth, actor, enemy, board.getTheoreticalNextBoard(a, board, turn + 1), turn + 1, Integer.MIN_VALUE, Integer.MAX_VALUE))
 				.boxed().collect(Collectors.toList());
 
-		// categorize action
-		List<Action> win = new ArrayList<Action>();
-		List<Action> loose = new ArrayList<Action>();
-		List<Action> draw = new ArrayList<Action>();
+		Action best = actions.get(0);
+		int bestScore = scores.get(0);
 
 		for (int i = 1; i < scores.size(); i++) {
-			if (scores.get(i) == Integer.MAX_VALUE)
-				win.add(actions.get(i));
-			else if (scores.get(i) == Integer.MIN_VALUE)
-				loose.add(actions.get(i));
-			else
-				draw.add(actions.get(i));
+			// same -> random
+			if (scores.get(i) == bestScore) {
+				if (Math.random() <= 0.5d) {
+					best = actions.get(i);
+					bestScore = scores.get(i);
+				}
+			} else
+			// bigger
+			if (scores.get(i) > bestScore) {
+				best = actions.get(i);
+				bestScore = scores.get(i);
+			}
 		}
-
-		// choose action
-		if (!win.isEmpty()) {
-			return win.get((int) (Math.random() * win.size()));
-		} else if (!draw.isEmpty()) {
-			return draw.get((int) (Math.random() * draw.size()));
-		} else if (!loose.isEmpty()) {
-			return loose.get((int) (Math.random() * loose.size()));
-		} else
-			return actions.get((int) Math.random() * win.size());
+		
+		return best;
 
 	}
 
 	private static int miniMax(int depth, Player actor, Player enemy, Board board, int turn, int alpha, int beta) {
 
 		if (depth == 0 || !actor.hasValidActions(board, turn))
-			return evaluate(actor, enemy, board, turn);
+			return evaluate(actor, enemy, board, turn,depth);
 		int max = alpha;
 		List<Action> actions = actor.getValidActions(board, turn);
 		for (Action a : actions) {
@@ -94,14 +91,14 @@ public class NegamaxAi {
 
 	}
 
-	private static int evaluate(Player actor, Player enemy, Board board, int turn) {
+	private static int evaluate(Player actor, Player enemy, Board board, int turn, int depth) {
 
 		Player winner = Game.getWinner(board, actor, enemy, turn);
 
 		if (winner == actor) {
-			return Integer.MAX_VALUE;
+			return maxDepth;
 		} else if (winner == enemy) {
-			return Integer.MIN_VALUE;
+			return -maxDepth;
 		} else
 			return 0;
 

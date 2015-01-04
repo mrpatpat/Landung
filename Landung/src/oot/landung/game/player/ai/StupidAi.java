@@ -1,7 +1,6 @@
 package oot.landung.game.player.ai;
 
 import java.util.List;
-import java.util.Random;
 
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;

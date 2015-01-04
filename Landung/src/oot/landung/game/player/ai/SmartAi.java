@@ -17,15 +17,10 @@ import oot.landung.game.player.ai.negamax.NegamaxAi;
 public class SmartAi implements AiInterface {
 
 	@Override
-	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions, int turn, Player enemy) {
-
-		// Player actor = allPossibleRemoveActions.get(0).getActor();
+	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions) {
 
 		if (allPossibleRemoveActions.isEmpty())
 			return null;
-
-		// return NegamaxAi.getBestParallel(allPossibleRemoveActions, actor,
-		// enemy, board, turn, Integer.MAX_VALUE);
 
 		if (allPossibleRemoveActions.isEmpty())
 			return null;
@@ -41,7 +36,7 @@ public class SmartAi implements AiInterface {
 		if (possibleActions.isEmpty())
 			return null;
 
-		return NegamaxAi.getBestParallel(possibleActions, actor, enemy, board, turn, Integer.MAX_VALUE);
+		return NegamaxAi.getBestParallel(possibleActions, actor, enemy, board, turn);
 
 	}
 
