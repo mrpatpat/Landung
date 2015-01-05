@@ -24,9 +24,9 @@ public class MainMenu extends Menu {
 				new NewGameMenu(getLandung(), this).open(current);
 			} else if (choice.equals("Laden") || choice.equals("2")) {
 				choiceValid = true;
-				new LadenMenu(getLandung(), this).open(current);
+				new LoadMenu(getLandung(), this).open(current);
 			} else if ((choice.equals("Speichern") || choice.equals("3") && current != null) && current != null) {
-				new SpeicherMenu(getLandung(), this).open(current);
+				new SaveMenu(getLandung(), this).open(current);
 				choiceValid = true;
 			} else if ((choice.equals("Weiterspielen") || choice.equals("4")) && current != null) {
 				choiceValid = true;

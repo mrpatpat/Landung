@@ -8,7 +8,7 @@ import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
 import oot.landung.game.save.Save;
 
-public class SpeicherMenu extends Menu {
+public class SaveMenu extends Menu {
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class SpeicherMenu extends Menu {
 	 */
 
 
-	public SpeicherMenu(Landung l, Menu parent) {
+	public SaveMenu(Landung l, Menu parent) {
 		super(l, parent);
 	}
 

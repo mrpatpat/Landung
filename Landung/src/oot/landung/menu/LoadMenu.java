@@ -9,9 +9,9 @@ import oot.landung.game.board.Board;
 import oot.landung.game.player.Player;
 import oot.landung.game.save.Save;
 
-public class LadenMenu extends Menu {
+public class LoadMenu extends Menu {
 
-	public LadenMenu(Landung l, Menu parent) {
+	public LoadMenu(Landung l, Menu parent) {
 		super(l, parent);
 	}
 
