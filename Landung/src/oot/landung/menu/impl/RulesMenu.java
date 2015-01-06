@@ -27,12 +27,12 @@ public class RulesMenu extends Menu {
 		list.add("Feld auf dem Spielfeld. In jedem weiteren Zug zieht ");
 		list.add("der Spieler einen seiner Steine mindestens zwei Felder ");
 		list.add("weit. Man darf in gerader Linie (Diagonal, Vertikal, ");
-		list.add("Horizontal) ziehen. Es wdürfen keine Steine übersprungen ");
-		list.add("werden und das letzte übersprungene Feld muss leer sein.");
-		list.add("Im zweiten Zug gilt für den zweiten Spieler eine ");
+		list.add("Horizontal) ziehen. Es duerfen keine Steine Uebersprungen ");
+		list.add("werden und das letzte uebersprungene Feld muss leer sein.");
+		list.add("Im zweiten Zug gilt fuer den zweiten Spieler eine ");
 		list.add("Sonderregelung. Er darf sich aussuchen, ob er zieht ");
 		list.add("oder nur setzt. Ziel des Spiels ist es eine 4er Reihe zu ");
-		list.add("bilden oder dem Gegner keine Züge mehr offen lassen.");
+		list.add("bilden oder dem Gegner keine Zuege mehr offen lassen.");
 		return list;
 	}
 
