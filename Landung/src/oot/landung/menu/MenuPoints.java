@@ -307,7 +307,7 @@ public class MenuPoints {
 	}
 
 	public static MenuPoint resetHighscoresPoint(Landung landung, Menu menu, Game current) {
-		MenuPoint m = new MenuPoint("Beenden") {
+		MenuPoint m = new MenuPoint("Reset") {
 
 			@Override
 			public void onSelect() {
