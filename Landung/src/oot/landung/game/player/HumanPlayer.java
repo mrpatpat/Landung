@@ -73,7 +73,7 @@ public class HumanPlayer extends Player {
 
 		// zug gefolgt von irgendwas
 		if (command.matches("zug.*")) {
-			System.out.println("Möglicher Zug: " + this.getValidActions(g.getBoard(), g.getTurn()).get(0));
+			System.out.println("Moeglicher Zug: " + this.getValidActions(g.getBoard(), g.getTurn()).get(0));
 			return askforAction(g);
 		}
 
@@ -117,7 +117,7 @@ public class HumanPlayer extends Player {
 	 */
 	@Override
 	public void notifyUnvalidMove(String message) {
-		System.out.println("Ung�ltiger Zug: " + message);
+		System.out.println("Ungueltiger Zug: " + message);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public RemoveAction askforRemoveAction(Board board, int turn) {
+	public RemoveAction askforRemoveAction(Game g) {
 
 		Scanner in = Utils.getScanner();
 

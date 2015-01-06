@@ -3,6 +3,7 @@ package oot.landung.game;
 import java.io.IOException;
 import java.io.Serializable;
 
+import oot.landung.Landung;
 import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.game.actions.Action;
 import oot.landung.game.actions.RemoveAction;
@@ -13,6 +14,7 @@ import oot.landung.game.highscore.Highscores;
 import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
+import oot.landung.menu.MainMenu;
 import oot.landung.menu.Menu;
 
 /**
@@ -51,7 +53,7 @@ public class Game implements Serializable{
 	 */
 	private int turn;
 
-	private int currentPlayer;
+	private int currentPlayerId;
 
 	private transient Menu main;
 
@@ -133,6 +135,18 @@ public class Game implements Serializable{
 	}
 
 	/**
+	 * Spiel laden Konstruktor
+	 * @param a
+	 */
+	public Game(Game a) {
+		
+		this(a.getMainMenu(),
+				a.getCurrentPlayer(),
+				a.getLastPlayer(), a.getBoard(), a.getTurn());
+		
+	}
+
+	/**
 	 * Spielschleife gibt Sieger zur�ck
 	 */
 	public Player run() {
@@ -151,8 +165,7 @@ public class Game implements Serializable{
 
 			}
 
-		} while (w == null); // ist unbn�tig !! wird nie genutzt ?? wenn w =
-								// null ist returned er in der while schleife
+		} while (w == null); 
 
 		board.print();
 		w.notifyWinner();
@@ -161,7 +174,6 @@ public class Game implements Serializable{
 		try {
 			Highscores h = HighscoreFileHandler.loadHighscores();
 			int score = board.getScore();
-			System.out.println(score);
 			h.addHighscore(new Highscore(score, w.getName()));
 			HighscoreFileHandler.saveHighscores(h);
 		} catch (ClassNotFoundException e) {
@@ -209,7 +221,7 @@ public class Game implements Serializable{
 
 		boolean turnValid = false;
 
-		currentPlayer = p.getPlayerID();
+		currentPlayerId = p.getPlayerID();
 		
 		do {
 			board.print();
@@ -218,7 +230,7 @@ public class Game implements Serializable{
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName() + "(" + p.getSymbol() + ") w�hlt Zug: "
+		System.out.println(p.getName() + "(" + p.getSymbol() + ") waehlt Zug: "
 				+ a);
 		a.execute(board);
 
@@ -229,7 +241,7 @@ public class Game implements Serializable{
 
 			do {
 				board.print();
-				ra = p.askforRemoveAction(board, turn);
+				ra = p.askforRemoveAction(this);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
 				}
@@ -253,7 +265,7 @@ public class Game implements Serializable{
 
 		boolean turnValid = false;
 
-		currentPlayer = p.getPlayerID();
+		currentPlayerId = p.getPlayerID();
 
 		do {
 			a = p.askforAction(this);
@@ -270,7 +282,7 @@ public class Game implements Serializable{
 
 			do {
 				
-				ra = p.askforRemoveAction(board, turn);
+				ra = p.askforRemoveAction(this);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
 				}
@@ -291,7 +303,7 @@ public class Game implements Serializable{
 	}
 	
 	public Player getWinner(Board board) {
-		return getWinner(board,this.getLastPlayer(),this.getLastPlayer()==player[0]?player[1]:player[0], turn);
+		return getWinner(board,this.getLastPlayer(),this.getCurrentPlayer(), turn);
 	}
 	
 	/**
@@ -404,8 +416,12 @@ public class Game implements Serializable{
 		return player;
 	}
 
-	public int getCurrentPlayer() {
-		return currentPlayer;
+	public int getCurrentPlayerId() {
+		return currentPlayerId;
+	}
+	
+	public int getNotCurrentPlayerId() {
+		return currentPlayerId==0?1:0;
 	}
 
 	public int getTurn() {
@@ -413,6 +429,9 @@ public class Game implements Serializable{
 	}
 
 	public Menu getMainMenu() {
+		if(main == null){
+			main = new MainMenu(Landung.instance);
+		}
 		return main;
 	}
 
@@ -432,6 +451,10 @@ public class Game implements Serializable{
 		return name;
 	}
 	
+	public Player getCurrentPlayer() {
+		return lastPlayer==player[0]?player[1]:player[0];
+	}
+	
 	public Player getLastPlayer() {
 		return lastPlayer;
 	}
@@ -442,7 +465,7 @@ public class Game implements Serializable{
 	
 	
 	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayer = currentPlayer;
+		this.currentPlayerId = currentPlayer;
 	}
 
 }

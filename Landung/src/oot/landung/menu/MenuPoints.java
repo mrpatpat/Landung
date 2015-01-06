@@ -7,8 +7,23 @@ import oot.landung.game.Game;
 import oot.landung.game.Game.GameType;
 
 public class MenuPoints {
-	
-	public static MenuPoint removeLoadGamePoint(Landung landung, LoadMenu menu, Game current) {
+
+	public static MenuPoint confirmPoint(Landung landung, Menu menu,
+			Game current, String message, MenuPoint target) {
+		MenuPoint m = new MenuPoint(target.getName()) {
+
+			@Override
+			public void onSelect() {
+				new ConfirmMenu(landung, message, target, menu).open(current);
+			}
+
+		};
+
+		return m;
+	}
+
+	public static MenuPoint removeLoadGamePoint(Landung landung, LoadMenu menu,
+			Game current) {
 		MenuPoint m = new MenuPoint("Entfernen") {
 
 			@Override
@@ -20,8 +35,9 @@ public class MenuPoints {
 
 		return m;
 	}
-	
-	public static MenuPoint getLoadGamePoint(Landung landung, LoadMenu menu, Game current) {
+
+	public static MenuPoint getLoadGamePoint(Landung landung, LoadMenu menu,
+			Game current) {
 		MenuPoint m = new MenuPoint("Laden") {
 
 			@Override
@@ -33,8 +49,9 @@ public class MenuPoints {
 
 		return m;
 	}
-	
-	public static MenuPoint resetSaveGamesPoint(Landung landung, Menu menu, Game game) {
+
+	public static MenuPoint resetSaveGamesPoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Reset") {
 
@@ -49,15 +66,16 @@ public class MenuPoints {
 		return m;
 
 	}
-	
-	public static MenuPoint getSaveGamePoint(Landung landung, SaveMenu menu, Game game) {
+
+	public static MenuPoint getSaveGamePoint(Landung landung, SaveMenu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Speichern") {
 
 			@Override
 			public void onSelect() {
 				menu.saveGame(game);
-				menu.open(game);
+				menu.getParent().open(game);
 			}
 
 		};
@@ -117,7 +135,8 @@ public class MenuPoints {
 
 			@Override
 			public void onSelect() {
-				menu.getParent().open(game);
+				if (menu.getParent() != null)
+					menu.getParent().open(game);
 			}
 
 		};
@@ -126,7 +145,8 @@ public class MenuPoints {
 
 	}
 
-	public static MenuPoint initBO3GamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint initBO3GamePoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Best of Three") {
 
@@ -141,7 +161,8 @@ public class MenuPoints {
 
 	}
 
-	public static MenuPoint initPvEGamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint initPvEGamePoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Spieler gegen Computer") {
 
@@ -156,7 +177,8 @@ public class MenuPoints {
 
 	}
 
-	public static MenuPoint initEvEGamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint initEvEGamePoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Computer gegen Computer") {
 
@@ -171,7 +193,8 @@ public class MenuPoints {
 
 	}
 
-	public static MenuPoint initPvPGamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint initPvPGamePoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Spieler gegen Spieler") {
 
@@ -186,7 +209,8 @@ public class MenuPoints {
 
 	}
 
-	public static MenuPoint getNewGamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint getNewGamePoint(Landung landung, Menu menu,
+			Game game) {
 
 		MenuPoint m = new MenuPoint("Neues Spiel") {
 
@@ -229,7 +253,8 @@ public class MenuPoints {
 		return m;
 	}
 
-	public static MenuPoint getResumeGamePoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint getResumeGamePoint(Landung landung, Menu menu,
+			Game game) {
 		MenuPoint m = new MenuPoint("Weiterspielen") {
 
 			@Override
@@ -241,7 +266,8 @@ public class MenuPoints {
 		return m;
 	}
 
-	public static MenuPoint getAiTest2Point(Landung landung, Menu menu, Game game) {
+	public static MenuPoint getAiTest2Point(Landung landung, Menu menu,
+			Game game) {
 		MenuPoint m = new MenuPoint("KI Test 2") {
 
 			@Override
@@ -254,7 +280,8 @@ public class MenuPoints {
 		return m;
 	}
 
-	public static MenuPoint getAiTest1Point(Landung landung, Menu menu, Game game) {
+	public static MenuPoint getAiTest1Point(Landung landung, Menu menu,
+			Game game) {
 		MenuPoint m = new MenuPoint("KI Test 1") {
 
 			@Override
@@ -267,7 +294,8 @@ public class MenuPoints {
 		return m;
 	}
 
-	public static MenuPoint getHighscoresPoint(Landung landung, Menu menu, Game game) {
+	public static MenuPoint getHighscoresPoint(Landung landung, Menu menu,
+			Game game) {
 		MenuPoint m = new MenuPoint("Highscores") {
 
 			@Override
@@ -306,7 +334,8 @@ public class MenuPoints {
 		return m;
 	}
 
-	public static MenuPoint resetHighscoresPoint(Landung landung, Menu menu, Game current) {
+	public static MenuPoint resetHighscoresPoint(Landung landung, Menu menu,
+			Game current) {
 		MenuPoint m = new MenuPoint("Reset") {
 
 			@Override
@@ -319,9 +348,5 @@ public class MenuPoints {
 
 		return m;
 	}
-
-	
-
-
 
 }

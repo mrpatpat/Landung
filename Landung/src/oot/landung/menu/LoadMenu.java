@@ -21,11 +21,30 @@ public class LoadMenu extends Menu {
 		boolean empty = hasNoSaveGames();
 
 		if (!empty)
-			this.addPoint(MenuPoints.getLoadGamePoint(getLandung(), this, current));
-		if (!empty)
-			this.addPoint(MenuPoints.resetSaveGamesPoint(getLandung(), this, current));
-		if (!empty)
-			this.addPoint(MenuPoints.removeLoadGamePoint(getLandung(), this, current));
+			this.addPoint(MenuPoints.getLoadGamePoint(getLandung(), this,
+					current));
+
+		if (!empty) {
+			MenuPoint target = MenuPoints.resetSaveGamesPoint(getLandung(),
+					this, current);
+			MenuPoint confirm = MenuPoints.confirmPoint(getLandung(), this,
+					current,
+					"Sind Sie sicher ? Die Spielstände gehen dabei verloren.",
+					target);
+
+			this.addPoint(confirm);
+		}
+
+		if (!empty) {
+			MenuPoint target = MenuPoints.removeLoadGamePoint(getLandung(),
+					this, current);
+			MenuPoint confirm = MenuPoints.confirmPoint(getLandung(), this,
+					current,
+					"Sind Sie sicher ? Der Spielstand geht dabei verloren.",
+					target);
+
+			this.addPoint(confirm);
+		}
 
 		this.addPoint(MenuPoints.backPoint(getLandung(), this, current));
 
@@ -83,7 +102,8 @@ public class LoadMenu extends Menu {
 							System.out.format(+i + " " + a.getName() + "\n");
 							i++;
 						}
-						System.out.println("Waehlen Sie einen Spielstand zum Loeschen aus");
+						System.out
+								.println("Waehlen Sie einen Spielstand zum Loeschen aus");
 						int remove = Integer.parseInt(askForString());
 						h.getSaves().remove(remove - 1);
 					}
@@ -107,25 +127,22 @@ public class LoadMenu extends Menu {
 			if (choice.matches("\\b([1-5]){1}\\b")) {
 
 				try {
+					
 					Save h = SaveFileHandler.loadSaves();
 					int b = Integer.parseInt(choice);
-					int i = b;
-					for (Game a : h.getSaves()) {
-						if (i == b) {
-
-							Game c = new Game(a.getMainMenu(), a.getPlayer()[(a.getCurrentPlayer() - 1)], a.getLastPlayer(), a.getBoard(), a.getTurn());
-							c.run();
-						}
-						i++;
-					}
-
+					
+					Game a = h.getSaves().get(b-1);
+					game = new Game(a);
+					game.run();
+					
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 			}
+
 		} while (!choice.matches("\\b([1-5]){1}\\b"));
 	}
-
 }

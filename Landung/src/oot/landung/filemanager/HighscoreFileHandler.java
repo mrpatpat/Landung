@@ -13,7 +13,6 @@ public class HighscoreFileHandler {
 
 	public static void saveHighscores(Highscores h) throws IOException, ClassNotFoundException{
 		FileHandler.writeSerializableToFile(h, file);
-		System.out.println("written");
 	}
 	
 	public static Highscores loadHighscores() throws ClassNotFoundException, IOException{

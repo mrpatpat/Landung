@@ -15,6 +15,8 @@ import oot.landung.menu.Menu;
  * Hauptklasse der Software. Initiert Spiele und hält das Menü.
  */
 public class Landung implements Serializable {
+	
+	public static Landung instance;
 
 	private Menu menu;
 	private Game game;
@@ -23,6 +25,7 @@ public class Landung implements Serializable {
 	 * Beim Instanziieren wird einfach nur das Hauptmenü geöffnet.
 	 */
 	public Landung() {
+		instance = this;
 		menu = new MainMenu(this);
 		menu.open(game);
 	}

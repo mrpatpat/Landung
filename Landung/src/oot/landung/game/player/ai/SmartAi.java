@@ -1,5 +1,6 @@
 package oot.landung.game.player.ai;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import oot.landung.game.actions.Action;
@@ -17,15 +18,17 @@ import oot.landung.game.player.ai.negamax.NegamaxAi;
 public class SmartAi implements AiInterface {
 
 	@Override
-	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions) {
+	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions, int turn, Player enemy) {
+		
+		//convert
+		List<Action> actions = new ArrayList<Action>();
+		
+		for(RemoveAction r:allPossibleRemoveActions){
+			actions.add(r);
+		}
 
-		if (allPossibleRemoveActions.isEmpty())
-			return null;
-
-		if (allPossibleRemoveActions.isEmpty())
-			return null;
-
-		return allPossibleRemoveActions.get((int) (Math.random() * allPossibleRemoveActions.size()));
+		return (RemoveAction) getNextAction(board, actions, turn, enemy);
+		
 	}
 
 	@Override

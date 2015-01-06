@@ -56,7 +56,7 @@ public class SaveMenu extends Menu {
 		try {
 			Save h = SaveFileHandler.loadSaves();
 			if (h.getSaves().size() >= 5) {
-				System.out.println("\nW�hlen Sie einen Spielstand zum L�schen aus");
+				System.out.println("\nWaehlen Sie einen Spielstand zum Loeschen aus");
 				int remove = Integer.parseInt(askForString());
 				h.getSaves().remove(remove - 1);
 			}

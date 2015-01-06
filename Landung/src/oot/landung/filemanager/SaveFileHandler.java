@@ -13,7 +13,6 @@ public class SaveFileHandler {
 
 	public static void saveGame(Save h) throws IOException, ClassNotFoundException{
 		FileHandler.writeSerializableToFile(h, file);
-		System.out.println("written");
 	}
 	
 	public static Save loadSaves() throws ClassNotFoundException, IOException{

@@ -14,7 +14,7 @@ public class NewGameMenu extends Menu {
 
 	@Override
 	public void define(Game current) {
-
+		
 		this.addPoint(MenuPoints.initPvPGamePoint(getLandung(), this, current));
 		this.addPoint(MenuPoints.initPvEGamePoint(getLandung(), this, current));
 		this.addPoint(MenuPoints.initEvEGamePoint(getLandung(), this, current));

@@ -69,7 +69,7 @@ public class ComputerPlayer extends Player {
 			if (lvl.matches("[1-5]\\b")) {
 				level = Integer.parseInt(lvl) - 1;
 			} else {
-				System.out.println("ungÃ¼ltige Eingabe.");
+				System.out.println("ungueltige Eingabe.");
 			}
 		} while (level == -1);
 
@@ -92,7 +92,7 @@ public class ComputerPlayer extends Player {
 			System.out.println("Thomas hat gewonnen.");
 			break;
 		case 4:
-			System.out.println("Nï¿½ï¿½ï¿½g! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
+			System.out.println("Nöööög! Klaus hat mal wieder dominiert und das Spiel gewonnen.");
 			break;
 		default:
 			System.out.println("n/a hat gewonnen.");
@@ -149,13 +149,13 @@ public class ComputerPlayer extends Player {
 	 * @return der Zug
 	 */
 	@Override
-	public RemoveAction askforRemoveAction(Board board, int turn) {
+	public RemoveAction askforRemoveAction(Game g) {
 		int rand = (int) (Math.random() * 5);
-
+		Player enemy  = g.getPlayer()[0] == this ? g.getPlayer()[1]:g.getPlayer()[0];
 		if (rand < level) {
-			return smart.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
+			return smart.getNextRemoveAction(g.getBoard(), this.getValidRemoveActions(g.getBoard(), g.getTurn()),g.getTurn(),enemy);
 		} else {
-			return stupid.getNextRemoveAction(board, this.getValidRemoveActions(board, turn));
+			return stupid.getNextRemoveAction(g.getBoard(), this.getValidRemoveActions(g.getBoard(), g.getTurn()),g.getTurn(),enemy);
 		}
 	}
 

@@ -23,6 +23,10 @@ public class Highscores implements Serializable {
 		
 		highscores.add(h);
 		highscores.sort(null);
+		
+		if(highscores.contains(h)){
+			System.out.println("Mit "+h.getScore()+" Punkten hat "+h.getName()+" einen neuen Highscore erreicht!");
+		}
 	
 	}
 

@@ -18,8 +18,25 @@ public class HighscoreMenu extends Menu {
 
 	@Override
 	public void define(Game current) {
+		boolean empty = true;
+		try {
+			empty = HighscoreFileHandler.loadHighscores().getHighscores()
+					.isEmpty();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
 
-		this.addPoint(MenuPoints.resetHighscoresPoint(getLandung(), this, current));
+		if (!empty) {
+			MenuPoint target = MenuPoints.resetHighscoresPoint(getLandung(),
+					this, current);
+			MenuPoint confirm = MenuPoints.confirmPoint(getLandung(), this,
+					current,
+					"Sind Sie sicher ? Die Highscores gehen dabei verloren.",
+					target);
+
+			this.addPoint(confirm);
+		}
+		
 		this.addPoint(MenuPoints.backPoint(getLandung(), this, current));
 
 	}

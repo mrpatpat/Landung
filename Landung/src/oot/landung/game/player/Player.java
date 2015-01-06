@@ -143,7 +143,7 @@ public abstract class Player implements Serializable {
 	 *            Spielbrett
 	 * @return Die RemoveAction des Spielers
 	 */
-	public abstract RemoveAction askforRemoveAction(Board board, int turn);
+	public abstract RemoveAction askforRemoveAction(Game g);
 
 	/**
 	 * Gibt zur�ck, ob ein Spieler noch g�ltige Aktionen ausf�hren kann.

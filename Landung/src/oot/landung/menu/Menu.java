@@ -18,7 +18,7 @@ public abstract class Menu {
 	public Menu(Landung l, Menu parent, String name) {
 		this.setLandung(l);
 		this.setParent(parent);
-		this.name = name;
+		this.setName(name);
 	}
 
 	public void open(Game current) {
@@ -87,7 +87,7 @@ public abstract class Menu {
 	public void print() {
 
 		// find the length of the longest String
-		int length = name.length();
+		int length = getName().length();
 		if (getCustomText() != null) {
 			for (String s : getCustomText()) {
 				if (s.length() > length) {
@@ -110,7 +110,7 @@ public abstract class Menu {
 		}
 		bar+="+";
 		
-		String title = centerIn("<"+name.toUpperCase()+">",bar);
+		String title = centerIn("<"+getName().toUpperCase()+">",bar);
 		String footer = centerIn("<"+"LANDUNG"+">",bar);
 		String format = "| %-"+(bar.length()-2)+"s|%n";
 		
@@ -144,6 +144,14 @@ public abstract class Menu {
 		String left = container.substring(0, start+1);
 		String right = container.substring(end, container.length());
 		return left+s+right;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

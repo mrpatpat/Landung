@@ -16,7 +16,7 @@ import oot.landung.game.player.Player;
 public class StupidAi implements AiInterface {
 
 	@Override
-	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions) {
+	public RemoveAction getNextRemoveAction(Board board, List<RemoveAction> allPossibleRemoveActions, int turn, Player enemy) {
 		if(allPossibleRemoveActions.isEmpty())
 			return null;
 		return allPossibleRemoveActions.get((int) (Math.random() * allPossibleRemoveActions.size()));
