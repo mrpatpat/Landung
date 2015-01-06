@@ -9,7 +9,7 @@ import oot.landung.game.actions.RemoveAction;
 import oot.landung.game.actions.SetAction;
 import oot.landung.game.board.Board;
 import oot.landung.game.utils.Utils;
-import oot.landung.menu.HelpMenu;
+import oot.landung.menu.impl.HelpMenu;
 
 /**
  * Instanz eines Menschlichen Spielers.

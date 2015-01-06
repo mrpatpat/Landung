@@ -217,8 +217,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="oot.landung.menu.CheatMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/CheatMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="25" language="java" name="oot.landung.menu.impl.CheatMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/CheatMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="160" y="617"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -226,8 +226,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="oot.landung.menu.NewGameMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/NewGameMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="26" language="java" name="oot.landung.menu.impl.NewGameMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/NewGameMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="371" y="608"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -235,8 +235,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="27" language="java" name="oot.landung.menu.LoadMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/LoadMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="27" language="java" name="oot.landung.menu.impl.LoadMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/LoadMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="579" y="626"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -244,8 +244,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="28" language="java" name="oot.landung.menu.HighscoreMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/HighscoreMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="28" language="java" name="oot.landung.menu.impl.HighscoreMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/HighscoreMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="777" y="607"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -253,8 +253,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="oot.landung.menu.MainMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/MainMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="29" language="java" name="oot.landung.menu.impl.MainMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/MainMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="987" y="596"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -262,8 +262,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="oot.landung.menu.RulesMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/RulesMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="30" language="java" name="oot.landung.menu.impl.RulesMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/RulesMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1180" y="607"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -271,8 +271,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="oot.landung.menu.InputMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/InputMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="31" language="java" name="oot.landung.menu.impl.InputMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/InputMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1374" y="605"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -280,8 +280,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="oot.landung.menu.SaveMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/SaveMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="32" language="java" name="oot.landung.menu.impl.SaveMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/SaveMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1593" y="635"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -289,8 +289,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="33" language="java" name="oot.landung.menu.HelpMenu" project="Landung" 
-    file="/Landung/src/oot/landung/menu/HelpMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="33" language="java" name="oot.landung.menu.impl.HelpMenu" project="Landung" 
+    file="/Landung/src/oot/landung/menu/impl/HelpMenu.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1827" y="635"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

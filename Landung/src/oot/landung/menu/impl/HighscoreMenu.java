@@ -1,4 +1,4 @@
-package oot.landung.menu;
+package oot.landung.menu.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.game.Game;
 import oot.landung.game.highscore.Highscore;
 import oot.landung.game.highscore.Highscores;
+import oot.landung.menu.Menu;
+import oot.landung.menu.MenuPoint;
+import oot.landung.menu.MenuPoints;
 
 public class HighscoreMenu extends Menu {
 

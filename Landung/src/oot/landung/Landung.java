@@ -8,8 +8,8 @@ import oot.landung.game.Game.GameType;
 import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Utils;
-import oot.landung.menu.MainMenu;
 import oot.landung.menu.Menu;
+import oot.landung.menu.impl.MainMenu;
 
 /**
  * Hauptklasse der Software. Initiert Spiele und hält das Menü.

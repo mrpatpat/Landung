@@ -5,6 +5,15 @@ import oot.landung.filemanager.HighscoreFileHandler;
 import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
 import oot.landung.game.Game.GameType;
+import oot.landung.menu.impl.CheatMenu;
+import oot.landung.menu.impl.ConfirmMenu;
+import oot.landung.menu.impl.HelpMenu;
+import oot.landung.menu.impl.HighscoreMenu;
+import oot.landung.menu.impl.InputMenu;
+import oot.landung.menu.impl.LoadMenu;
+import oot.landung.menu.impl.NewGameMenu;
+import oot.landung.menu.impl.RulesMenu;
+import oot.landung.menu.impl.SaveMenu;
 
 public class MenuPoints {
 

@@ -14,8 +14,8 @@ import oot.landung.game.highscore.Highscores;
 import oot.landung.game.player.ComputerPlayer;
 import oot.landung.game.player.HumanPlayer;
 import oot.landung.game.player.Player;
-import oot.landung.menu.MainMenu;
 import oot.landung.menu.Menu;
+import oot.landung.menu.impl.MainMenu;
 
 /**
  * Instanz eines Spieles. Serialisierbar, da man dann ein Spiel mit Zustand

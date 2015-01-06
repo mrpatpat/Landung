@@ -1,4 +1,4 @@
-package oot.landung.menu;
+package oot.landung.menu.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import oot.landung.Landung;
 import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
 import oot.landung.game.save.Save;
+import oot.landung.menu.Menu;
+import oot.landung.menu.MenuPoints;
 
 public class SaveMenu extends Menu {
 

@@ -1,9 +1,12 @@
-package oot.landung.menu;
+package oot.landung.menu.impl;
 
 import java.util.List;
 
 import oot.landung.Landung;
 import oot.landung.game.Game;
+import oot.landung.menu.Menu;
+import oot.landung.menu.MenuPoint;
+import oot.landung.menu.MenuPoints;
 
 public class MainMenu extends Menu {
 
