@@ -4,22 +4,33 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 import oot.landung.game.Game;
+import oot.landung.game.Game.GameType;
 import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Utils;
 import oot.landung.menu.MainMenu;
 import oot.landung.menu.Menu;
 
+/**
+ * Hauptklasse der Software. Initiert Spiele und hält das Menü.
+ */
 public class Landung implements Serializable {
 
 	private Menu menu;
 	private Game game;
 
+	/**
+	 * Beim Instanziieren wird einfach nur das Hauptmenü geöffnet.
+	 */
 	public Landung() {
 		menu = new MainMenu(this);
 		menu.open(game);
 	}
 
+	/**
+	 * Startet einen KI Test, der Stufe 5 gegen Stufe 1 beliebig oft spielen
+	 * lässt.
+	 */
 	public void testAi() {
 
 		Player worst = new FixedComputerPlayer(1, 0);
@@ -39,14 +50,14 @@ public class Landung implements Serializable {
 
 			Game g = new Game(null, enemy, worst);
 			Player winner = g.runKI();
-			
+
 			end = System.currentTimeMillis();
-			
+
 			if (winner == enemy) {
 				res++;
 			}
-			
-			System.out.println("Fortschritt: "+(j+1)+"/"+(runs+runs)+" gespielt. Vergangene Zeit: "+(end-start)/1000+"s");
+
+			System.out.println("Fortschritt: " + (j + 1) + "/" + (runs + runs) + " gespielt. Vergangene Zeit: " + (end - start) / 1000 + "s");
 
 		}
 
@@ -64,15 +75,14 @@ public class Landung implements Serializable {
 			Player winner = g.runKI();
 
 			end = System.currentTimeMillis();
-			
+
 			if (winner == enemy) {
 				res2++;
 			}
-			System.out.println("Fortschritt: "+(runs+j+1)+"/"+(runs+runs)+" gespielt. Vergangene Zeit: "+((end-start)/1000)+"s");
+			System.out.println("Fortschritt: " + (runs + j + 1) + "/" + (runs + runs) + " gespielt. Vergangene Zeit: " + ((end - start) / 1000) + "s");
 
 		}
 
-		
 		// PRINTS
 
 		System.out.println("\nKI(5) beginnt: \n");
@@ -86,6 +96,10 @@ public class Landung implements Serializable {
 		menu.open(game);
 	}
 
+	/**
+	 * Startet einen KI Test, der alle KI's gegen Stufe 1 beliebig oft spielen
+	 * lässt.
+	 */
 	public void testAi2() {
 
 		Player worst = new FixedComputerPlayer(1, 0);
@@ -157,8 +171,13 @@ public class Landung implements Serializable {
 		}
 
 		menu.open(game);
+
 	}
 
+	/**
+	 * Startet ein einfaches Spiel
+	 * @param g das Spiel
+	 */
 	public void initGame(Game g) {
 		game = g;
 		game.run();
@@ -166,4 +185,72 @@ public class Landung implements Serializable {
 		menu.open(game);
 	}
 
+	/**
+	 * Startet ein Best of 3
+	 */
+	public void initBO3() {
+
+		// Spieler 1 gewinnt -> +1 ; Spieler 2 gewinnt-> -1
+		int result = 0;
+
+		// Game 1
+		game = new Game(GameType.PVP, menu);
+		game.run();
+
+		// get Player instances
+		Player a = game.getPlayer()[0];
+		Player b = game.getPlayer()[1];
+
+		// edit result
+		if (a == game.getWinner()) {
+			result++;
+		} else {
+			result--;
+		}
+
+		// Game 2
+		game = new Game(menu, a, b);
+		game.run();
+		// edit result
+		if (a == game.getWinner()) {
+			result++;
+		} else {
+			result--;
+		}
+
+		// check if someone won
+		if (result == 2) {
+			System.out.println(a.getName() + " hat 2 zu 0 gewonnen!");
+			game = null;
+			menu.open(game);
+		} else if (result == -2) {
+			System.out.println(b.getName() + " hat 2 zu 0 gewonnen!");
+			game = null;
+			menu.open(game);
+		} else {
+
+			// Game 3
+			game = new Game(menu, a, b);
+			game.run();
+			// edit result
+			if (a == game.getWinner()) {
+				result++;
+			} else {
+				result--;
+			}
+
+			// check win
+			if (result == 1) {
+				System.out.println(a.getName() + " hat 2 zu 1 gewonnen!");
+				game = null;
+				menu.open(game);
+			} else if (result == -1) {
+				System.out.println(b.getName() + " hat 2 zu 1 gewonnen!");
+				game = null;
+				menu.open(game);
+			}
+
+		}
+
+	}
 }

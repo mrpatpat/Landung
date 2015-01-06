@@ -1,62 +1,37 @@
 package oot.landung.menu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import oot.landung.Landung;
 import oot.landung.game.Game;
 
 public class RulesMenu extends Menu {
 
-	private static final long serialVersionUID = 2364108791961664496L;
-
 	public RulesMenu(Landung l, Menu parent) {
-		super(l, parent);
-		// TODO Auto-generated constructor stub
+		super(l, parent, "Regeln");
 	}
 
 	@Override
-	public void open(Game current) {
-		print(current);
-
-		boolean choiceValid = false;
-
-		do {
-
-			String choice = askForChoice();
-
-			if (choice.equals("Zurück") || choice.equals("1")) {
-				this.getParent().open(current);
-				choiceValid = true;
-			} else {
-				System.out.println("ung�ltige Eingabe");
-			}
-
-		} while (!choiceValid);
-
+	public void define(Game current) {
+		this.addPoint(MenuPoints.backPoint(getLandung(), this, current));
 	}
 
-	private void print(Game current) {
-
-		String format1 = new String("\n\n+---------------------------<%-6s>----------------------------+\n");
-		String format2 = new String("|   %-57s   |\n");
-		String format3 = new String("+---------------------------<%-7s>---------------------------+\n");
-
-		System.out.format(format1, "REGELN");
-		System.out.format(format2, "");
-		System.out.format(format2, "Jeder Spieler hat 9 Spielsteine. In seinem ersten Zug ");
-		System.out.format(format2, "setzt jeder Spieler einen Spielstein auf ein freies ");
-		System.out.format(format2, "Feld auf dem Spielfeld. In jedem weiteren Zug zieht ");
-		System.out.format(format2, "der Spieler einen seiner Steine mindestens zwei Felder ");
-		System.out.format(format2, "weit. Man darf in gerader Linie (Diagonal, Vertikal, ");
-		System.out.format(format2, "Horizontal) ziehen. Es wdürfen keine Steine übersprungen ");
-		System.out.format(format2, "werden und das letzte übersprungene Feld muss leer sein.");
-		System.out.format(format2, "Im zweiten Zug gilt für den zweiten Spieler eine ");
-		System.out.format(format2, "Sonderregelung. Er darf sich aussuchen, ob er zieht ");
-		System.out.format(format2, "oder nur setzt. Ziel des Spiels ist es eine 4er Reihe zu ");
-		System.out.format(format2, "bilden oder dem Gegner keine Züge mehr offen lassen.");
-		System.out.format(format2, "");
-		System.out.format(format2, "Zurück");
-		System.out.format(format2, "");
-		System.out.format(format3, "LANDUNG");
-
+	@Override
+	public List<String> getCustomText() {
+		List<String> list = new ArrayList<String>();
+		list.add("Jeder Spieler hat 9 Spielsteine. In seinem ersten Zug ");
+		list.add("setzt jeder Spieler einen Spielstein auf ein freies ");
+		list.add("Feld auf dem Spielfeld. In jedem weiteren Zug zieht ");
+		list.add("der Spieler einen seiner Steine mindestens zwei Felder ");
+		list.add("weit. Man darf in gerader Linie (Diagonal, Vertikal, ");
+		list.add("Horizontal) ziehen. Es wdürfen keine Steine übersprungen ");
+		list.add("werden und das letzte übersprungene Feld muss leer sein.");
+		list.add("Im zweiten Zug gilt für den zweiten Spieler eine ");
+		list.add("Sonderregelung. Er darf sich aussuchen, ob er zieht ");
+		list.add("oder nur setzt. Ziel des Spiels ist es eine 4er Reihe zu ");
+		list.add("bilden oder dem Gegner keine Züge mehr offen lassen.");
+		return list;
 	}
 
 }

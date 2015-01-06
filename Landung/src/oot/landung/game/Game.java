@@ -53,7 +53,7 @@ public class Game implements Serializable{
 
 	private int currentPlayer;
 
-	private Menu main;
+	private transient Menu main;
 
 	private Player lastPlayer;
 	
