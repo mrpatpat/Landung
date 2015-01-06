@@ -81,6 +81,13 @@ public class Game implements Serializable{
 			player[1] = new ComputerPlayer(2);
 		}
 
+		//randomize
+		if(Math.random()<0.5d){
+			Player first = player[1];
+			player[1] = player[0];
+			player[0] = first;
+		}
+		
 		// init board
 		board = new Board();
 
@@ -109,7 +116,14 @@ public class Game implements Serializable{
 	
 	
 	
-	
+	/**
+	 * laden
+	 * @param main
+	 * @param p1
+	 * @param p2
+	 * @param board
+	 * @param turn
+	 */
 	public Game(Menu main, Player p1, Player p2, Board board, int turn) {
 
 		this.main = main;
