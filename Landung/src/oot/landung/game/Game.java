@@ -33,33 +33,15 @@ public class Game implements Serializable{
 		PVP, PVE, EVE;
 	}
 
-	/**
-	 * Anzahl der Spieler
-	 */
 	private static final int PLAYERS = 2;
-
-	/**
-	 * Spielfeld static for test
-	 */
 	private Board board;
-
-	/**
-	 * Spieler
-	 */
 	private Player[] player;
-
-	/**
-	 * Spielzug
-	 */
 	private int turn;
-
 	private int currentPlayerId;
-
 	private transient Menu main;
-
 	private Player lastPlayer;
-	
 	private String name = "";
+	
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
@@ -93,6 +75,9 @@ public class Game implements Serializable{
 
 		// init rest
 		turn = 0;
+		
+		currentPlayerId = 0;
+		lastPlayer = player[1];
 
 	}
 
@@ -111,6 +96,9 @@ public class Game implements Serializable{
 
 		// init rest
 		turn = 0;
+		
+		currentPlayerId = 0;
+		lastPlayer = player[1];
 
 	}
 	
@@ -139,6 +127,9 @@ public class Game implements Serializable{
 
 		// init rest
 		this.turn = turn;
+		
+		currentPlayerId = 0;
+		lastPlayer = player[1];
 
 	}
 
@@ -146,18 +137,6 @@ public class Game implements Serializable{
 	 * BlankoKonstruktor f�r Turnier
 	 */
 	protected Game() {
-	}
-
-	/**
-	 * Spiel laden Konstruktor
-	 * @param a
-	 */
-	public Game(Game a) {
-		
-		this(a.getMainMenu(),
-				a.getCurrentPlayer(),
-				a.getLastPlayer(), a.getBoard(), a.getTurn());
-		
 	}
 
 	/**

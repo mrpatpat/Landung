@@ -135,8 +135,7 @@ public class LoadMenu extends Menu {
 					int b = Integer.parseInt(choice);
 					
 					Game a = h.getSaves().get(b-1);
-					game = new Game(a);
-					game.run();
+					this.getLandung().initLoadedGame(a);
 					
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
