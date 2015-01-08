@@ -12,8 +12,8 @@ import oot.landung.game.player.Player;
 import oot.landung.game.utils.Vector;
 
 /**
- * Negamaxalgorithmus. Bewertet einen Spielsituation und gibt den mÃ¶glichst
- * besten Zug des Spielers zurÃ¼ck.
+ * Negamaxalgorithmus. Bewertet einen Spielsituation und gibt den möglichst
+ * besten Zug des Spielers zurück.
  */
 public class NegamaxAi {
 
@@ -23,11 +23,11 @@ public class NegamaxAi {
 	private static int maxDepth = 100;
 
 	/**
-	 * Sucht den besten Zug. Diese Methode nutzt Javastreams um ParallelitÃ¤t zu
-	 * ermÃ¶glichen.
+	 * Sucht den besten Zug. Diese Methode nutzt Javastreams um Parallelität zu
+	 * ermöglichen.
 	 * 
 	 * @param actions
-	 *            Liste aller gÃ¼ltigen ZÃ¼ge des Spielers actor
+	 *            Liste aller gültigen Züge des Spielers actor
 	 * @param actor
 	 *            Der Akteur in dieser Runde
 	 * @param enemy
@@ -36,48 +36,39 @@ public class NegamaxAi {
 	 *            Das aktuelle Spielfeld
 	 * @param turn
 	 *            Der aktuelle Zug
-	 * @return mÃ¶glichst bester Zug fÃ¼r den Akteur
+	 * @return möglichst bester Zug für den Akteur
 	 */
 	public static Action getBestParallel(List<Action> actions, Player actor,
 			Player enemy, Board board, int turn) {
 
-		// Opening Moves
+		// Eröffnungszüge
 		if (turn == 0) {
 			actions = getOpeningMoves(actions, actor, board, turn);
 		}
 
-		// move in turn 2
-		if(turn == 1){
-			Stone s = board.getPlacedStones(enemy).get(0);
-			int x = s.getPosition().getX()<=2?4:0;
-			int y = s.getPosition().getY()<=2?4:0;
-			actions.clear();
-			actions.add(new SetAction(false,actor,new Vector<Integer>(x,y)));
-		}
-
-		// if there are no actions, return null
+		// keine Aktionen -> null
 		if (actions == null)
 			return null;
 
-		// get the scores of our actions through negamax
+		// hole die Liste mit den Bewertungen
 		List<Integer> scores = getScores(actions, actor, enemy, board, turn);
 
-		// return the best action
+		// gebe die beste Aktion zurück
 		return findBestAction(actions, scores);
 
 	}
 
 	/**
 	 * Die Negamaximplementation des Minimaxalgorithmus. Er versucht immer den
-	 * fÃ¼r sich besten Zug zu wÃ¤hlen und geht davon aus, dass der Gegner das
-	 * auch tut. D.h. Im eigenen Zug wÃ¤hlt er den fÃ¼r sich maximalen Zug aus
-	 * und im gegnerischen Zug nimmt er den fÃ¼r sich minimalen Zug, da
-	 * angenommen wird, dass der Gegner perfekt spielt. Der Negamaxalgorithmus
-	 * muss immer nur nach dem maximum suchen, da er pro Schritt das Ergebnis
-	 * negiert. Der Algorithmus ist auÃŸerdem mit einem Alpha-Beta-Pruning
-	 * optimiert. D.h. er merkt sich vorherige Minima und Maxima und berechnet
-	 * ganze Zweige nicht mehr, wenn sie auÃŸerhalb dieser Grenzen liegen, da
-	 * sie das Ergebnis nicht mehr verÃ¤ndern.
+	 * für sich besten Zug zu wählen und geht davon aus, dass der Gegner das
+	 * auch tut. D.h. Im eigenen Zug wählt er den für sich maximalen Zug aus und
+	 * im gegnerischen Zug nimmt er den für sich minimalen Zug, da angenommen
+	 * wird, dass der Gegner perfekt spielt. Der Negamaxalgorithmus muss immer
+	 * nur nach dem maximum suchen, da er pro Schritt das Ergebnis negiert. Der
+	 * Algorithmus ist außerdem mit einem Alpha-Beta-Pruning optimiert. D.h. er
+	 * merkt sich vorherige Minima und Maxima und berechnet ganze Zweige nicht
+	 * mehr, wenn sie außerhalb dieser Grenzen liegen, da sie das Ergebnis nicht
+	 * mehr verändern.
 	 * 
 	 * @param depth
 	 *            aktuelle Suchtiefe
@@ -113,12 +104,11 @@ public class NegamaxAi {
 			}
 		}
 		return max;
-
 	}
 
 	/**
-	 * Bewertungsfunktion fÃ¼r eine Spielsituation. Je hÃ¶her das Ergebnis,
-	 * desto besser ist die Situation fÃ¼r den Akteur.
+	 * Bewertungsfunktion für eine Spielsituation. Je höher das Ergebnis, desto
+	 * besser ist die Situation für den Akteur.
 	 * 
 	 * @param actor
 	 *            der Akteur
@@ -138,9 +128,9 @@ public class NegamaxAi {
 		Player winner = Game.getWinner(board, actor, enemy, turn);
 
 		if (winner == actor) {
-			return maxDepth;
+			return Integer.MAX_VALUE;
 		} else if (winner == enemy) {
-			return -maxDepth;
+			return Integer.MIN_VALUE;
 		} else
 			return 0;
 
@@ -169,6 +159,19 @@ public class NegamaxAi {
 		return best;
 	}
 
+	/**
+	 * gibt die Eröffnungszüge zurück.
+	 * 
+	 * @param actions
+	 *            Aktionsliste
+	 * @param actor
+	 *            Akteur
+	 * @param board
+	 *            aktuelles Spielbrett
+	 * @param turn
+	 *            Zug
+	 * @return Eröffnungszüge
+	 */
 	private static List<Action> getOpeningMoves(List<Action> actions,
 			Player actor, Board board, int turn) {
 		actions.clear();
@@ -193,16 +196,36 @@ public class NegamaxAi {
 		return actions;
 	}
 
+	/**
+	 * Gibt zu einer Aktionsliste und einem Brett die dazugehörigen Bewertungen
+	 * zurück.
+	 * 
+	 * @param actions Liste aller Aktionen
+	 * @param actor Der Akteur
+	 * @param enemy Der Gegner
+	 * @param board Aktuelles Spielbrett
+	 * @param turn Aktueller Spielzug
+	 * @return Liste der Zugbewertungen
+	 */
 	private static List<Integer> getScores(List<Action> actions, Player actor,
 			Player enemy, Board board, int turn) {
+
+		/*
+		 * Aktionsliste wird in einen parallelen Stream geladen. Als nächstes
+		 * werden alle Aktionen auf ihre Bewertungen nach minimax gemappt.
+		 * Der Stream wird dann eingesammelt und in eine Liste aus Integern konvertiert.
+		 */
 		return actions
 				.stream()
 				.parallel()
 				.mapToInt(
+
 						a -> miniMax(maxDepth, actor, enemy, board
 								.getTheoreticalNextBoard(a, board, turn + 1),
-								turn + 1, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				.boxed().collect(Collectors.toList());
+								turn + 1, Integer.MIN_VALUE, Integer.MAX_VALUE)
+
+				).boxed().collect(Collectors.toList());
+
 	}
 
 }

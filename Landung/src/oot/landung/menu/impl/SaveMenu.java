@@ -20,7 +20,6 @@ public class SaveMenu extends Menu {
 	@Override
 	public void define(Game current) {
 
-		
 		this.addPoint(MenuPoints.getSaveGamePoint(getLandung(), this, current));
 		this.addPoint(MenuPoints.resetSaveGamesPoint(getLandung(), this, current));
 		this.addPoint(MenuPoints.backPoint(getLandung(), this, current));

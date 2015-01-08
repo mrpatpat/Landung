@@ -1,5 +1,8 @@
 package oot.landung.tournament;
 
+import tournament.DonutSlayersEngine;
+import tournament.IGame;
+
 
 /**
  * Turnierklasse
@@ -15,7 +18,7 @@ public class Tournament {
 	}
 	
 	public static IGame getGameB(){
-		return new TournamentWrapper();
+		return new DonutSlayersEngine(5);
 	}
 	
 	
@@ -134,12 +137,26 @@ public class Tournament {
 				//make a move
 				String move = actor.getMyMove();
 				boolean valid = enemy.takeYourMove(move);
+				
+				System.out.println(actor.getClass()+" moved "+move);
+				System.out.println(enemy.getClass()+" accepted it: "+valid);
+				actor.printBoard();
+				enemy.printBoard();
+				System.out.println(actor.getClass()+" isRunning: "+actor.isRunning());
+				System.out.println(enemy.getClass()+" isRunning: "+enemy.isRunning());
+				System.out.println(actor.getClass()+" whoWon: "+actor.whoWon());
+				System.out.println(enemy.getClass()+" whoWon: "+enemy.whoWon());
 
 				// does enemy recognize it as valid?
 				if (!valid) {
 					throw new NotInSyncException(
 							"Zug des ersten Spielers im anderen Programm ungültig");
 				}
+				
+				// did someone win ?
+				winner = getWinner(actor, enemy);
+				if (winner != null)
+					return winner;
 
 			} else {
 
@@ -156,7 +173,13 @@ public class Tournament {
 				return winner;
 
 		} else {
+			
+			winner = getWinner(actor, enemy);
+			if (winner != null)
+				return winner;
+			
 			throw new NotInSyncException("isRunning not in sync");
+			
 		}
 		
 		return null;

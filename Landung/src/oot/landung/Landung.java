@@ -32,7 +32,7 @@ public class Landung implements Serializable {
 	
 	public void initLoadedGame(Game g){
 		game = g;
-		game.run();
+		game.run(true);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Landung implements Serializable {
 		for (int j = 0; j < runs; j++) {
 
 			Game g = new Game(null, enemy, worst);
-			Player winner = g.runKI();
+			Player winner = g.run(false);
 
 			end = System.currentTimeMillis();
 
@@ -80,7 +80,7 @@ public class Landung implements Serializable {
 		for (int j = 0; j < runs; j++) {
 
 			Game g = new Game(null, worst, enemy);
-			Player winner = g.runKI();
+			Player winner = g.run(false);
 
 			end = System.currentTimeMillis();
 
@@ -127,7 +127,7 @@ public class Landung implements Serializable {
 			for (int j = 0; j < runs; j++) {
 
 				Game g = new Game(null, enemy, worst);
-				Player winner = g.runKI();
+				Player winner = g.run(false);
 
 				if (winner == enemy) {
 					res[i]++;
@@ -150,7 +150,7 @@ public class Landung implements Serializable {
 			for (int j = 0; j < runs; j++) {
 
 				Game g = new Game(null, worst, enemy);
-				Player winner = g.runKI();
+				Player winner = g.run(false);
 
 				if (winner == enemy) {
 					res2[i]++;
@@ -188,7 +188,7 @@ public class Landung implements Serializable {
 	 */
 	public void initGame(Game g) {
 		game = g;
-		game.run();
+		game.run(true);
 		game = null;
 		menu.open(game);
 	}
@@ -203,11 +203,11 @@ public class Landung implements Serializable {
 
 		// Game 1
 		game = new Game(GameType.PVP, menu);
-		game.run();
+		game.run(true);
 
 		// get Player instances
-		Player a = game.getPlayer()[0];
-		Player b = game.getPlayer()[1];
+		Player a = game.getCurrentPlayer();
+		Player b = game.getLastPlayer();
 
 		// edit result
 		if (a == game.getWinner()) {
@@ -218,7 +218,7 @@ public class Landung implements Serializable {
 
 		// Game 2
 		game = new Game(menu, a, b);
-		game.run();
+		game.run(true);
 		// edit result
 		if (a == game.getWinner()) {
 			result++;
@@ -239,7 +239,7 @@ public class Landung implements Serializable {
 
 			// Game 3
 			game = new Game(menu, a, b);
-			game.run();
+			game.run(true);
 			// edit result
 			if (a == game.getWinner()) {
 				result++;

@@ -9,6 +9,7 @@ import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.player.ProgrammablePlayer;
 import oot.landung.game.utils.Utils;
+import tournament.IGame;
 
 
 
@@ -41,6 +42,8 @@ public class TournamentWrapper extends Game implements IGame {
 		me.setId(0);
 		enemy.setId(1);
 		isRunning = true;
+		setCurrentPlayerId(0);
+		setLastPlayer(enemy);
 	}
 
 	@Override
@@ -50,6 +53,8 @@ public class TournamentWrapper extends Game implements IGame {
 		me.setId(1);
 		enemy.setId(0);
 		isRunning = true;
+		setCurrentPlayerId(0);
+		setLastPlayer(me);
 	}
 
 	@Override

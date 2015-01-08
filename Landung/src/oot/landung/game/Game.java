@@ -24,7 +24,7 @@ import oot.landung.menu.impl.MainMenu;
  * Klassen, die Game benutzt müssen auch serialisierbar sein. Die Spielklasse
  * managed alles was zum Spiel gehört.
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
 
 	/**
 	 * Spielmodi
@@ -35,13 +35,28 @@ public class Game implements Serializable{
 
 	private static final int PLAYERS = 2;
 	private Board board;
-	private Player[] player;
 	private int turn;
-	private int currentPlayerId;
 	private transient Menu main;
+	private Player currentPlayer;
 	private Player lastPlayer;
-	private String name = "";
-	
+	private String name;
+
+	public Game(Player current, Player last, Board board, int turn, Menu main) {
+		this.currentPlayer = current;
+		this.lastPlayer = last;
+		this.board = board;
+		this.turn = turn;
+		this.main = main;
+	}
+
+	public Game(Player current, Player last, Board board, int turn) {
+		this(current, last, board, turn, new MainMenu(Landung.instance));
+	}
+
+	public Game(Menu main, Player current, Player last) {
+		this(current, last, new Board(), 0, main);
+	}
+
 	/**
 	 * Konstruktor für eine neue Spielinstanz.
 	 */
@@ -50,191 +65,99 @@ public class Game implements Serializable{
 		this.main = main;
 
 		// init players
-		player = new Player[Game.PLAYERS];
+		Player a = null;
+		Player b = null;
 
 		if (type == GameType.PVP) {
-			player[0] = new HumanPlayer(1);
-			player[1] = new HumanPlayer(2);
+			a = new HumanPlayer(1);
+			b = new HumanPlayer(2);
 		} else if (type == GameType.PVE) {
-			player[0] = new HumanPlayer(1);
-			player[1] = new ComputerPlayer(2);
+			a = new HumanPlayer(1);
+			b = new ComputerPlayer(2);
 		} else if (type == GameType.EVE) {
-			player[0] = new ComputerPlayer(1);
-			player[1] = new ComputerPlayer(2);
+			a = new ComputerPlayer(1);
+			b = new ComputerPlayer(2);
 		}
 
-		//randomize
-		if(Math.random()<0.5d){
-			Player first = player[1];
-			player[1] = player[0];
-			player[0] = first;
+		// randomize
+		if (Math.random() < 0.5d) {
+			this.currentPlayer = a;
+			this.lastPlayer = b;
+		} else {
+			this.currentPlayer = b;
+			this.lastPlayer = a;
 		}
-		
-		// init board
-		board = new Board();
 
-		// init rest
-		turn = 0;
-		
-		currentPlayerId = 0;
-		lastPlayer = player[1];
+		this.board = new Board();
+		this.turn = 0;
+		this.main = new MainMenu(Landung.instance);
 
-	}
-
-	public Game(Menu main, Player p1, Player p2) {
-
-		this.main = main;
-
-		// init players
-		player = new Player[Game.PLAYERS];
-
-		player[0] = p1;
-		player[1] = p2;
-
-		// init board
-		board = new Board();
-
-		// init rest
-		turn = 0;
-		
-		currentPlayerId = 0;
-		lastPlayer = player[1];
-
-	}
-	
-	
-	
-	/**
-	 * laden
-	 * @param main
-	 * @param p1
-	 * @param p2
-	 * @param board
-	 * @param turn
-	 */
-	public Game(Menu main, Player p1, Player p2, Board board, int turn) {
-
-		this.main = main;
-
-		// init players
-		player = new Player[Game.PLAYERS];
-
-		player[0] = p1;
-		player[1] = p2;
-
-		// init board
-		this.board = board;
-
-		// init rest
-		this.turn = turn;
-		
-		currentPlayerId = 0;
-		lastPlayer = player[1];
-
-	}
-
-	/**
-	 * BlankoKonstruktor f�r Turnier
-	 */
-	protected Game() {
 	}
 
 	/**
 	 * Spielschleife gibt Sieger zur�ck
 	 */
-	public Player run() {
-
+	public Player run(boolean verbose) {
 
 		Player w = null;
 
 		do {
-			runPlayerTurn(player[0]);
+
+			runPlayerTurn(currentPlayer, lastPlayer, verbose);
 			w = getWinner();
 
-			if (w == null) {
-				runPlayerTurn(player[1]);
-				
-				w = getWinner();
+		} while (w == null);
 
+		if (verbose) {
+			board.print();
+			w.notifyWinner();
+
+			// init Highscores
+			try {
+				Highscores h = HighscoreFileHandler.loadHighscores();
+				int score = board.getScore();
+				h.addHighscore(new Highscore(score, w.getName()));
+				HighscoreFileHandler.saveHighscores(h);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-
-		} while (w == null); 
-
-		board.print();
-		w.notifyWinner();
-
-		//init Highscores
-		try {
-			Highscores h = HighscoreFileHandler.loadHighscores();
-			int score = board.getScore();
-			h.addHighscore(new Highscore(score, w.getName()));
-			HighscoreFileHandler.saveHighscores(h);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		
+
 		return w;
 
 	}
 
-	
-	
-	public Player runKI() {
-
-
-		Player w = null;
-
-		do {
-			runPlayerTurnKI(player[0]);
-			
-			w = getWinner();
-
-			if (w == null) {
-				runPlayerTurnKI(player[1]);
-
-				w = getWinner();
-
-			}
-
-		} while (w == null); // ist unbn�tig !! wird nie genutzt ?? wenn w =
-								// null ist returned er in der while schleife
-
-	
-		
-		
-		return w;
-
-	}
-	
-	private void runPlayerTurn(Player p) {
+	private void runPlayerTurn(Player current, Player last, boolean verbose) {
 
 		Action a;
 
 		boolean turnValid = false;
 
-		currentPlayerId = p.getPlayerID();
-		
 		do {
-			board.print();
-			a = p.askforAction(this);
+			if (verbose)
+				board.print();
+			a = current.askforAction(this);
 			if (a.isActionValid(board, turn, true)) {
 				turnValid = true;
 			}
 		} while (turnValid == false);
-		System.out.println(p.getName() + "(" + p.getSymbol() + ") waehlt Zug: "
-				+ a);
+
+		if (verbose)
+			System.out.println(current.getName() + "(" + current.getSymbol()
+					+ ") waehlt Zug: " + a);
+
 		a.execute(board);
 
-		if (p.getStones(board) <= 0) {
+		if (current.getStones(board) <= 0) {
 
 			boolean remValid = false;
 			RemoveAction ra;
 
 			do {
 				board.print();
-				ra = p.askforRemoveAction(this);
+				ra = current.askforRemoveAction(this);
 				if (ra.isActionValid(board, turn, true)) {
 					remValid = true;
 				}
@@ -246,70 +169,32 @@ public class Game implements Serializable{
 
 		turn++;
 
-		this.setLastPlayer(p);
-
-	}
-	
-	
-	
-	private void runPlayerTurnKI(Player p) {
-
-		Action a;
-
-		boolean turnValid = false;
-
-		currentPlayerId = p.getPlayerID();
-
-		do {
-			a = p.askforAction(this);
-			if (a.isActionValid(board, turn, true)) {
-				turnValid = true;
-			}
-		} while (turnValid == false);
-		a.execute(board);
-
-		if (p.getStones(board) <= 0) {
-
-			boolean remValid = false;
-			RemoveAction ra;
-
-			do {
-				
-				ra = p.askforRemoveAction(this);
-				if (ra.isActionValid(board, turn, true)) {
-					remValid = true;
-				}
-			} while (remValid == false);
-
-			ra.execute(board);
-
-		}
-
-		turn++;
-
-		this.setLastPlayer(p);
+		this.lastPlayer = current;
+		this.currentPlayer = last;
 
 	}
 
 	public Player getWinner() {
 		return getWinner(board);
 	}
-	
+
 	public Player getWinner(Board board) {
-		return getWinner(board,this.getLastPlayer(),this.getCurrentPlayer(), turn);
+		return getWinner(board, lastPlayer, currentPlayer, turn);
 	}
-	
+
 	/**
 	 * null if no winner
 	 * 
 	 * @return
 	 */
-	public static Player getWinner(Board board, Player last, Player current, int turn) {
+	public static Player getWinner(Board board, Player last, Player current,
+			int turn) {
 
 		// keine Z�ge mehr
-		Player toCheck = current;
-		if (toCheck.hasValidActions(board, turn) == false) {
+		if (!current.hasValidActions(board, turn)) {
 			return last;
+		} else if (!last.hasValidActions(board, turn)) {
+			return current;
 		}
 
 		// 4 gewinnt regel
@@ -405,16 +290,12 @@ public class Game implements Serializable{
 		return board;
 	}
 
-	public Player[] getPlayer() {
-		return player;
+	public int getCurrentPlayerId() {
+		return currentPlayer.getPlayerID();
 	}
 
-	public int getCurrentPlayerId() {
-		return currentPlayerId;
-	}
-	
 	public int getNotCurrentPlayerId() {
-		return currentPlayerId==0?1:0;
+		return getCurrentPlayerId() == 0 ? 1 : 0;
 	}
 
 	public int getTurn() {
@@ -422,7 +303,7 @@ public class Game implements Serializable{
 	}
 
 	public Menu getMainMenu() {
-		if(main == null){
+		if (main == null) {
 			main = new MainMenu(Landung.instance);
 		}
 		return main;
@@ -432,22 +313,10 @@ public class Game implements Serializable{
 		this.turn = turn;
 	}
 
-	public void setPlayer(Player[] player) {
-		this.player = player;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
-	public String getName() {
-		return name;
-	}
-	
-	public Player getCurrentPlayer() {
-		return lastPlayer==player[0]?player[1]:player[0];
-	}
-	
 	public Player getLastPlayer() {
 		return lastPlayer;
 	}
@@ -455,10 +324,13 @@ public class Game implements Serializable{
 	public void setLastPlayer(Player lastPlayer) {
 		this.lastPlayer = lastPlayer;
 	}
-	
-	
-	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayerId = currentPlayer;
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

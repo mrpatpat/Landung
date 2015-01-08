@@ -118,7 +118,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Action askforAction(Game g) {
 		
-		Player enemy  = g.getPlayer()[0] == this ? g.getPlayer()[1]:g.getPlayer()[0];
+		Player enemy  = g.getCurrentPlayer() == this ? g.getLastPlayer():g.getCurrentPlayer();
 
 		List<Action> actions = getValidActions(g.getBoard(), g.getTurn());
 		
@@ -151,7 +151,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public RemoveAction askforRemoveAction(Game g) {
 		int rand = (int) (Math.random() * 5);
-		Player enemy  = g.getPlayer()[0] == this ? g.getPlayer()[1]:g.getPlayer()[0];
+		Player enemy  = g.getCurrentPlayer() == this ? g.getLastPlayer():g.getCurrentPlayer();
 		if (rand < level) {
 			return smart.getNextRemoveAction(g.getBoard(), this.getValidRemoveActions(g.getBoard(), g.getTurn()),g.getTurn(),enemy);
 		} else {
