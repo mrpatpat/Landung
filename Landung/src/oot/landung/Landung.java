@@ -35,7 +35,7 @@ public class Landung implements Serializable {
 		menu = new MainMenu(this);
 		game = new Game(g.getCurrentPlayer(), g.getLastPlayer(), g.getBoard(), g.getTurn(),menu);
 		initGame(game);
-	}
+	}   
 
 	/**
 	 * Startet einen KI Test, der Stufe 5 gegen Stufe 1 beliebig oft spielen
