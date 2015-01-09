@@ -332,5 +332,9 @@ public class Game implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void close(){
+		
+	}
 
 }

@@ -9,6 +9,7 @@ import oot.landung.filemanager.SaveFileHandler;
 import oot.landung.game.Game;
 import oot.landung.game.save.Save;
 import oot.landung.menu.Menu;
+import oot.landung.menu.MenuPoint;
 import oot.landung.menu.MenuPoints;
 
 public class SaveMenu extends Menu {
@@ -21,9 +22,34 @@ public class SaveMenu extends Menu {
 	public void define(Game current) {
 
 		this.addPoint(MenuPoints.getSaveGamePoint(getLandung(), this, current));
-		this.addPoint(MenuPoints.resetSaveGamesPoint(getLandung(), this, current));
+		
+		boolean empty = hasNoSaveGames();
+		
+		if (!empty) {
+			MenuPoint target = MenuPoints.resetSaveGamesPoint(getLandung(), this, current);
+			MenuPoint confirm = MenuPoints.confirmPoint(getLandung(), this,
+					current,
+					"Sind Sie sicher ? Die Spielstände gehen dabei verloren.",
+					target);
+
+			this.addPoint(confirm);
+		}
+
 		this.addPoint(MenuPoints.backPoint(getLandung(), this, current));
 
+	}
+	
+	private boolean hasNoSaveGames() {
+		boolean empty = true;
+		try {
+			Save h = SaveFileHandler.loadSaves();
+			empty = h.getSaves().isEmpty();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return empty;
 	}
 	
 	@Override

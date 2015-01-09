@@ -34,7 +34,7 @@ public abstract class Menu {
 			}
 		}
 
-		choice.onSelect();
+		choice.onSelect(current);
 
 	}
 
@@ -85,7 +85,7 @@ public abstract class Menu {
 	}
 
 	public void print() {
-
+		
 		// find the length of the longest String
 		int length = getName().length();
 		if (getCustomText() != null) {

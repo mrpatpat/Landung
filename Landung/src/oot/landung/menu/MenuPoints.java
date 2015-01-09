@@ -22,7 +22,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint(target.getName()) {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new ConfirmMenu(landung, message, target, menu).open(current);
 			}
 
@@ -36,7 +36,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Entfernen") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				menu.removeGame();
 			}
 
@@ -50,7 +50,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Laden") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				menu.loadGame(current);
 			}
 
@@ -65,7 +65,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Reset") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				SaveFileHandler.resetSaves();
 				menu.open(game);
 			}
@@ -82,7 +82,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Speichern") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				menu.saveGame(game);
 				menu.getParent().open(game);
 			}
@@ -98,7 +98,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Cheats") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new CheatMenu(landung, menu).open(game);
 			}
 
@@ -113,7 +113,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Eingaben") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new InputMenu(landung, menu).open(game);
 			}
 
@@ -128,7 +128,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Regeln") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new RulesMenu(landung, menu).open(game);
 			}
 
@@ -143,7 +143,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Zurueck") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				if (menu.getParent() != null)
 					menu.getParent().open(game);
 			}
@@ -160,7 +160,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Best of Three") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.initBO3();
 			}
 
@@ -176,7 +176,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Spieler gegen Computer") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.initGame(new Game(GameType.PVE, menu.getParent()));
 			}
 
@@ -192,7 +192,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Computer gegen Computer") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.initGame(new Game(GameType.EVE, menu.getParent()));
 			}
 
@@ -208,7 +208,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Spieler gegen Spieler") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.initGame(new Game(GameType.PVP, menu.getParent()));
 			}
 
@@ -224,7 +224,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Neues Spiel") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new NewGameMenu(landung, menu).open(game);
 			}
 
@@ -239,7 +239,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Laden") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new LoadMenu(landung, menu).open(game);
 			}
 
@@ -253,7 +253,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Speichern") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new SaveMenu(landung, menu).open(game);
 			}
 
@@ -267,7 +267,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Weiterspielen") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 			}
 
 		};
@@ -280,7 +280,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("KI Test 2") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.testAi2();
 			}
 
@@ -294,7 +294,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("KI Test 1") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				landung.testAi();
 			}
 
@@ -308,7 +308,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Highscores") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new HighscoreMenu(landung, menu).open(game);
 			}
 
@@ -321,7 +321,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Hilfe") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				new HelpMenu(landung, menu).open(game);
 			}
 
@@ -334,7 +334,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Beenden") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				System.exit(0);
 			}
 
@@ -348,7 +348,7 @@ public class MenuPoints {
 		MenuPoint m = new MenuPoint("Reset") {
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				HighscoreFileHandler.resetHighscores();
 				menu.open(current);
 			}

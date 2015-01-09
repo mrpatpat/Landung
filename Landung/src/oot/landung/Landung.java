@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import oot.landung.game.Game;
 import oot.landung.game.Game.GameType;
+import oot.landung.game.board.Board;
 import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.utils.Utils;
@@ -31,8 +32,9 @@ public class Landung implements Serializable {
 	}
 	
 	public void initLoadedGame(Game g){
-		game = g;
-		game.run(true);
+		menu = new MainMenu(this);
+		game = new Game(g.getCurrentPlayer(), g.getLastPlayer(), g.getBoard(), g.getTurn(),menu);
+		initGame(game);
 	}
 
 	/**

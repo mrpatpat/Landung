@@ -25,8 +25,8 @@ public class ConfirmMenu extends Menu {
 		MenuPoint yes = new MenuPoint("Bestaetigen"){
 
 			@Override
-			public void onSelect() {
-				target.onSelect();
+			public void onSelect(Game current) {
+				target.onSelect(current);
 			}
 			
 		};
@@ -34,7 +34,7 @@ public class ConfirmMenu extends Menu {
 		MenuPoint no = new MenuPoint("Zurueck"){
 
 			@Override
-			public void onSelect() {
+			public void onSelect(Game current) {
 				getParent().open(current);
 			}
 			
