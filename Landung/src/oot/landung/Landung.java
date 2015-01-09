@@ -33,7 +33,7 @@ public class Landung implements Serializable {
 	public void initLoadedGame(Game g){
 		game = g;
 		game.run(true);
-	}
+	}   
 
 	/**
 	 * Startet einen KI Test, der Stufe 5 gegen Stufe 1 beliebig oft spielen
