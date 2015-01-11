@@ -1,4 +1,5 @@
-package oot.landung.tournament;
+package oot.landung.tournament.donutslayers.tournament;
+
 
 
 /**

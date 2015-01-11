@@ -9,9 +9,7 @@ import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
 import oot.landung.game.player.ProgrammablePlayer;
 import oot.landung.game.utils.Utils;
-import tournament.IGame;
-
-
+import oot.landung.tournament.donutslayers.tournament.IGame;
 
 /**
  * 
@@ -20,56 +18,42 @@ import tournament.IGame;
  */
 public class TournamentWrapper extends Game implements IGame {
 
-	private FixedComputerPlayer me;
-	private ProgrammablePlayer enemy;
+	private static FixedComputerPlayer me = new FixedComputerPlayer(0, 4);
+	private static ProgrammablePlayer enemy = new ProgrammablePlayer(1);
 
-	private boolean isRunning;
-	private Player winner;
+	private static boolean isRunning;
+	private static Player winner;
 
 	public TournamentWrapper() {
-		super();
-		me = new FixedComputerPlayer(0, 5);
-		enemy = new ProgrammablePlayer(1);
-		this.initBoard();
-		setTurn(0);
-		setPlayer(new Player[2]);
+		super(null, me, enemy);
 	}
 
 	@Override
 	public void youAreFirst() {
-		this.getPlayer()[0] = me;
-		this.getPlayer()[1] = enemy;
-		me.setId(0);
-		enemy.setId(1);
-		isRunning = true;
-		setCurrentPlayerId(0);
-		setLastPlayer(enemy);
+		this.setCurrentPlayer(me);
+		this.setLastPlayer(enemy);
 	}
+
 
 	@Override
 	public void youAreSecond() {
-		this.getPlayer()[1] = me;
-		this.getPlayer()[0] = enemy;
-		me.setId(1);
-		enemy.setId(0);
-		isRunning = true;
-		setCurrentPlayerId(0);
-		setLastPlayer(me);
+		this.setCurrentPlayer(enemy);
+		this.setLastPlayer(me);
 	}
 
 	@Override
 	public boolean isRunning() {
 		return isRunning;
 	}
-	
+
 	@Override
 	public int whoWon() {
 		if (this.getWinner() == me || winner == me) {
 			isRunning = false;
-			return 1; // ?????
+			return 1;
 		} else if (this.getWinner() == enemy || winner == enemy) {
 			isRunning = false;
-			return -1; // ?????
+			return -1;
 		} else
 			return 0;
 	}
@@ -110,7 +94,7 @@ public class TournamentWrapper extends Game implements IGame {
 							.substring(0, 2)),
 					Utils.convertExternalStringToInternalVector(command
 							.substring(2, 4)));
-			
+
 			if (a.isActionValid(getBoard(), getTurn(), false)) {
 				a.execute(getBoard());
 				this.setTurn(getTurn() + 1);

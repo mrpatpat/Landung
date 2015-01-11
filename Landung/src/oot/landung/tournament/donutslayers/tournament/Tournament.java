@@ -1,8 +1,4 @@
-package oot.landung.tournament;
-
-import tournament.DonutSlayersEngine;
-import tournament.IGame;
-
+package oot.landung.tournament.donutslayers.tournament;
 
 /**
  * Turnierklasse
@@ -12,17 +8,33 @@ public class Tournament {
 
 	private IGame[] games;
 	private int[] points;
-	
-	public static IGame getGameA(){
-		return new TournamentWrapper();
+
+	/**
+	 * 
+	 * HIER EIGENE SPIELE IMPLEMENTIEREN!
+	 * 
+	 * neue Spielinstanz des Spiels A
+	 * 
+	 * @return neue Spielinstanz des Spiels A
+	 */
+	public static IGame getGameA() {
+		// return new TournamentWrapper();
+		return null;
 	}
-	
-	public static IGame getGameB(){
-		return new DonutSlayersEngine(5);
+
+	/**
+	 * 
+	 * HIER EIGENE SPIELE IMPLEMENTIEREN!
+	 * 
+	 * neue Spielinstanz des Spiels B
+	 * 
+	 * @return neue Spielinstanz des Spiels B
+	 */
+	public static IGame getGameB() {
+		// return new TournamentWrapper();
+		return null;
 	}
-	
-	
-	
+
 	/**
 	 * Konstruktor für Tournament
 	 * 
@@ -42,8 +54,7 @@ public class Tournament {
 		}
 
 	}
-	
-	
+
 	/**
 	 * 
 	 * startet und verwaltet das tunier
@@ -56,10 +67,10 @@ public class Tournament {
 
 		for (int i = 0; i < matches; i++) {
 			games = new IGame[2];
-			
+
 			games[0] = Tournament.getGameA();
 			games[1] = Tournament.getGameB();
-			
+
 			IGame winner = runSingleGame(games[i % 2]);
 			if (winner == games[0]) {
 				points[0] += 3;
@@ -75,7 +86,7 @@ public class Tournament {
 		System.out.println("Points B:" + points[1]);
 
 	}
-	
+
 	/**
 	 * Startet und verwaltet ein Spiel
 	 * 
@@ -100,11 +111,11 @@ public class Tournament {
 		// game loop
 		while (running) {
 
-			winner = makeTurn(first,second,winner);
+			winner = makeTurn(first, second, winner);
 			if (winner != null)
 				return winner;
-			
-			winner = makeTurn(second,first,winner);
+
+			winner = makeTurn(second, first, winner);
 			if (winner != null)
 				return winner;
 
@@ -113,7 +124,7 @@ public class Tournament {
 		// bad
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * Zug eines Spielers
@@ -122,11 +133,12 @@ public class Tournament {
 	 * @param actor
 	 * @param enemy
 	 * @param winner
-	 * @return winner  // wenn einer da ist ansonsten null
+	 * @return winner // wenn einer da ist ansonsten null
 	 * @throws NotInSyncException
 	 */
-	
-	private IGame makeTurn(IGame actor, IGame enemy, IGame winner) throws NotInSyncException {
+
+	private IGame makeTurn(IGame actor, IGame enemy, IGame winner)
+			throws NotInSyncException {
 
 		// both running?
 		if (actor.isRunning() && enemy.isRunning()) {
@@ -134,29 +146,15 @@ public class Tournament {
 			// can actor move ?
 			if (actor.canIMove() && enemy.canYouMove()) {
 
-				//make a move
+				// make a move
 				String move = actor.getMyMove();
 				boolean valid = enemy.takeYourMove(move);
-				
-				System.out.println(actor.getClass()+" moved "+move);
-				System.out.println(enemy.getClass()+" accepted it: "+valid);
-				actor.printBoard();
-				enemy.printBoard();
-				System.out.println(actor.getClass()+" isRunning: "+actor.isRunning());
-				System.out.println(enemy.getClass()+" isRunning: "+enemy.isRunning());
-				System.out.println(actor.getClass()+" whoWon: "+actor.whoWon());
-				System.out.println(enemy.getClass()+" whoWon: "+enemy.whoWon());
 
 				// does enemy recognize it as valid?
 				if (!valid) {
 					throw new NotInSyncException(
 							"Zug des ersten Spielers im anderen Programm ungültig");
 				}
-				
-				// did someone win ?
-				winner = getWinner(actor, enemy);
-				if (winner != null)
-					return winner;
 
 			} else {
 
@@ -173,15 +171,9 @@ public class Tournament {
 				return winner;
 
 		} else {
-			
-			winner = getWinner(actor, enemy);
-			if (winner != null)
-				return winner;
-			
 			throw new NotInSyncException("isRunning not in sync");
-			
 		}
-		
+
 		return null;
 
 	}

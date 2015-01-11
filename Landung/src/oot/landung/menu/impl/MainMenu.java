@@ -25,7 +25,7 @@ public class MainMenu extends Menu {
 			this.addPoint(MenuPoints.getResumeGamePoint(getLandung(), this,
 					current));
 
-		if (current != null)
+		if (current != null&&!current.isBo3())
 			this.addPoint(MenuPoints.getSavePoint(getLandung(), this, current));
 
 		if (current != null) {

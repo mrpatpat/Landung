@@ -33,13 +33,13 @@ public class Game implements Serializable {
 		PVP, PVE, EVE;
 	}
 
-	private static final int PLAYERS = 2;
 	private Board board;
 	private int turn;
 	private transient Menu main;
 	private Player currentPlayer;
 	private Player lastPlayer;
 	private String name;
+	private boolean isBo3 = false;
 
 	public Game(Player current, Player last, Board board, int turn, Menu main) {
 		this.currentPlayer = current;
@@ -335,6 +335,22 @@ public class Game implements Serializable {
 	
 	public void close(){
 		
+	}
+
+	public void markBo3() {
+		this.setBo3(true);
+	}
+
+	public boolean isBo3() {
+		return isBo3;
+	}
+
+	public void setBo3(boolean isBo3) {
+		this.isBo3 = isBo3;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import oot.landung.game.Game;
 import oot.landung.game.Game.GameType;
+import oot.landung.game.aiTests.AiTests;
+import oot.landung.game.bo3.BestOf3;
 import oot.landung.game.board.Board;
 import oot.landung.game.player.FixedComputerPlayer;
 import oot.landung.game.player.Player;
@@ -43,66 +45,7 @@ public class Landung implements Serializable {
 	 */
 	public void testAi() {
 
-		Player worst = new FixedComputerPlayer(1, 0);
-		Player enemy;
-
-		Scanner in = Utils.getScanner();
-		System.out.println("Wie viele Spiele soll die KI Spielen?");
-		String input = in.nextLine();
-		int runs = Integer.parseInt(input);
-
-		int res = 0;
-		long start = System.currentTimeMillis();
-		long end = start;
-		enemy = new FixedComputerPlayer(0, 4);
-
-		for (int j = 0; j < runs; j++) {
-
-			Game g = new Game(null, enemy, worst);
-			Player winner = g.run(false);
-
-			end = System.currentTimeMillis();
-
-			if (winner == enemy) {
-				res++;
-			}
-
-			System.out.println("Fortschritt: " + (j + 1) + "/" + (runs + runs) + " gespielt. Vergangene Zeit: " + (end - start) / 1000 + "s");
-
-		}
-
-		// ______
-
-		worst = new FixedComputerPlayer(1, 0);
-
-		int res2 = 0;
-
-		enemy = new FixedComputerPlayer(0, 4);
-
-		for (int j = 0; j < runs; j++) {
-
-			Game g = new Game(null, worst, enemy);
-			Player winner = g.run(false);
-
-			end = System.currentTimeMillis();
-
-			if (winner == enemy) {
-				res2++;
-			}
-			System.out.println("Fortschritt: " + (runs + j + 1) + "/" + (runs + runs) + " gespielt. Vergangene Zeit: " + ((end - start) / 1000) + "s");
-
-		}
-
-		// PRINTS
-
-		System.out.println("\nKI(5) beginnt: \n");
-
-		System.out.println("KI(" + (5) + ") hat gegen KI(1) " + res + " von " + runs + " Malen gewonnen.");
-
-		System.out.println("\nKI(1) beginnt: \n");
-
-		System.out.println("KI(" + (5) + ") hat gegen KI(1) " + res2 + " von " + runs + " Malen gewonnen.");
-
+		AiTests.testAi();
 		menu.open(game);
 	}
 
@@ -112,74 +55,7 @@ public class Landung implements Serializable {
 	 */
 	public void testAi2() {
 
-		Player worst = new FixedComputerPlayer(1, 0);
-		Player enemy;
-
-		Scanner in = Utils.getScanner();
-		System.out.println("Wie viele Spiele soll die KI Spielen?");
-		String input = in.nextLine();
-		int runs = Integer.parseInt(input);
-
-		int[] res = new int[5];
-
-		for (int i = 0; i < 5; i++) {
-
-			enemy = new FixedComputerPlayer(0, i);
-
-			for (int j = 0; j < runs; j++) {
-
-				Game g = new Game(null, enemy, worst);
-				Player winner = g.run(false);
-
-				if (winner == enemy) {
-					res[i]++;
-				}
-
-			}
-
-		}
-
-		// ______
-
-		worst = new FixedComputerPlayer(1, 0);
-
-		int[] res2 = new int[5];
-
-		for (int i = 0; i < 5; i++) {
-
-			enemy = new FixedComputerPlayer(0, i);
-
-			for (int j = 0; j < runs; j++) {
-
-				Game g = new Game(null, worst, enemy);
-				Player winner = g.run(false);
-
-				if (winner == enemy) {
-					res2[i]++;
-				}
-
-			}
-
-		}
-
-		// PRINTS
-
-		System.out.println("\nKI(1-5) beginnt: \n");
-
-		for (int i = 0; i < 5; i++) {
-
-			System.out.println("KI(" + (i + 1) + ") hat gegen KI(1) " + res[i] + " von " + runs + " Malen gewonnen.");
-
-		}
-
-		System.out.println("\nKI(1) beginnt: \n");
-
-		for (int i = 0; i < 5; i++) {
-
-			System.out.println("KI(" + (i + 1) + ") hat gegen KI(1) " + res2[i] + " von " + runs + " Malen gewonnen.");
-
-		}
-
+		AiTests.testAi2();
 		menu.open(game);
 
 	}
@@ -199,68 +75,10 @@ public class Landung implements Serializable {
 	 * Startet ein Best of 3
 	 */
 	public void initBO3() {
-
-		// Spieler 1 gewinnt -> +1 ; Spieler 2 gewinnt-> -1
-		int result = 0;
-
-		// Game 1
-		game = new Game(GameType.PVP, menu);
-		game.run(true);
-
-		// get Player instances
-		Player a = game.getCurrentPlayer();
-		Player b = game.getLastPlayer();
-
-		// edit result
-		if (a == game.getWinner()) {
-			result++;
-		} else {
-			result--;
-		}
-
-		// Game 2
-		game = new Game(menu, a, b);
-		game.run(true);
-		// edit result
-		if (a == game.getWinner()) {
-			result++;
-		} else {
-			result--;
-		}
-
-		// check if someone won
-		if (result == 2) {
-			System.out.println(a.getName() + " hat 2 zu 0 gewonnen!");
-			game = null;
-			menu.open(game);
-		} else if (result == -2) {
-			System.out.println(b.getName() + " hat 2 zu 0 gewonnen!");
-			game = null;
-			menu.open(game);
-		} else {
-
-			// Game 3
-			game = new Game(menu, a, b);
-			game.run(true);
-			// edit result
-			if (a == game.getWinner()) {
-				result++;
-			} else {
-				result--;
-			}
-
-			// check win
-			if (result == 1) {
-				System.out.println(a.getName() + " hat 2 zu 1 gewonnen!");
-				game = null;
-				menu.open(game);
-			} else if (result == -1) {
-				System.out.println(b.getName() + " hat 2 zu 1 gewonnen!");
-				game = null;
-				menu.open(game);
-			}
-
-		}
+		
+		BestOf3 b = new BestOf3();
+		b.init();
+		menu.open(null);
 
 	}
 }
