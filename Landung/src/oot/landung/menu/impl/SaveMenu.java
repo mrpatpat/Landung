@@ -29,7 +29,7 @@ public class SaveMenu extends Menu {
 			MenuPoint target = MenuPoints.resetSaveGamesPoint(getLandung(), this, current);
 			MenuPoint confirm = MenuPoints.confirmPoint(getLandung(), this,
 					current,
-					"Sind Sie sicher ? Die Spielstände gehen dabei verloren.",
+					"Sind Sie sicher ? Alle Spielstände gehen dabei verloren.",
 					target);
 
 			this.addPoint(confirm);
@@ -87,8 +87,18 @@ public class SaveMenu extends Menu {
 				int remove = Integer.parseInt(askForString());
 				h.getSaves().remove(remove - 1);
 			}
+			
+			boolean test =false;
+			do{
 			System.out.println("\nBitte geben Sie einen Namen zum Speichern ein:");
 			current.setName(askForString());
+			if(current.getName().length()< 40){
+				test =true;
+			}else{
+				System.out.println("\nDer Spielstandname darf nicht mehr als 40 Zeichen haben!");
+			}
+			}while(!test);
+			
 			h.addGame(current);
 			SaveFileHandler.resetSaves();
 			SaveFileHandler.saveGame(h);
